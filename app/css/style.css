@@ -1,0 +1,21 @@
+.explore, .fight, .zone {
+  float: left;
+  width: 400px;
+  border: 1px solid #ccc;
+  margin: 3px;
+}
+
+hr {
+  clear: left;
+}
+
+.characters, .ennemies, .upgrades {
+  float: left;
+  width: 400px;
+}
+
+.character, .ennemy, .upgrade {
+  height: 40px;
+  border: 1px solid #ccc;
+  margin: 3px;
+}

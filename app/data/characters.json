@@ -1,0 +1,19 @@
+{
+  "1": [{
+    "name": "Cloud",
+    "lines": {
+      "1": "It's not my problem."
+    }
+  }, {
+    "name": "Barret",
+    "lines": {
+      "1": "A promise is a promise"
+    }
+  }],
+  "2": [{
+    "name": "Tifa",
+    "lines": {
+      "1": "Words aren't the only way to tell someone how you feel."
+    }
+  }]
+}

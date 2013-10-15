@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr" ng-app="clickingff7">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="revisit-after" content="7 days" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1" />
+    
+    <title>Final Fantasy VII: Expérience - #ff7e (FF7 le roman) </title>
+
+    <link rel="stylesheet" type="text/css" href="app/css/style.css">
+    
+    <script src="app/js/angular.min.js"></script>
+    <script src="app/js/app.js"></script>
+  </head>
+
+  <body ng-controller="HomeCtrl">
+    
+    <div class="explore">
+      <div>Ennemies (Difficulty is poor)</div>
+      <div>0</div>
+      <div>0 per second (net)</div>
+      <div>EXPLORE</div>
+    </div>
+    
+    <div class="fight">
+      <div>Experience (Multiplicator x1)</div>
+      <div>0 xp</div>
+      <div>0 xp per second</div>
+      <div>FIGHT</div>
+    </div>
+
+    <div class="zone">
+      <div>Zone</div>
+      {{zone.name}}
+    </div>
+
+    <hr />
+
+    <div class="ennemies">
+      <div>Ennemies</div>
+      <div ng-repeat="ennemy in ennemies" class="ennemy">
+        {{ennemy.name}}
+      </div>
+    </div>
+
+    <div class="characters">
+      <div>Characters</div>
+      <div ng-repeat="character in characters" class="character">
+        {{character.name}}
+      </div>
+    </div>
+
+    <div class="upgrades">
+      <div>Upgrades</div>
+    </div>
+
+  </body>
+
+</html>
