@@ -23,8 +23,12 @@ function Character($scope, infos) {
  * Init the character if does not exist in COOKIE
  */
 Character.prototype.init = function() {
-  this.level = 0;
-  this.weapon_level = 1;
+  if (!this.level) {
+    this.level = 0;
+  }
+  if (!this.weapon_level) {
+    this.weapon_level = 1;
+  }
 };
 
 /**
