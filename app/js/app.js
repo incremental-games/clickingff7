@@ -7,9 +7,9 @@ function HomeCtrl($scope, $http) {
   // STEP 1
   // Load game from COOKIE
 
-  var battles = 100,
-    experience = 100,
-    gils = 100;
+  var battles = 0,
+    experience = 0,
+    gils = 0;
 
   var zone_level = 1;
 

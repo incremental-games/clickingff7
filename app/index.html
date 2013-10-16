@@ -7,7 +7,7 @@
     <meta name="revisit-after" content="7 days" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1" />
     
-    <title>Final Fantasy VII: Expérience - #ff7e (FF7 le roman) </title>
+    <title>Clicking FF7</title>
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
     
@@ -18,58 +18,91 @@
   </head>
 
   <body ng-controller="HomeCtrl">
-    
-    <div class="explore">
-      <div>Ennemies (Difficulty is poor)</div>
-      <div>{{battles}}</div>
-      <div>0 per second (net)</div>
-      <div ng-click="explore()">EXPLORE</div>
-    </div>
-    
-    <div class="fight">
-      <div>Experience (Multiplicator x1)</div>
-      <div>{{experience}} xp</div>
-      <div>0 xp per second</div>
 
-      <div>Gils (Multiplicator x0)</div>
-      <div>{{gils}} gils</div>
-      <div>0 gils per second</div>
-
-      <div ng-click="fight()">FIGHT</div>
-    </div>
-
-    <div class="zone">
-      <div>Zone</div>
-      {{zone.name}}
-    </div>
-
-    <hr />
-
-    <div class="ennemies">
-      <div>Ennemies</div>
-      <div ng-repeat="ennemy in ennemies" class="ennemy">
-        {{ennemy.name}}
+    <header>
+      <div class="wrapper">
+        clicking ff7
       </div>
-    </div>
+    </header>
 
-    <div class="characters">
-      <div>Characters</div>
-      <div ng-repeat="(i, character) in characters" class="character">
-        <div class="actions">
-          <div class="level_up" ng-click="level_up(character)" ng-class="{disabled: !character.can_level_up()}">LEVEL UP</div>
-          <div class="weapon_level_up" ng-click="weapon_up(character)" ng-class="{disabled: !character.can_weapon_up()}">WEAPON UP</div>
-        </div>
-        <div>{{character.name}} <span ng-show="character.level > 0">(LVL{{character.level}})</span></div>
-        <div>Weapon: {{character.weapon_level}}</div>
-        <div>{{character.hits()}} hits per second</div>
+    <div class="wrapper">
+
+      <div class="part">
+
+        <section class="explore">
+          <div>Ennemies (Difficulty is poor)</div>
+          <div><strong>{{battles}}</strong></div>
+          <div>0 per second (net)</div>
+
+          <br />
+
+          <div ng-click="explore()" class="button">EXPLORE</div>
+        </section>
+        
+        <section class="fight">
+          <div>Experience (Multiplicator x1)</div>
+          <div><strong>{{experience}} xp</strong></div>
+          <div>0 xp per second</div>
+
+          <br />
+
+          <div>Gils (Multiplicator x0)</div>
+          <div><strong>{{gils}} gils</strong></div>
+          <div>0 gils per second</div>
+
+          <br />
+
+          <div ng-click="fight()" class="button" ng-class="{disabled: battles == 0}">FIGHT</div>
+        </section>
+
+        <section class="zone">
+          <div>Current zone</div>
+          <div><strong>{{zone.name}}</strong></div>
+        </section>
+
       </div>
-    </div>
 
-    <div class="upgrades">
-      <div>Upgrades</div>
-    </div>
+      <div class="part">
 
-    <footer><a href="https://github.com/Menencia/clickingff7/commits/master">What's new?</a></footer>
+        <sections class="ennemies">
+          <div class="title">Ennemies</div>
+          <div ng-repeat="ennemy in ennemies" class="ennemy">
+            {{ennemy.name}}
+          </div>
+        </sections>
+
+      </div>
+
+      <div class="part">
+
+        <sections class="characters">
+          <div class="title">Characters</div>
+          <div ng-repeat="(i, character) in characters" class="character">
+            <div class="actions">
+              <div class="button level_up" ng-click="level_up(character)" ng-class="{disabled: !character.can_level_up()}">LEVEL UP</div>
+              <div class="button weapon_up" ng-click="weapon_up(character)" ng-class="{disabled: !character.can_weapon_up()}">WEAPON UP</div>
+            </div>
+            <div>{{character.name}} <span ng-show="character.level > 0">(LVL{{character.level}})</span></div>
+            <div>Weapon: {{character.weapon_level}}</div>
+            <div>{{character.hits()}} hits per second</div>
+          </div>
+        </sections>
+
+      </div>
+
+      <div class="part">
+        <sections class="upgrades"></sections>
+      </div>
+
+    </div>
+    
+    <div class="clear"></div>
+
+    <footer>
+      <div class="wrapper">
+        <a href="https://github.com/Menencia/clickingff7/commits/master" target="_blank">What's new?</a>
+      </div>
+    </footer>
 
   </body>
 
