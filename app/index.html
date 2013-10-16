@@ -11,8 +11,9 @@
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
     
+    <script src="models/ennemy.js"></script>
     <script src="models/character.js"></script>
-
+ 
     <script src="js/angular.min.js"></script>
     <script src="js/app.js"></script>
   </head>
@@ -66,8 +67,16 @@
 
         <sections class="ennemies">
           <div class="title">Ennemies</div>
-          <div ng-repeat="ennemy in ennemies" class="ennemy">
-            {{ennemy.name}}
+          <div ng-repeat="ennemy in ennemies" class="ennemy" ng-class="{disabled: ennemy.number == 0}">
+            <div class="actions">
+              <div class="button level_up" ng-click="search(ennemy)" ng-class="{disabled: !ennemy.can_be_searched()}">SEARCH</div>
+              <div class="button weapon_up" ng-click="escape(ennemy)" ng-class="{disabled: !ennemy.can_be_escaped()}">RUN</div>
+            </div>
+            <div><img ng-src="img/ennemies/{{ennemy.image}}" alt="avatar" class="avatar" height="48" /></div>
+            {{ennemy.name}} <span ng-show="ennemy.number > 0">x{{ennemy.number}}</span>
+            <div>{{ennemy.hp}} HP</div>
+            <div>{{ennemy.experience()}} xp per second</div>
+            <div>{{ennemy.gils()}} gils per second</div>
           </div>
         </sections>
 

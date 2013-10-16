@@ -1,5 +1,9 @@
 {
-  "1": [{
-    "name": "1st Ray"
-  }]
+  "1": {
+    "1": {
+      "name": "1st Ray",
+      "image": "1st-ray.png",
+      "hp": "18"
+    }
+  }
 }

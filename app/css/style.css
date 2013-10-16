@@ -63,10 +63,10 @@ footer {
   margin: 3px;
 }
 
-.character.disabled {
+.character.disabled, .ennemy.disabled {
   background-color: #eee;
 }
-.character.disabled .avatar {
+.character.disabled .avatar, .ennemy.disabled .avatar {
   opacity: 0.1;
 }
 
