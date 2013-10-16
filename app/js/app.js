@@ -1,12 +1,15 @@
 var app = angular.module('clickingff7', []);
 
+app.service();
+
 function HomeCtrl($scope, $http) {
 
   // STEP 1
   // Load game from COOKIE
 
-  var battles = 0,
-    experience = 100;
+  var battles = 100,
+    experience = 100,
+    gils = 100;
 
   var zone_level = 1;
 
@@ -29,19 +32,20 @@ function HomeCtrl($scope, $http) {
   $http.get('data/characters.json').success(function(data) {
     var character, _data = [];
     for (var i in data[zone_level]) {
-      character = new Character(data[zone_level][i]);
+      character = new Character($scope, data[zone_level][i]);
       if (characters[i]) {
         character.extends(characters[i]);
       } else {
         character.init();
       }
-      _data.push(character.toJSON());
+      _data.push(character);
     }
     $scope.characters = characters = _data;
   });
 
   $scope.battles = battles;
   $scope.experience = experience;
+  $scope.gils = gils;
 
   /**
    * Explore to find ennemies
@@ -63,11 +67,23 @@ function HomeCtrl($scope, $http) {
    * Use experience to level up characters
    * @param  {int} id Character ID in the zone
    */
-  $scope.level_up = function(id) {
-    if ($scope.experience >= characters[id].level_cost) {
-      $scope.experience -= characters[id].level_cost;
-      characters[id].level += 1;
-      characters[id].level_cost + 10;
+  $scope.level_up = function(character) {
+    if (character.can_level_up()) {
+      $scope.experience -= character.level_cost;
+      character.level += 1;
+      character.level_cost *= 2;
+    }
+  };
+
+  /**
+   * Use experience to level up characters
+   * @param  {int} id Character ID in the zone
+   */
+  $scope.weapon_up = function(character) {
+    if (character.can_weapon_up()) {
+      $scope.gils -= character.level_cost;
+      character.weapon_level += 1;
+      character.weapon_cost *= 2;
     }
   };
 

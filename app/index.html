@@ -30,6 +30,11 @@
       <div>Experience (Multiplicator x1)</div>
       <div>{{experience}} xp</div>
       <div>0 xp per second</div>
+
+      <div>Gils (Multiplicator x0)</div>
+      <div>{{gils}} gils</div>
+      <div>0 gils per second</div>
+
       <div ng-click="fight()">FIGHT</div>
     </div>
 
@@ -50,14 +55,21 @@
     <div class="characters">
       <div>Characters</div>
       <div ng-repeat="(i, character) in characters" class="character">
+        <div class="actions">
+          <div class="level_up" ng-click="level_up(character)" ng-class="{disabled: !character.can_level_up()}">LEVEL UP</div>
+          <div class="weapon_level_up" ng-click="weapon_up(character)" ng-class="{disabled: !character.can_weapon_up()}">WEAPON UP</div>
+        </div>
         <div>{{character.name}} <span ng-show="character.level > 0">(LVL{{character.level}})</span></div>
-        <div class="level_up" ng-click="level_up(i)">LEVEL UP</div>
+        <div>Weapon: {{character.weapon_level}}</div>
+        <div>{{character.hits()}} hits per second</div>
       </div>
     </div>
 
     <div class="upgrades">
       <div>Upgrades</div>
     </div>
+
+    <footer><a href="https://github.com/Menencia/clickingff7/commits/master">What's new?</a></footer>
 
   </body>
 
