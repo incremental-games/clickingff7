@@ -1,27 +1,49 @@
+/**
+ * Character class
+ * @param {object} infos
+ */
+
 function Character(infos) {
-  if (infos) { // based on cookie infos
-    self = this;
-    for (var i in infos) {
-      self[i] = infos[i];
-    }
-  } else { // init
-    this.level = 0;
-    this.weapon_level = 1;
+
+  // general INFOS
+  this.level_cost = "2x";
+  this.weapon_cost = "2x";
+
+  // INFOS from COOKIE
+  if (infos) {
+    this.extends(infos);
+  }
+
+};
+
+/**
+ * Init the character if does not exist in COOKIE
+ */
+Character.prototype.init = function() {
+  this.level = 0;
+  this.weapon_level = 1;
+};
+
+/**
+ * Extends the properties with new ones
+ * @param  {object} infos
+ */
+Character.prototype.extends = function(infos) {
+  self = this;
+  for (var i in infos) {
+    self[i] = infos[i];
   }
 };
 
-Character.prototype.infos = function() {
+/**
+ * Export properties to JSON format
+ */
+Character.prototype.toJSON = function() {
   return {
     "name": this.name,
     "level": this.level,
     "level_cost": this.level_cost,
-    "weapon_level": this.level_cost,
-    "level_cost": this.level_cost,
-    "level_cost": this.level_cost,
-    "level_cost": this.level_cost,
+    "weapon_level": this.weapon_level,
+    "weapon_cost": this.weapon_cost
   }
-};
-
-Character.prototype.line = function() {
-  return lines[this.name][this.level];
 };

@@ -11,6 +11,8 @@
 
     <link rel="stylesheet" type="text/css" href="app/css/style.css">
     
+    <script src="app/models/character.js"></script>
+
     <script src="app/js/angular.min.js"></script>
     <script src="app/js/app.js"></script>
   </head>
@@ -47,8 +49,9 @@
 
     <div class="characters">
       <div>Characters</div>
-      <div ng-repeat="character in characters" class="character">
-        {{character.name}}
+      <div ng-repeat="(i, character) in characters" class="character">
+        {{character.name}} | 
+        <div class="level_up" ng-click="level_up(i)">LEVEL UP</div>
       </div>
     </div>
 

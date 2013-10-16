@@ -1,15 +1,19 @@
 {
-  "1": [{
-    "name": "Cloud",
-    "lines": {
-      "1": "It's not my problem."
+  "1": {
+    "1": {
+      "name": "Cloud",
+      "level": 1,
+      "lines": {
+        "1": "It's not my problem."
+      }
+    },
+    "2": {
+      "name": "Barret",
+      "lines": {
+        "1": "A promise is a promise"
+      }
     }
-  }, {
-    "name": "Barret",
-    "lines": {
-      "1": "A promise is a promise"
-    }
-  }],
+  },
   "2": [{
     "name": "Tifa",
     "lines": {
