@@ -6,8 +6,8 @@
 function Character(infos) {
 
   // general INFOS
-  this.level_cost = "2x";
-  this.weapon_cost = "2x";
+  this.level_cost = "10";
+  this.weapon_cost = "10";
 
   // INFOS from COOKIE
   if (infos) {

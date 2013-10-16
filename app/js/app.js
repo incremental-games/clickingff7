@@ -6,18 +6,11 @@ function HomeCtrl($scope, $http) {
   // Load game from COOKIE
 
   var battles = 0,
-    experience = 0;
+    experience = 100;
 
   var zone_level = 1;
 
-  var zone, ennemies = {};
-
-  var characters = {
-    "1": {
-      "level": 2,
-      "weapon_level": 1
-    }
-  };
+  var zone = ennemies = characters = {};
 
   // STEP 2
   // Extend COOKIE with background information
@@ -71,7 +64,11 @@ function HomeCtrl($scope, $http) {
    * @param  {int} id Character ID in the zone
    */
   $scope.level_up = function(id) {
-    characters[id].level += 1;
+    if ($scope.experience >= characters[id].level_cost) {
+      $scope.experience -= characters[id].level_cost;
+      characters[id].level += 1;
+      characters[id].level_cost + 10;
+    }
   };
 
 };
