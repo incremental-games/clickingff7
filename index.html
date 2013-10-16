@@ -21,16 +21,16 @@
     
     <div class="explore">
       <div>Ennemies (Difficulty is poor)</div>
-      <div>0</div>
+      <div>{{battles}}</div>
       <div>0 per second (net)</div>
-      <div>EXPLORE</div>
+      <div ng-click="explore()">EXPLORE</div>
     </div>
     
     <div class="fight">
       <div>Experience (Multiplicator x1)</div>
-      <div>0 xp</div>
+      <div>{{experience}} xp</div>
       <div>0 xp per second</div>
-      <div>FIGHT</div>
+      <div ng-click="fight()">FIGHT</div>
     </div>
 
     <div class="zone">
