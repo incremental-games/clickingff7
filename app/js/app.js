@@ -16,17 +16,17 @@ function HomeCtrl($scope, $http) {
   // Extend COOKIE with background information
 
   // ZONE
-  $http.get('app/data/zone.json').success(function(data) {
+  $http.get('data/zone.json').success(function(data) {
     $scope.zone = zone = data[zone_level];
   });
 
   // ENNEMIES
-  $http.get('app/data/ennemies.json').success(function(data) {
+  $http.get('data/ennemies.json').success(function(data) {
     $scope.ennemies = ennemies = data[zone_level];
   });
 
   // CHARACTERS
-  $http.get('app/data/characters.json').success(function(data) {
+  $http.get('data/characters.json').success(function(data) {
     var character, _data = [];
     for (var i in data[zone_level]) {
       character = new Character(data[zone_level][i]);
