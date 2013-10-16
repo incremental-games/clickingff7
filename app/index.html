@@ -77,11 +77,12 @@
 
         <sections class="characters">
           <div class="title">Characters</div>
-          <div ng-repeat="(i, character) in characters" class="character">
+          <div ng-repeat="(i, character) in characters" class="character" ng-class="{disabled: character.level == 0}">
             <div class="actions">
               <div class="button level_up" ng-click="level_up(character)" ng-class="{disabled: !character.can_level_up()}">LEVEL UP</div>
               <div class="button weapon_up" ng-click="weapon_up(character)" ng-class="{disabled: !character.can_weapon_up()}">WEAPON UP</div>
             </div>
+            <div><img ng-src="img/characters/{{character.image}}" alt="avatar" class="avatar" /></div>
             <div>{{character.name}} <span ng-show="character.level > 0">(LVL{{character.level}})</span></div>
             <div>Weapon: {{character.weapon_level}}</div>
             <div>{{character.hits()}} hits per second</div>

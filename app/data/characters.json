@@ -1,14 +1,16 @@
 {
   "1": {
     "1": {
-      "name": "Cloud",
+      "name": "Cloud Strife",
+      "image": "cloud.png",
       "level": 1,
       "lines": {
         "1": "It's not my problem."
       }
     },
     "2": {
-      "name": "Barret",
+      "name": "Barret Wallace",
+      "image": "barret.png",
       "lines": {
         "1": "A promise is a promise"
       }

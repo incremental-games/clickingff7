@@ -63,6 +63,13 @@ footer {
   margin: 3px;
 }
 
+.character.disabled {
+  background-color: #eee;
+}
+.character.disabled .avatar {
+  opacity: 0.1;
+}
+
 .actions {
   float: right;
 }
@@ -80,7 +87,7 @@ footer {
   cursor: pointer;
 }
 
-.disabled {
+.button.disabled {
   background-color: #aaa;
   cursor: auto;
 }
