@@ -50,7 +50,7 @@
     <div class="characters">
       <div>Characters</div>
       <div ng-repeat="(i, character) in characters" class="character">
-        {{character.name}} | 
+        <div>{{character.name}} <span ng-show="character.level > 0">(LVL{{character.level}})</span></div>
         <div class="level_up" ng-click="level_up(i)">LEVEL UP</div>
       </div>
     </div>

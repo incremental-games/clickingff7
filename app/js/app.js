@@ -46,7 +46,7 @@ function HomeCtrl($scope, $http) {
 
   $scope.level_up = function(id) {
     var character = new Character(characters[id]);
-    console.log(character.toJSON());
+    characters[id].level += 1;
   };
 
 };
