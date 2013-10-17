@@ -1,11 +1,17 @@
+'use strict';
+
 var app = angular.module('clickingff7', []);
 
-app.service();
+app.factory('Game', function() {
+  return new Game();
+});
 
-function HomeCtrl($scope, $http) {
+function HomeCtrl($scope, $http, Game) {
 
   // STEP 1
   // Load game from COOKIE
+
+  var game = {};
 
   var battles = 0,
     experience = 0,
@@ -13,10 +19,13 @@ function HomeCtrl($scope, $http) {
 
   var zone_level = 1;
 
-  var zone = enemies = characters = {};
+  var zone = {}, enemies = {}, characters = {};
 
   // STEP 2
   // Extend COOKIE with background information
+
+  // GAME
+  Game.init($scope, game);
 
   // ZONE
   $http.get('data/zone.json').success(function(data) {
@@ -27,7 +36,7 @@ function HomeCtrl($scope, $http) {
   $http.get('data/enemies.json').success(function(data) {
     var enemy, _data = [];
     for (var i in data[zone_level]) {
-      enemy = new Enemy($scope, data[zone_level][i]);
+      enemy = new Enemy(Game, data[zone_level][i]);
       if (enemies[i]) {
         enemy.extends(enemies[i]);
       } else {
@@ -36,13 +45,14 @@ function HomeCtrl($scope, $http) {
       _data.push(enemy);
     }
     $scope.enemies = enemies = _data;
+    Game.refreshEnemy();
   });
 
   // CHARACTERS
   $http.get('data/characters.json').success(function(data) {
     var character, _data = [];
     for (var i in data[zone_level]) {
-      character = new Character($scope, data[zone_level][i]);
+      character = new Character(Game, data[zone_level][i]);
       if (characters[i]) {
         character.extends(characters[i]);
       } else {
@@ -51,6 +61,7 @@ function HomeCtrl($scope, $http) {
       _data.push(character);
     }
     $scope.characters = characters = _data;
+    Game.refreshCharacters();
   });
 
   $scope.battles = battles;
@@ -82,6 +93,7 @@ function HomeCtrl($scope, $http) {
       $scope.experience -= character.level_cost;
       character.level += 1;
       character.level_cost *= 2;
+      Game.refreshCharacters();
     }
   };
 
@@ -94,6 +106,7 @@ function HomeCtrl($scope, $http) {
       $scope.gils -= character.level_cost;
       character.weapon_level += 1;
       character.weapon_cost *= 2;
+      Game.refreshCharacters();
     }
   };
 
@@ -101,9 +114,10 @@ function HomeCtrl($scope, $http) {
    * Use ??? to search enemy
    * @param  {object} id Enemy in the zone
    */
-  $scope.search = function(enemy) {
-    if (enemy.can_be_searched()) {
+  $scope.fight_enemy = function(enemy) {
+    if (enemy.can_be_fought()) {
       enemy.number += 1;
+      Game.refreshEnemy();
     }
   };
 
@@ -114,6 +128,7 @@ function HomeCtrl($scope, $http) {
   $scope.escape = function(enemy) {
     if (enemy.can_be_escaped()) {
       enemy.number -= 1;
+      Game.refreshEnemy();
     }
   };
 

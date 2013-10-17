@@ -3,7 +3,8 @@
     "1": {
       "name": "1st Ray",
       "image": "1st-ray.png",
-      "hp": "18"
+      "hp": 18,
+      "hits": 12
     }
   }
 }

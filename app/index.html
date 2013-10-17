@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
     
+    <script src="models/game.js"></script>
     <script src="models/enemy.js"></script>
     <script src="models/character.js"></script>
  
@@ -69,12 +70,12 @@
           <div class="title">Enemy</div>
           <div ng-repeat="enemy in enemies" class="enemy" ng-class="{disabled: enemy.number == 0}">
             <div class="actions">
-              <div class="button level_up" ng-click="search(enemy)" ng-class="{disabled: !enemy.can_be_searched()}">SEARCH</div>
-              <div class="button weapon_up" ng-click="escape(enemy)" ng-class="{disabled: !enemy.can_be_escaped()}">RUN</div>
+              <div class="button fight_enemy" ng-click="fight_enemy(enemy)" ng-class="{disabled: !enemy.can_be_fought()}">FIGHT</div>
+              <div class="button escape" ng-click="escape(enemy)" ng-class="{disabled: !enemy.can_be_escaped()}">ESCAPE</div>
             </div>
             <div><img ng-src="img/enemies/{{enemy.image}}" alt="avatar" class="avatar" height="48" /></div>
-            {{enemy.name}} <span ng-show="enemy.number > 0">x{{enemy.number}}</span>
-            <div>{{enemy.hp}} HP</div>
+            {{enemy.name}} <strong ng-show="enemy.number > 0">x{{enemy.number}}</strong>
+            <div>{{enemy.hp}} HP | {{enemy.hits}} hits</div>
             <div>{{enemy.experience()}} xp per second</div>
             <div>{{enemy.gils()}} gils per second</div>
           </div>
@@ -92,8 +93,8 @@
               <div class="button weapon_up" ng-click="weapon_up(character)" ng-class="{disabled: !character.can_weapon_up()}">WEAPON UP</div>
             </div>
             <div><img ng-src="img/characters/{{character.image}}" alt="avatar" class="avatar" /></div>
-            <div>{{character.name}} <span ng-show="character.level > 0">(LVL{{character.level}})</span></div>
-            <div>Weapon: {{character.weapon_level}}</div>
+            <div>{{character.name}} <strong ng-show="character.level > 0">(LVL{{character.level}})</strong></div>
+            <div>{{character.hp()}} HP | Weapon: {{character.weapon_level}}</div>
             <div>{{character.hits()}} hits per second</div>
           </div>
         </sections>

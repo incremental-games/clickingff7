@@ -1,12 +1,12 @@
 /**
  * Character class
- * @param {object} $scope
+ * @param {object} Game
  * @param {object} infos
  */
 
-function Character($scope, infos) {
+function Character(Game, infos) {
 
-  this.$scope = $scope;
+  this.Game = Game;
 
   // general INFOS
   this.level_cost = 10;
@@ -47,6 +47,16 @@ Character.prototype.extends = function(infos) {
  * based on level and weapon level
  * @return {int}
  */
+Character.prototype.hp = function() {
+  var level = (this.level == 0) ? 1 : this.level;
+  return 30 + level * 20;
+};
+
+/**
+ * returns character total hits
+ * based on level and weapon level
+ * @return {int}
+ */
 Character.prototype.hits = function() {
   return this.level * this.weapon_level;
 };
@@ -56,7 +66,7 @@ Character.prototype.hits = function() {
  * @return {boolean}
  */
 Character.prototype.can_level_up = function() {
-  return this.$scope.experience >= this.level_cost;
+  return this.Game.$scope.experience >= this.level_cost;
 };
 
 /**
@@ -64,5 +74,5 @@ Character.prototype.can_level_up = function() {
  * @return {boolean}
  */
 Character.prototype.can_weapon_up = function() {
-  return this.level > 0 && this.$scope.gils >= this.weapon_cost;
+  return this.level > 0 && this.Game.$scope.gils >= this.weapon_cost;
 };

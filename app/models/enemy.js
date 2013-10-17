@@ -1,12 +1,12 @@
 /**
  * Enemy class
- * @param {object} $scope
+ * @param {object} Game
  * @param {object} infos
  */
 
-function Enemy($scope, infos) {
+function Enemy(Game, infos) {
 
-  this.$scope = $scope;
+  this.Game = Game;
 
   // general INFOS
   this.number_cost = 10;
@@ -57,11 +57,11 @@ Enemy.prototype.gils = function() {
 };
 
 /**
- * Returns true if enemy can be searched
+ * Returns true if enemy can be fought
  * @return {boolean}
  */
-Enemy.prototype.can_be_searched = function() {
-  return true;
+Enemy.prototype.can_be_fought = function() {
+  return (this.Game.enemy.hits + this.hits < this.Game.characters.hp);
 };
 
 /**
@@ -69,5 +69,5 @@ Enemy.prototype.can_be_searched = function() {
  * @return {boolean}
  */
 Enemy.prototype.can_be_escaped = function() {
-  return this.number > 0;
+  return (this.number > 0);
 };
