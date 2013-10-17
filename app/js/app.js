@@ -13,7 +13,7 @@ function HomeCtrl($scope, $http) {
 
   var zone_level = 1;
 
-  var zone = ennemies = characters = {};
+  var zone = enemies = characters = {};
 
   // STEP 2
   // Extend COOKIE with background information
@@ -24,18 +24,18 @@ function HomeCtrl($scope, $http) {
   });
 
   // ENNEMIES
-  $http.get('data/ennemies.json').success(function(data) {
-    var ennemy, _data = [];
+  $http.get('data/enemies.json').success(function(data) {
+    var enemy, _data = [];
     for (var i in data[zone_level]) {
-      ennemy = new Ennemy($scope, data[zone_level][i]);
-      if (ennemies[i]) {
-        ennemy.extends(ennemies[i]);
+      enemy = new Enemy($scope, data[zone_level][i]);
+      if (enemies[i]) {
+        enemy.extends(enemies[i]);
       } else {
-        ennemy.init();
+        enemy.init();
       }
-      _data.push(ennemy);
+      _data.push(enemy);
     }
-    $scope.ennemies = ennemies = _data;
+    $scope.enemies = enemies = _data;
   });
 
   // CHARACTERS
@@ -58,14 +58,14 @@ function HomeCtrl($scope, $http) {
   $scope.gils = gils;
 
   /**
-   * Explore to find ennemies
+   * Explore to find enemies
    */
   $scope.explore = function() {
     $scope.battles += 1;
   };
 
   /**
-   * Fight ennemies to get experience
+   * Fight enemies to get experience
    */
   $scope.fight = function() {
     if ($scope.battles == 0) return;
@@ -98,22 +98,22 @@ function HomeCtrl($scope, $http) {
   };
 
   /**
-   * Use ??? to search ennemy
-   * @param  {object} id Ennemy in the zone
+   * Use ??? to search enemy
+   * @param  {object} id Enemy in the zone
    */
-  $scope.search = function(ennemy) {
-    if (ennemy.can_be_searched()) {
-      ennemy.number += 1;
+  $scope.search = function(enemy) {
+    if (enemy.can_be_searched()) {
+      enemy.number += 1;
     }
   };
 
   /**
    * Loose exp & gils to escape
-   * @param  {object} id Ennemy in the zone
+   * @param  {object} id Enemy in the zone
    */
-  $scope.escape = function(ennemy) {
-    if (ennemy.can_be_escaped()) {
-      ennemy.number -= 1;
+  $scope.escape = function(enemy) {
+    if (enemy.can_be_escaped()) {
+      enemy.number -= 1;
     }
   };
 

@@ -11,7 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
     
-    <script src="models/ennemy.js"></script>
+    <script src="models/enemy.js"></script>
     <script src="models/character.js"></script>
  
     <script src="js/angular.min.js"></script>
@@ -31,7 +31,7 @@
       <div class="part">
 
         <section class="explore">
-          <div>Ennemies (Difficulty is poor)</div>
+          <div>Enemies (Difficulty is poor)</div>
           <div><strong>{{battles}}</strong></div>
           <div>0 per second (net)</div>
 
@@ -65,18 +65,18 @@
 
       <div class="part">
 
-        <sections class="ennemies">
-          <div class="title">Ennemies</div>
-          <div ng-repeat="ennemy in ennemies" class="ennemy" ng-class="{disabled: ennemy.number == 0}">
+        <sections class="enemies">
+          <div class="title">Enemy</div>
+          <div ng-repeat="enemy in enemies" class="enemy" ng-class="{disabled: enemy.number == 0}">
             <div class="actions">
-              <div class="button level_up" ng-click="search(ennemy)" ng-class="{disabled: !ennemy.can_be_searched()}">SEARCH</div>
-              <div class="button weapon_up" ng-click="escape(ennemy)" ng-class="{disabled: !ennemy.can_be_escaped()}">RUN</div>
+              <div class="button level_up" ng-click="search(enemy)" ng-class="{disabled: !enemy.can_be_searched()}">SEARCH</div>
+              <div class="button weapon_up" ng-click="escape(enemy)" ng-class="{disabled: !enemy.can_be_escaped()}">RUN</div>
             </div>
-            <div><img ng-src="img/ennemies/{{ennemy.image}}" alt="avatar" class="avatar" height="48" /></div>
-            {{ennemy.name}} <span ng-show="ennemy.number > 0">x{{ennemy.number}}</span>
-            <div>{{ennemy.hp}} HP</div>
-            <div>{{ennemy.experience()}} xp per second</div>
-            <div>{{ennemy.gils()}} gils per second</div>
+            <div><img ng-src="img/enemies/{{enemy.image}}" alt="avatar" class="avatar" height="48" /></div>
+            {{enemy.name}} <span ng-show="enemy.number > 0">x{{enemy.number}}</span>
+            <div>{{enemy.hp}} HP</div>
+            <div>{{enemy.experience()}} xp per second</div>
+            <div>{{enemy.gils()}} gils per second</div>
           </div>
         </sections>
 

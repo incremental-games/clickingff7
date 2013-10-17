@@ -1,10 +1,10 @@
 /**
- * Ennemy class
+ * Enemy class
  * @param {object} $scope
  * @param {object} infos
  */
 
-function Ennemy($scope, infos) {
+function Enemy($scope, infos) {
 
   this.$scope = $scope;
 
@@ -21,7 +21,7 @@ function Ennemy($scope, infos) {
 /**
  * Init the character if does not exist in COOKIE
  */
-Ennemy.prototype.init = function() {
+Enemy.prototype.init = function() {
   if (!this.number) {
     this.number = 0;
   }
@@ -31,7 +31,7 @@ Ennemy.prototype.init = function() {
  * Extends the properties with new ones
  * @param  {object} infos
  */
-Ennemy.prototype.extends = function(infos) {
+Enemy.prototype.extends = function(infos) {
   self = this;
   for (var i in infos) {
     self[i] = infos[i];
@@ -39,28 +39,28 @@ Ennemy.prototype.extends = function(infos) {
 };
 
 /**
- * returns ennemy total experience
+ * returns enemy total experience
  * based on ???
  * @return {int}
  */
-Ennemy.prototype.experience = function() {
+Enemy.prototype.experience = function() {
   return this.number;
 };
 
 /**
- * returns ennemy total gils
+ * returns enemy total gils
  * based on ???
  * @return {int}
  */
-Ennemy.prototype.gils = function() {
+Enemy.prototype.gils = function() {
   return this.number;
 };
 
 /**
- * Returns true if ennemy can be searched
+ * Returns true if enemy can be searched
  * @return {boolean}
  */
-Ennemy.prototype.can_be_searched = function() {
+Enemy.prototype.can_be_searched = function() {
   return true;
 };
 
@@ -68,6 +68,6 @@ Ennemy.prototype.can_be_searched = function() {
  * Returns true if character can upgrade his weapon
  * @return {boolean}
  */
-Ennemy.prototype.can_be_escaped = function() {
+Enemy.prototype.can_be_escaped = function() {
   return this.number > 0;
 };

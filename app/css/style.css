@@ -58,15 +58,15 @@ footer {
   text-transform: uppercase;
 }
 
-.character, .ennemy, .upgrade {
+.character, .enemy, .upgrade {
   border: 1px solid #ccc;
   margin: 3px;
 }
 
-.character.disabled, .ennemy.disabled {
+.character.disabled, .enemy.disabled {
   background-color: #eee;
 }
-.character.disabled .avatar, .ennemy.disabled .avatar {
+.character.disabled .avatar, .enemy.disabled .avatar {
   opacity: 0.1;
 }
 
