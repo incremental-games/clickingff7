@@ -70,7 +70,7 @@ Enemy.prototype.get_gils = function() {
  * @return {boolean}
  */
 Enemy.prototype.can_be_fought = function() {
-  return this.Game.$scope.battles >= this.get_cost();
+  return this.Game.$scope.total_enemy_pwr >= this.get_cost();
 };
 
 /**
