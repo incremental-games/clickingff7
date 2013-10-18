@@ -43,7 +43,7 @@ Enemy.prototype.extends = function(infos) {
  * based on ???
  * @return {int}
  */
-Enemy.prototype.experience = function() {
+Enemy.prototype.xp = function() {
   return this.number;
 };
 

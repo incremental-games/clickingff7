@@ -6,7 +6,7 @@ app.factory('Game', function() {
   return new Game();
 });
 
-function HomeCtrl($scope, $http, Game) {
+function HomeCtrl($scope, $http, $timeout, Game) {
 
   // STEP 1
   // Load game from COOKIE
@@ -67,6 +67,8 @@ function HomeCtrl($scope, $http, Game) {
   $scope.battles = battles;
   $scope.experience = experience;
   $scope.gils = gils;
+
+  Game.run($timeout);
 
   /**
    * Explore to find enemies
