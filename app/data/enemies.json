@@ -3,8 +3,9 @@
     "1": {
       "name": "1st Ray",
       "image": "1st-ray.png",
-      "hp": 18,
-      "hits": 12
+      "cost": 10,
+      "xp": 1,
+      "gils": 1
     }
   }
 }

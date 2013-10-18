@@ -43,7 +43,7 @@
         
         <section class="fight">
           <div>Experience (Multiplicator x1)</div>
-          <div><strong>{{experience}} xp</strong></div>
+          <div><strong>{{xp}} xp</strong></div>
           <div>0 xp per second</div>
 
           <br />
@@ -75,9 +75,9 @@
             </div>
             <div><img ng-src="img/enemies/{{enemy.image}}" alt="avatar" class="avatar" height="48" /></div>
             {{enemy.name}} <strong ng-show="enemy.number > 0">x{{enemy.number}}</strong>
-            <div>{{enemy.hp}} HP | {{enemy.hits}} hits</div>
-            <div>{{enemy.xp()}} xp per second</div>
-            <div>{{enemy.gils()}} gils per second</div>
+            <div>Cost: {{enemy.get_cost()}}</div>
+            <div>{{enemy.xp}} xp per second</div>
+            <div>{{enemy.gils}} gils per second</div>
           </div>
         </sections>
 

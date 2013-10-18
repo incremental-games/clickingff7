@@ -39,12 +39,21 @@ Enemy.prototype.extends = function(infos) {
 };
 
 /**
+ * returns enemy cost
+ * based on ???
+ * @return {int}
+ */
+Enemy.prototype.get_cost = function() {
+  return (this.number + 1) * this.cost;
+};
+
+/**
  * returns enemy total experience
  * based on ???
  * @return {int}
  */
-Enemy.prototype.xp = function() {
-  return this.number;
+Enemy.prototype.get_xp = function() {
+  return this.number * this.xp;
 };
 
 /**
@@ -52,8 +61,8 @@ Enemy.prototype.xp = function() {
  * based on ???
  * @return {int}
  */
-Enemy.prototype.gils = function() {
-  return this.number;
+Enemy.prototype.get_gils = function() {
+  return this.number * this.gils;
 };
 
 /**
@@ -61,7 +70,7 @@ Enemy.prototype.gils = function() {
  * @return {boolean}
  */
 Enemy.prototype.can_be_fought = function() {
-  return (this.Game.enemy.hits + this.hits < this.Game.characters.hp);
+  return this.Game.$scope.battles >= this.get_cost();
 };
 
 /**

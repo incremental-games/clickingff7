@@ -47,7 +47,7 @@ Character.prototype.extends = function(infos) {
  * based on level and weapon level
  * @return {int}
  */
-Character.prototype.hp = function() {
+Character.prototype.get_hp = function() {
   var level = (this.level == 0) ? 1 : this.level;
   return 30 + level * 20;
 };
@@ -57,7 +57,7 @@ Character.prototype.hp = function() {
  * based on level and weapon level
  * @return {int}
  */
-Character.prototype.hits = function() {
+Character.prototype.get_hits = function() {
   return this.level * this.weapon_level;
 };
 
@@ -66,7 +66,7 @@ Character.prototype.hits = function() {
  * @return {boolean}
  */
 Character.prototype.can_level_up = function() {
-  return this.Game.$scope.experience >= this.level_cost;
+  return this.Game.$scope.xp >= this.level_cost;
 };
 
 /**

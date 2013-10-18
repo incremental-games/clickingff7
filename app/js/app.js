@@ -14,7 +14,7 @@ function HomeCtrl($scope, $http, $timeout, Game) {
   var game = {};
 
   var battles = 0,
-    experience = 0,
+    xp = 0,
     gils = 0;
 
   var zone_level = 1;
@@ -65,7 +65,7 @@ function HomeCtrl($scope, $http, $timeout, Game) {
   });
 
   $scope.battles = battles;
-  $scope.experience = experience;
+  $scope.xp = xp;
   $scope.gils = gils;
 
   Game.run($timeout);
@@ -83,7 +83,8 @@ function HomeCtrl($scope, $http, $timeout, Game) {
   $scope.fight = function() {
     if ($scope.battles == 0) return;
     $scope.battles -= 1;
-    $scope.experience += 1;
+    $scope.xp += Game.enemy.xp;
+    $scope.gils += Game.enemy.gils;
   };
 
   /**
@@ -92,7 +93,7 @@ function HomeCtrl($scope, $http, $timeout, Game) {
    */
   $scope.level_up = function(character) {
     if (character.can_level_up()) {
-      $scope.experience -= character.level_cost;
+      $scope.xp -= character.level_cost;
       character.level += 1;
       character.level_cost *= 2;
       Game.refreshCharacters();
@@ -118,6 +119,7 @@ function HomeCtrl($scope, $http, $timeout, Game) {
    */
   $scope.fight_enemy = function(enemy) {
     if (enemy.can_be_fought()) {
+      $scope.battles -= enemy.get_cost();
       enemy.number += 1;
       Game.refreshEnemy();
     }
