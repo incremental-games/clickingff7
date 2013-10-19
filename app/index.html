@@ -103,7 +103,7 @@
             </div>
             <div><img ng-src="img/characters/{{character.data.image}}" alt="avatar" class="avatar" /></div>
             <div>{{character.data.name}} <strong ng-show="character.data.level > 0">(LVL{{character.data.level}})</strong></div>
-            <div>Weapon: {{character.data.weapon_level}}</div>
+            <div>Weapon: {{character.get_weapon().name}}</div>
             <div>{{character.get_hits()|round:2}} hits per second</div>
           </div>
         </sections>

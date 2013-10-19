@@ -49,7 +49,7 @@ Character.prototype.extends = function(infos) {
  * @return {int}
  */
 Character.prototype.get_hits = function() {
-  return this.data.level * this.data.weapon_level * 0.1;
+  return this.data.level * this.get_weapon().hits * 0.1;
 };
 
 /**
@@ -65,12 +65,28 @@ Character.prototype.can_level_up = function() {
  * @return {boolean}
  */
 Character.prototype.can_weapon_up = function() {
-  return this.data.level > 0 && this.Game.$scope.total_gils >= this.data.weapon_cost;
+  return this.data.level > 0 && this.data.weapon_level < this.get_nbr_weapon() && this.Game.$scope.total_gils >= this.data.weapon_cost;
+};
+
+/**
+ * Returns current weapon object
+ * @return {string}
+ */
+Character.prototype.get_weapon = function() {
+  return this.data.weapons[this.data.weapon_level];
+};
+
+/**
+ * Returns avalaible weapons number
+ * @return {int}
+ */
+Character.prototype.get_nbr_weapon = function() {
+  return Object.keys(this.data.weapons).length
 };
 
 /**
  * Save character data
  */
 Character.prototype.save = function() {
-  return _.omit(this.data, 'image', 'name', 'lines');
+  return _.omit(this.data, 'image', 'name', 'weapons', 'lines');
 };
