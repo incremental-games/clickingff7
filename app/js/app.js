@@ -92,6 +92,8 @@ function HomeCtrl($scope, $http, $timeout, Game, $cookieStore) {
   $scope.rate_xp = Game.general.rate_xp;
   $scope.rate_gils = Game.general.rate_gils;
 
+  $scope.boss_defeated = false;
+
   Game.run($timeout);
 
   /**
@@ -144,6 +146,9 @@ function HomeCtrl($scope, $http, $timeout, Game, $cookieStore) {
     if (enemy.can_be_fought()) {
       $scope.total_enemy_pwr -= enemy.get_cost();
       enemy.data.number += 1;
+      if (enemy.data.boss) {
+        $scope.boss_defeated = true;
+      }
       Game.refresh();
     }
   };
@@ -156,6 +161,19 @@ function HomeCtrl($scope, $http, $timeout, Game, $cookieStore) {
     if (enemy.can_be_escaped()) {
       enemy.data.number -= 1;
       Game.refresh();
+    }
+  };
+
+  /**
+   * Go next zone
+   */
+  $scope.next_zone = function() {
+    if ($scope.boss_defeated) {
+      if (Game.zone.level == 1) {
+        alert("Congrates! You've cleaned the game!\nThere should be more to come.. Stay tuned!");
+        return;
+      }
+      Game.next_level();
     }
   };
 
