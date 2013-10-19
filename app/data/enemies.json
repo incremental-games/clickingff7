@@ -43,5 +43,14 @@
       "gils": 1,
       "boss": true
     }
+  },
+  "2": {
+    "1": {
+      "name": "Smogger",
+      "image": "smogger.png",
+      "cost": 90,
+      "xp": 0.32,
+      "gils": 0.6
+    }
   }
 }

@@ -8,7 +8,7 @@ function Character(Game, infos) {
 
   this.Game = Game;
 
-  // general INFOS
+  // scopes INFOS
   if (!this.data) this.data = {};
   this.data.level_cost = 10;
   this.data.weapon_cost = 10;
@@ -33,13 +33,13 @@ Character.prototype.init = function() {
 };
 
 /**
- * Extends the properties with new ones
+ * Extends the data properties with saved data
  * @param  {object} infos
  */
-Character.prototype.extends = function(infos) {
+Character.prototype.extends = function(data) {
   self = this;
-  for (var i in infos) {
-    self.data[i] = infos[i];
+  for (var i in data) {
+    self.data[i] = data[i];
   }
 };
 

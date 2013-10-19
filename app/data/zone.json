@@ -2,5 +2,9 @@
   "1": {
     "level": 1,
     "name": "Sector 1 Reactor"
+  },
+  "2": {
+    "level": 2,
+    "name": "Sector 5 Reactor"
   }
 }

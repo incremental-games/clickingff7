@@ -8,7 +8,7 @@ function Enemy(Game, infos) {
 
   this.Game = Game;
 
-  // general INFOS
+  // scopes INFOS
   if (!this.data) this.data = {};
   this.data.number_cost = 10;
 
@@ -32,10 +32,10 @@ Enemy.prototype.init = function() {
  * Extends the properties with new ones
  * @param  {object} infos
  */
-Enemy.prototype.extends = function(infos) {
+Enemy.prototype.extends = function(data) {
   self = this;
-  for (var i in infos) {
-    self.data[i] = infos[i];
+  for (var i in data) {
+    self.data[i] = data[i];
   }
 };
 

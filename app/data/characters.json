@@ -15,14 +15,16 @@
         }
       },
       "lines": {
-        "1": "It's not my problem."
+        "1": "It's not my problem.",
+        "2": ""
       }
     },
     "2": {
       "name": "Barret Wallace",
       "image": "barret.png",
       "lines": {
-        "1": "The planet's dyin', Cloud!"
+        "1": "The planet's dyin', Cloud!",
+        "2": ""
       },
       "weapons": {
         "1": {
@@ -32,6 +34,63 @@
         "2": {
           "name": "Assault Gun",
           "hits": 17
+        }
+      }
+    }
+  },
+  "2": {
+    "1": {
+      "name": "Cloud Strife",
+      "image": "cloud.png",
+      "level": 1,
+      "weapons": {
+        "1": {
+          "name": "Buster Sword",
+          "hits": 18
+        },
+        "2": {
+          "name": "Mythril Saber",
+          "hits": 23
+        }
+      },
+      "lines": {
+        "1": "It's not my problem.",
+        "2": ""
+      }
+    },
+    "2": {
+      "name": "Barret Wallace",
+      "image": "barret.png",
+      "lines": {
+        "1": "The planet's dyin', Cloud!",
+        "2": ""
+      },
+      "weapons": {
+        "1": {
+          "name": "Gatling Gun",
+          "hits": 14
+        },
+        "2": {
+          "name": "Assault Gun",
+          "hits": 17
+        }
+      }
+    },
+    "3": {
+      "name": "Tifa Lockhart",
+      "image": "tifa.png",
+      "lines": {
+        "1": "",
+        "2": ""
+      },
+      "weapons": {
+        "1": {
+          "name": "Leather Glove",
+          "hits": 13
+        },
+        "2": {
+          "name": "Metal Knuckle",
+          "hits": 18
         }
       }
     }

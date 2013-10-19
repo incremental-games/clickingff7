@@ -1,17 +1,30 @@
 'use strict';
 
+/**
+ * App module
+ * @type {object}
+ */
 var app = angular.module('clickingff7', ['ngCookies']);
 
+/**
+ * Game Service
+ */
 app.factory('Game', function() {
   return new Game();
 });
 
+/**
+ * Used to get floor number
+ */
 app.filter('floor', function() {
   return function(input) {
     return Math.floor(input);
   }
 });
 
+/**
+ * Used to round a number
+ */
 app.filter('round', function() {
   return function(input, decimals) {
     var d = Math.pow(10, decimals);
@@ -19,6 +32,9 @@ app.filter('round', function() {
   }
 });
 
+/**
+ * Used to clean an associative array
+ */
 app.filter('clean', function() {
   return function(items) {
     var result = {};
@@ -31,70 +47,32 @@ app.filter('clean', function() {
   };
 });
 
-function HomeCtrl($scope, $http, $timeout, Game, $cookieStore) {
+/**
+ * MAIN CLASS
+ * @param {[type]} $scope       [description]
+ * @param {[type]} $http        [description]
+ * @param {[type]} $timeout     [description]
+ * @param {[type]} Game         [description]
+ * @param {[type]} $cookieStore [description]
+ */
+
+function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
 
   // STEP 1
-  // Load game from COOKIE
+  // Load saved game from COOKIE
 
-  var game = $cookieStore.get('game');
+  var save = $cookieStore.get('game');
 
   // STEP 2
   // Extend COOKIE with background information
 
   // GAME
-  Game.init($scope, $cookieStore, game);
+  Game.init($scope, $cookieStore, $http, $timeout);
 
-  var zone_level = Game.zone.level;
+  Game.load();
 
-  // ZONE
-  $http.get('data/zone.json').success(function(data) {
-    $scope.zone = Game.zone = data[zone_level];
-  });
-
-  // ENNEMIES
-  $http.get('data/enemies.json').success(function(data) {
-    var enemy, _data = [];
-    for (var i in data[zone_level]) {
-      enemy = new Enemy(Game, data[zone_level][i]);
-      if (i in Game.enemy) {
-        enemy.extends(Game.enemy[i]);
-      } else {
-        enemy.init();
-      }
-      _data[i] = enemy;
-    }
-    $scope.enemy = Game.enemy = _data;
-    Game.refresh();
-  });
-
-  // CHARACTERS
-  $http.get('data/characters.json').success(function(data) {
-    var character, _data = [];
-    for (var i in data[zone_level]) {
-      character = new Character(Game, data[zone_level][i]);
-      if (i in Game.characters) {
-        character.extends(Game.characters[i]);
-      } else {
-        character.init();
-      }
-      _data[i] = character;
-    }
-    $scope.characters = Game.characters = _data;
-
-    Game.refresh();
-  });
-
-  $scope.total_enemy_pwr = Game.general.total_enemy_pwr;
-  $scope.total_xp = Game.general.total_xp;
-  $scope.total_gils = Game.general.total_gils;
-
-  $scope.rate_enemy_pwr = Game.general.rate_enemy_pwr;
-  $scope.rate_xp = Game.general.rate_xp;
-  $scope.rate_gils = Game.general.rate_gils;
-
-  $scope.boss_defeated = false;
-
-  Game.run($timeout);
+  // STEP 3
+  // Scope actions
 
   /**
    * Explore to find enemies
@@ -147,7 +125,7 @@ function HomeCtrl($scope, $http, $timeout, Game, $cookieStore) {
       $scope.total_enemy_pwr -= enemy.get_cost();
       enemy.data.number += 1;
       if (enemy.data.boss) {
-        $scope.boss_defeated = true;
+        $scope.boss_defeated = Game.scopes.boss_defeated = true;
       }
       Game.refresh();
     }
@@ -169,11 +147,11 @@ function HomeCtrl($scope, $http, $timeout, Game, $cookieStore) {
    */
   $scope.next_zone = function() {
     if ($scope.boss_defeated) {
-      if (Game.zone.level == 1) {
+      if (Game.zone.level == 2) {
         alert("Congrates! You've cleaned the game!\nThere should be more to come.. Stay tuned!");
         return;
       }
-      Game.next_level();
+      Game.next_zone();
     }
   };
 
