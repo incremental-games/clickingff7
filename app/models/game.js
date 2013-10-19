@@ -52,12 +52,19 @@ Game.prototype.extends = function(infos) {
   }
 };
 
+/**
+ * Main mechanics of the game
+ * @param  {[type]} $timeout [description]
+ * @return {[type]}          [description]
+ */
 Game.prototype.run = function($timeout) {
   var self = this;
   this.timer = $timeout(function() {
-    self.$scope.total_enemy_pwr += self.general.rate_enemy_pwr;
-    self.$scope.total_xp += self.general.rate_xp;
-    self.$scope.total_gils += self.general.rate_gils;
+    self.$scope.total_enemy_pwr = Math.max(self.$scope.total_enemy_pwr + self.general.rate_enemy_pwr, 0);
+    if (self.$scope.total_enemy_pwr > 0) {
+      self.$scope.total_xp += self.general.rate_xp;
+      self.$scope.total_gils += self.general.rate_gils;
+    }
     self.run($timeout);
   }, 1000);
 };
@@ -110,6 +117,10 @@ Game.prototype.save = function() {
     "enemy": enemy,
     "characters": characters
   };
+
+  game.general.total_enemy_pwr = this.$scope.total_enemy_pwr;
+  game.general.total_xp = this.$scope.total_xp;
+  game.general.total_gils = this.$scope.total_gils;
 
   this.$cookieStore.put('game', game);
 };
