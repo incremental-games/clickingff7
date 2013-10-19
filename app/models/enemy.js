@@ -9,7 +9,8 @@ function Enemy(Game, infos) {
   this.Game = Game;
 
   // general INFOS
-  this.number_cost = 10;
+  if (!this.data) this.data = {};
+  this.data.number_cost = 10;
 
   // INFOS from COOKIE
   if (infos) {
@@ -22,8 +23,8 @@ function Enemy(Game, infos) {
  * Init the character if does not exist in COOKIE
  */
 Enemy.prototype.init = function() {
-  if (!this.number) {
-    this.number = 0;
+  if (!this.data.number) {
+    this.data.number = 0;
   }
 };
 
@@ -34,7 +35,7 @@ Enemy.prototype.init = function() {
 Enemy.prototype.extends = function(infos) {
   self = this;
   for (var i in infos) {
-    self[i] = infos[i];
+    self.data[i] = infos[i];
   }
 };
 
@@ -44,7 +45,7 @@ Enemy.prototype.extends = function(infos) {
  * @return {int}
  */
 Enemy.prototype.get_cost = function() {
-  return (this.number + 1) * this.cost;
+  return (this.data.number + 1) * this.data.cost;
 };
 
 /**
@@ -53,7 +54,7 @@ Enemy.prototype.get_cost = function() {
  * @return {int}
  */
 Enemy.prototype.get_xp = function() {
-  return this.number * this.xp;
+  return this.data.number * this.data.xp;
 };
 
 /**
@@ -62,7 +63,7 @@ Enemy.prototype.get_xp = function() {
  * @return {int}
  */
 Enemy.prototype.get_gils = function() {
-  return this.number * this.gils;
+  return this.data.number * this.data.gils;
 };
 
 /**
@@ -78,5 +79,12 @@ Enemy.prototype.can_be_fought = function() {
  * @return {boolean}
  */
 Enemy.prototype.can_be_escaped = function() {
-  return (this.number > 0);
+  return (this.data.number > 0);
+};
+
+/**
+ * Save enemy data
+ */
+Enemy.prototype.save = function() {
+  return _.omit(this.data, 'image', 'name');
 };

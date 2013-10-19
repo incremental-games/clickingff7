@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('clickingff7', []);
+var app = angular.module('clickingff7', ['ngCookies']);
 
 app.factory('Game', function() {
   return new Game();
@@ -19,30 +19,30 @@ app.filter('round', function() {
   }
 });
 
-function HomeCtrl($scope, $http, $timeout, Game) {
+app.filter('clean', function() {
+  return function(items) {
+    var result = {};
+    angular.forEach(items, function(value, key) {
+      if (!value.hasOwnProperty('id')) {
+        result[key] = value;
+      }
+    });
+    return result;
+  };
+});
+
+function HomeCtrl($scope, $http, $timeout, Game, $cookieStore) {
 
   // STEP 1
   // Load game from COOKIE
 
-  var game = {
-    "general": {
-      "total_enemy_pwr": 0,
-      "total_xp": 0,
-      "total_gils": 10,
-      "rate_enemy_pwr": 0,
-      "rate_xp": 0,
-      "rate_gils": 0
-    },
-    "zone": {},
-    "enemy": {},
-    "characters": {}
-  };
+  var game = $cookieStore.get('game');
 
   // STEP 2
   // Extend COOKIE with background information
 
   // GAME
-  Game.init($scope, game);
+  Game.init($scope, $cookieStore, game);
 
   var zone_level = Game.zone.level;
 
@@ -61,7 +61,7 @@ function HomeCtrl($scope, $http, $timeout, Game) {
       } else {
         enemy.init();
       }
-      _data.push(enemy);
+      _data[i] = enemy;
     }
     $scope.enemy = Game.enemy = _data;
     Game.refresh();
@@ -77,9 +77,10 @@ function HomeCtrl($scope, $http, $timeout, Game) {
       } else {
         character.init();
       }
-      _data.push(character);
+      _data[i] = character;
     }
     $scope.characters = Game.characters = _data;
+
     Game.refresh();
   });
 
@@ -115,9 +116,9 @@ function HomeCtrl($scope, $http, $timeout, Game) {
    */
   $scope.level_up = function(character) {
     if (character.can_level_up()) {
-      $scope.total_xp -= character.level_cost;
-      character.level += 1;
-      character.level_cost *= 2;
+      $scope.total_xp -= character.data.level_cost;
+      character.data.level += 1;
+      character.data.level_cost *= 2;
       Game.refresh();
     }
   };
@@ -128,9 +129,9 @@ function HomeCtrl($scope, $http, $timeout, Game) {
    */
   $scope.weapon_up = function(character) {
     if (character.can_weapon_up()) {
-      $scope.total_gils -= character.level_cost;
-      character.weapon_level += 1;
-      character.weapon_cost *= 2;
+      $scope.total_gils -= character.data.level_cost;
+      character.data.weapon_level += 1;
+      character.data.weapon_cost *= 2;
       Game.refresh();
     }
   };
@@ -142,7 +143,7 @@ function HomeCtrl($scope, $http, $timeout, Game) {
   $scope.fight_enemy = function(enemy) {
     if (enemy.can_be_fought()) {
       $scope.total_enemy_pwr -= enemy.get_cost();
-      enemy.number += 1;
+      enemy.data.number += 1;
       Game.refresh();
     }
   };
@@ -153,9 +154,23 @@ function HomeCtrl($scope, $http, $timeout, Game) {
    */
   $scope.escape = function(enemy) {
     if (enemy.can_be_escaped()) {
-      enemy.number -= 1;
+      enemy.data.number -= 1;
       Game.refresh();
     }
+  };
+
+  /**
+   * Save the game
+   */
+  $scope.save = function() {
+    Game.save();
+  };
+
+  /**
+   * Reset the game
+   */
+  $scope.reset = function() {
+    Game.reset();
   };
 
 };

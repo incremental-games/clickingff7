@@ -2,15 +2,16 @@
  * Game class
  */
 
-function Game($scope) {};
+function Game() {};
 
 /**
  * Init the game
  * @param {object} $scope
  * @param {object} infos
  */
-Game.prototype.init = function($scope, infos) {
+Game.prototype.init = function($scope, $cookieStore, infos) {
   this.$scope = $scope;
+  this.$cookieStore = $cookieStore;
 
   // general INFOS
   this.extends({
@@ -87,4 +88,35 @@ Game.prototype.refresh = function() {
     characters.rate_enemy_pwr += l_characters[i].get_hits();
   }
   this.general.rate_enemy_pwr = this.$scope.rate_enemy_pwr = characters.rate_enemy_pwr - enemy.rate_enemy_pwr;
+};
+
+/**
+ * Save the game into COOKIE
+ */
+Game.prototype.save = function() {
+  var enemy = {};
+  for (var i in this.enemy) {
+    enemy[i] = this.enemy[i].save();
+  }
+
+  var characters = {};
+  for (var i in this.characters) {
+    characters[i] = this.characters[i].save();
+  }
+
+  var game = {
+    "general": this.general,
+    "zone": this.zone,
+    "enemy": enemy,
+    "characters": characters
+  };
+
+  this.$cookieStore.put('game', game);
+};
+
+/**
+ * Remove the COOKIE & reset the game
+ */
+Game.prototype.reset = function() {
+  this.$cookieStore.remove('game');
 };

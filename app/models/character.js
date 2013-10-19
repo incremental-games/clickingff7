@@ -9,8 +9,9 @@ function Character(Game, infos) {
   this.Game = Game;
 
   // general INFOS
-  this.level_cost = 10;
-  this.weapon_cost = 10;
+  if (!this.data) this.data = {};
+  this.data.level_cost = 10;
+  this.data.weapon_cost = 10;
 
   // INFOS from COOKIE
   if (infos) {
@@ -23,11 +24,11 @@ function Character(Game, infos) {
  * Init the character if does not exist in COOKIE
  */
 Character.prototype.init = function() {
-  if (!this.level) {
-    this.level = 0;
+  if (!this.data.level) {
+    this.data.level = 0;
   }
-  if (!this.weapon_level) {
-    this.weapon_level = 1;
+  if (!this.data.weapon_level) {
+    this.data.weapon_level = 1;
   }
 };
 
@@ -38,7 +39,7 @@ Character.prototype.init = function() {
 Character.prototype.extends = function(infos) {
   self = this;
   for (var i in infos) {
-    self[i] = infos[i];
+    self.data[i] = infos[i];
   }
 };
 
@@ -48,7 +49,7 @@ Character.prototype.extends = function(infos) {
  * @return {int}
  */
 Character.prototype.get_hits = function() {
-  return this.level * this.weapon_level * 0.1;
+  return this.data.level * this.data.weapon_level * 0.1;
 };
 
 /**
@@ -56,7 +57,7 @@ Character.prototype.get_hits = function() {
  * @return {boolean}
  */
 Character.prototype.can_level_up = function() {
-  return this.Game.$scope.total_xp >= this.level_cost;
+  return this.Game.$scope.total_xp >= this.data.level_cost;
 };
 
 /**
@@ -64,5 +65,12 @@ Character.prototype.can_level_up = function() {
  * @return {boolean}
  */
 Character.prototype.can_weapon_up = function() {
-  return this.level > 0 && this.Game.$scope.total_gils >= this.weapon_cost;
+  return this.data.level > 0 && this.Game.$scope.total_gils >= this.data.weapon_cost;
+};
+
+/**
+ * Save character data
+ */
+Character.prototype.save = function() {
+  return _.omit(this.data, 'image', 'name', 'lines');
 };
