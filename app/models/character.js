@@ -69,6 +69,14 @@ Character.prototype.can_weapon_up = function() {
 };
 
 /**
+ * Returns current line
+ * @return {string}
+ */
+Character.prototype.get_line = function() {
+  return this.data.lines[this.Game.zone.level];
+};
+
+/**
  * Returns current weapon object
  * @return {string}
  */
