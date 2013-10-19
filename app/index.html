@@ -82,7 +82,7 @@
               <div class="button fight_enemy" ng-click="fight_enemy(e)" ng-class="{disabled: !e.can_be_fought()}">FIGHT</div>
               <div class="button escape" ng-click="escape(e)" ng-class="{disabled: !e.can_be_escaped()}">ESCAPE</div>
             </div>
-            <div><img ng-src="img/enemies/{{e.data.image}}" alt="avatar" class="avatar" height="48" /></div>
+            <div><img ng-src="img/enemy/{{e.data.image}}" alt="avatar" class="avatar" height="48" /></div>
             {{e.data.name}} <strong ng-show="e.data.number > 0">x{{e.data.number}}</strong>
             <div>Cost: {{e.get_cost()}} pwr</div>
             <div>{{e.data.xp|round:2}} xp per second</div>

@@ -3,9 +3,45 @@
     "1": {
       "name": "1st Ray",
       "image": "1st-ray.png",
-      "cost": 10,
-      "xp": 0.1,
-      "gils": 0.01
+      "cost": 18,
+      "xp": 0.12,
+      "gils": 0.05
+    },
+    "2": {
+      "name": "Grunt",
+      "image": "grunt.png",
+      "cost": 40,
+      "xp": 0.22,
+      "gils": 0.15
+    },
+    "3": {
+      "name": "MP",
+      "image": "mp.png",
+      "cost": 30,
+      "xp": 0.16,
+      "gils": 0.10
+    },
+    "4": {
+      "name": "Mono Drive",
+      "image": "mono-drive.png",
+      "cost": 28,
+      "xp": 0.18,
+      "gils": 0.08
+    },
+    "5": {
+      "name": "Sweeper",
+      "image": "sweeper.png",
+      "cost": 140,
+      "xp": 0.27,
+      "gils": 0.30
+    },
+    "6": {
+      "name": "Guard Scorpion",
+      "image": "guard-scorpion.png",
+      "cost": 800,
+      "xp": 1,
+      "gils": 1,
+      "boss": true
     }
   }
 }
