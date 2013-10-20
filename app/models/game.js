@@ -39,11 +39,23 @@ Game.prototype.preload = function() {
   var $http = this.$http;
 
   this.tmp = 0;
-  var tmp_max = 1;
+  var tmp_max = 2;
+
+  if (!self.data) {
+    self.data = {};
+  }
+
+  // WEAPONS
+  $http.get('data/characters.json').success(function(data) {
+    self.data.characters = data;
+
+    self.tmp += 1;
+    if (self.tmp == tmp_max) self.load();
+  });
 
   // WEAPONS
   $http.get('data/weapons.json').success(function(data) {
-    self.weapons = data;
+    self.data.weapons = data;
 
     self.tmp += 1;
     if (self.tmp == tmp_max) self.load();
@@ -98,10 +110,11 @@ Game.prototype.load = function() {
   });
 
   // CHARACTERS
-  $http.get('data/characters.json').success(function(data) {
+  $http.get('data/characters_zone.json').success(function(data) {
     var character, _data = {};
     for (var i in data[zone_level]) {
-      character = new Character(self, data[zone_level][i]);
+      var ref = data[zone_level][i];
+      character = new Character(self, self.data.characters[ref]);
       if (i in self.characters) {
         character.extends(self.characters[i].data);
       } else {

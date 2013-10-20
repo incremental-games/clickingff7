@@ -25,7 +25,7 @@ function Character(Game, infos) {
  */
 Character.prototype.init = function() {
   if (!this.data.level) {
-    this.data.level = 0;
+    this.data.level = 1;
   }
   if (!this.data.weapon_level) {
     this.data.weapon_level = 1;
@@ -81,7 +81,7 @@ Character.prototype.get_line = function() {
  * @return {string}
  */
 Character.prototype.get_weapon = function() {
-  return this.Game.weapons[this.data.ref][this.data.weapon_level];
+  return this.Game.data.weapons[this.data.ref][this.data.weapon_level];
 };
 
 /**
@@ -89,7 +89,7 @@ Character.prototype.get_weapon = function() {
  * @return {int}
  */
 Character.prototype.get_nbr_weapon = function() {
-  return Object.keys(this.data.weapons).length
+  return Object.keys(this.Game.data.weapons[this.data.ref]).length;
 };
 
 /**

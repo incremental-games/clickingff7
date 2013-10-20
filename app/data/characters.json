@@ -1,32 +1,17 @@
 {
-  "1": {
-    "1": {
-      "ref": "cloud",
-      "name": "Cloud Strife",
-      "image": "cloud.png",
-      "level": 1
-    },
-    "2": {
-      "ref": "barret",
-      "name": "Barret Wallace",
-      "image": "barret.png"
-    }
+  "cloud": {
+    "ref": "cloud",
+    "name": "Cloud Strife",
+    "image": "cloud.png"
   },
-  "2": {
-    "1": {
-      "ref": "cloud",
-      "name": "Cloud Strife",
-      "image": "cloud.png"
-    },
-    "2": {
-      "ref": "barret",
-      "name": "Barret Wallace",
-      "image": "barret.png"
-    },
-    "3": {
-      "ref": "tifa",
-      "name": "Tifa Lockhart",
-      "image": "tifa.png"
-    }
+  "barret": {
+    "ref": "barret",
+    "name": "Barret Wallace",
+    "image": "barret.png"
+  },
+  "tifa": {
+    "ref": "tifa",
+    "name": "Tifa Lockhart",
+    "image": "tifa.png"
   }
 }
