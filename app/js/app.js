@@ -113,7 +113,7 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
    */
   $scope.weapon_up = function(character) {
     if (character.can_weapon_up()) {
-      $scope.total_gils -= character.data.level_cost;
+      $scope.total_gils -= character.data.weapon_cost;
       Game.scopes.total_gils = $scope.total_gils;
       character.data.weapon_level += 1;
       character.data.weapon_cost *= 2;
