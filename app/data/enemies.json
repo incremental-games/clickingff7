@@ -51,6 +51,35 @@
       "cost": 90,
       "xp": 0.32,
       "gils": 0.6
+    },
+    "2": {
+      "name": "Special Combatant",
+      "image": "special-combatant.png",
+      "cost": 60,
+      "xp": 0.28,
+      "gils": 0.4
+    },
+    "3": {
+      "name": "Proto Machinegun",
+      "image": "proto-machinegun.png",
+      "cost": 100,
+      "xp": 0.16,
+      "gils": 0.15
+    },
+    "4": {
+      "name": "Blood Taste",
+      "image": "blood-taste.png",
+      "cost": 72,
+      "xp": 0.24,
+      "gils": 0.32
+    },
+    "5": {
+      "name": "Air Buster",
+      "image": "air-buster.png",
+      "cost": 1200,
+      "xp": 1.8,
+      "gils": 1.5,
+      "boss": true
     }
   }
 }
