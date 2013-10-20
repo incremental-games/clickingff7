@@ -96,11 +96,7 @@ Game.prototype.load = function() {
     var enemy, _data = {};
     for (var i in data[zone_level]) {
       enemy = new Enemy(self, data[zone_level][i]);
-      if (i in self.enemy) {
-        enemy.extends(self.enemy[i].data);
-      } else {
-        enemy.init();
-      }
+      enemy.init();
       _data[i] = enemy;
     }
     $scope.enemy = self.enemy = _data;
@@ -144,9 +140,6 @@ Game.prototype.begin = function() {
     if (save) {
       this.extends(save);
     }
-  } else {
-    // Detecting new zone level
-    this.enemy = {};
   }
 
   // SCOPES

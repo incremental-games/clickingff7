@@ -49,7 +49,7 @@ Character.prototype.extends = function(data) {
  * @return {int}
  */
 Character.prototype.get_hits = function() {
-  return this.data.level * this.get_weapon().hits * 0.1;
+  return this.data.level * this.get_weapon().hits * 0.03;
 };
 
 /**
