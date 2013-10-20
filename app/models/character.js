@@ -96,5 +96,5 @@ Character.prototype.get_nbr_weapon = function() {
  * Save character data
  */
 Character.prototype.save = function() {
-  return _.omit(this.data, 'image', 'name', 'weapons', 'lines');
+  return _.omit(this.data, 'image', 'name');
 };

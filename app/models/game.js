@@ -115,12 +115,12 @@ Game.prototype.load = function() {
     for (var i in data[zone_level]) {
       var ref = data[zone_level][i];
       character = new Character(self, self.data.characters[ref]);
-      if (i in self.characters) {
-        character.extends(self.characters[i].data);
+      if (ref in self.characters) {
+        character.extends(self.characters[ref].data);
       } else {
         character.init();
       }
-      _data[i] = character;
+      _data[ref] = character;
     }
     $scope.characters = self.characters = _data;
 
