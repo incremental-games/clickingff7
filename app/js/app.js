@@ -69,7 +69,7 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
   // GAME
   Game.init($scope, $cookieStore, $http, $timeout);
 
-  Game.load();
+  Game.preload();
 
   // STEP 3
   // Scope actions

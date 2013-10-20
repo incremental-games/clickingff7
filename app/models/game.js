@@ -34,6 +34,22 @@ Game.prototype.init = function($scope, $cookieStore, $http, $timeout) {
   this.characters = this.enemy = {};
 };
 
+Game.prototype.preload = function() {
+  var self = this;
+  var $http = this.$http;
+
+  this.tmp = 0;
+  var tmp_max = 1;
+
+  // WEAPONS
+  $http.get('data/weapons.json').success(function(data) {
+    self.weapons = data;
+
+    self.tmp += 1;
+    if (self.tmp == tmp_max) self.load();
+  });
+};
+
 /**
  * Load game infos : characters, enemy & zone
  * depending the zone level
@@ -45,13 +61,22 @@ Game.prototype.load = function() {
   var $http = this.$http;
 
   this.tmp = 0;
+  var tmp_max = 4;
+
+  // LINES
+  $http.get('data/lines.json').success(function(data) {
+    self.lines = data[zone_level];
+
+    self.tmp += 1;
+    if (self.tmp == tmp_max) self.begin();
+  });
 
   // ZONE
   $http.get('data/zone.json').success(function(data) {
     $scope.zone = self.zone = data[zone_level];
 
     self.tmp += 1;
-    if (self.tmp == 3) self.begin();
+    if (self.tmp == tmp_max) self.begin();
   });
 
   // ENNEMIES
@@ -69,7 +94,7 @@ Game.prototype.load = function() {
     $scope.enemy = self.enemy = _data;
 
     self.tmp += 1;
-    if (self.tmp == 3) self.begin();
+    if (self.tmp == tmp_max) self.begin();
   });
 
   // CHARACTERS
@@ -87,7 +112,7 @@ Game.prototype.load = function() {
     $scope.characters = self.characters = _data;
 
     self.tmp += 1;
-    if (self.tmp == 3) self.begin();
+    if (self.tmp == tmp_max) self.begin();
   });
 };
 

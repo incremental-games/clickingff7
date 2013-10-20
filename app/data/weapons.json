@@ -1,0 +1,32 @@
+{
+  "cloud": {
+    "1": {
+      "name": "Buster Sword",
+      "hits": 18
+    },
+    "2": {
+      "name": "Mythril Saber",
+      "hits": 23
+    }
+  },
+  "barret": {
+    "1": {
+      "name": "Gatling Gun",
+      "hits": 14
+    },
+    "2": {
+      "name": "Assault Gun",
+      "hits": 17
+    }
+  },
+  "tifa": {
+    "1": {
+      "name": "Leather Glove",
+      "hits": 13
+    },
+    "2": {
+      "name": "Metal Knuckle",
+      "hits": 18
+    }
+  }
+}

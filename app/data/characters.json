@@ -1,98 +1,32 @@
 {
   "1": {
     "1": {
+      "ref": "cloud",
       "name": "Cloud Strife",
       "image": "cloud.png",
-      "level": 1,
-      "weapons": {
-        "1": {
-          "name": "Buster Sword",
-          "hits": 18
-        },
-        "2": {
-          "name": "Mythril Saber",
-          "hits": 23
-        }
-      },
-      "lines": {
-        "1": "It's not my problem.",
-        "2": ""
-      }
+      "level": 1
     },
     "2": {
+      "ref": "barret",
       "name": "Barret Wallace",
-      "image": "barret.png",
-      "lines": {
-        "1": "The planet's dyin', Cloud!",
-        "2": ""
-      },
-      "weapons": {
-        "1": {
-          "name": "Gatling Gun",
-          "hits": 14
-        },
-        "2": {
-          "name": "Assault Gun",
-          "hits": 17
-        }
-      }
+      "image": "barret.png"
     }
   },
   "2": {
     "1": {
+      "ref": "cloud",
       "name": "Cloud Strife",
-      "image": "cloud.png",
-      "level": 1,
-      "weapons": {
-        "1": {
-          "name": "Buster Sword",
-          "hits": 18
-        },
-        "2": {
-          "name": "Mythril Saber",
-          "hits": 23
-        }
-      },
-      "lines": {
-        "1": "It's not my problem.",
-        "2": ""
-      }
+      "image": "cloud.png"
     },
     "2": {
+      "ref": "barret",
       "name": "Barret Wallace",
-      "image": "barret.png",
-      "lines": {
-        "1": "The planet's dyin', Cloud!",
-        "2": ""
-      },
-      "weapons": {
-        "1": {
-          "name": "Gatling Gun",
-          "hits": 14
-        },
-        "2": {
-          "name": "Assault Gun",
-          "hits": 17
-        }
-      }
+      "image": "barret.png"
     },
     "3": {
+      "ref": "tifa",
       "name": "Tifa Lockhart",
-      "image": "tifa.png",
-      "lines": {
-        "1": "",
-        "2": ""
-      },
-      "weapons": {
-        "1": {
-          "name": "Leather Glove",
-          "hits": 13
-        },
-        "2": {
-          "name": "Metal Knuckle",
-          "hits": 18
-        }
-      }
+      "image": "tifa.png"
     }
   }
 }

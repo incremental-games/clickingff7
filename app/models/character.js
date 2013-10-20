@@ -73,7 +73,7 @@ Character.prototype.can_weapon_up = function() {
  * @return {string}
  */
 Character.prototype.get_line = function() {
-  return this.data.lines[this.Game.zone.level];
+  return this.Game.lines[this.data.ref];
 };
 
 /**
@@ -81,7 +81,7 @@ Character.prototype.get_line = function() {
  * @return {string}
  */
 Character.prototype.get_weapon = function() {
-  return this.data.weapons[this.data.weapon_level];
+  return this.Game.weapons[this.data.ref][this.data.weapon_level];
 };
 
 /**
