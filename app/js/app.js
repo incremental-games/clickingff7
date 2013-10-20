@@ -79,6 +79,7 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
    */
   $scope.explore = function() {
     $scope.total_enemy_pwr += 1;
+    Game.scopes.total_enemy_pwr = $scope.total_enemy_pwr;
   };
 
   /**
@@ -87,7 +88,9 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
   $scope.fight = function() {
     if ($scope.total_enemy_pwr < 1) return;
     $scope.total_enemy_pwr -= 1;
+    Game.scopes.total_enemy_pwr = $scope.total_enemy_pwr;
     $scope.total_xp += 1;
+    Game.scopes.total_xp = $scope.total_xp;
   };
 
   /**
@@ -97,6 +100,7 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
   $scope.level_up = function(character) {
     if (character.can_level_up()) {
       $scope.total_xp -= character.data.level_cost;
+      Game.scopes.total_xp = $scope.total_xp;
       character.data.level += 1;
       character.data.level_cost *= 2;
       Game.refresh();
@@ -110,6 +114,7 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
   $scope.weapon_up = function(character) {
     if (character.can_weapon_up()) {
       $scope.total_gils -= character.data.level_cost;
+      Game.scopes.total_gils = $scope.total_gils;
       character.data.weapon_level += 1;
       character.data.weapon_cost *= 2;
       Game.refresh();
@@ -123,6 +128,7 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
   $scope.fight_enemy = function(enemy) {
     if (enemy.can_be_fought()) {
       $scope.total_enemy_pwr -= enemy.get_cost();
+      Game.scopes.total_enemy_pwr = $scope.total_enemy_pwr;
       enemy.data.number += 1;
       if (enemy.data.boss) {
         $scope.boss_defeated = Game.scopes.boss_defeated = true;

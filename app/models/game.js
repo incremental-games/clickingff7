@@ -185,9 +185,12 @@ Game.prototype.run = function() {
 
   this.timer = $timeout(function() {
     $scope.total_enemy_pwr = Math.max($scope.total_enemy_pwr + self.scopes.rate_enemy_pwr, 0);
+    self.scopes.total_enemy_pwr = $scope.total_enemy_pwr;
     if ($scope.total_enemy_pwr > 0) {
       $scope.total_xp += self.scopes.rate_xp;
+      self.scopes.total_xp = $scope.total_xp;
       $scope.total_gils += self.scopes.rate_gils;
+      self.scopes.total_gils = $scope.total_gils;
     }
     self.run();
   }, 1000);
