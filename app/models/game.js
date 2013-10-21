@@ -20,12 +20,7 @@ Game.prototype.init = function($scope, $cookieStore, $http, $timeout) {
 
   // scopes INFOS
   this.scopes = {
-    "total_enemy_pwr": 0,
-    "total_xp": 0,
     "total_gils": 0,
-    "rate_enemy_pwr": 0,
-    "rate_xp": 0,
-    "rate_gils": 0,
     "boss_defeated": false
   };
   this.zone = {
@@ -148,7 +143,10 @@ Game.prototype.begin = function() {
   }
 
   this.refresh();
-  this.run();
+
+  for (var i in this.characters) {
+    this.characters[i].run();
+  }
 };
 
 /**
@@ -168,25 +166,38 @@ Game.prototype.extends = function(save) {
 };
 
 /**
- * Main mechanics of the game
- * @param  {object} $timeout
+ * Select an active enemy randomly
+ * @return {Enemy}
  */
-Game.prototype.run = function() {
-  var self = this;
-  var $scope = this.$scope;
-  var $timeout = this.$timeout;
-
-  this.timer = $timeout(function() {
-    $scope.total_enemy_pwr = Math.max($scope.total_enemy_pwr + self.scopes.rate_enemy_pwr, 0);
-    self.scopes.total_enemy_pwr = $scope.total_enemy_pwr;
-    if ($scope.total_enemy_pwr > 0) {
-      $scope.total_xp += self.scopes.rate_xp;
-      self.scopes.total_xp = $scope.total_xp;
-      $scope.total_gils += self.scopes.rate_gils;
-      self.scopes.total_gils = $scope.total_gils;
+Game.prototype.get_random_enemy = function() {
+  var res = {};
+  for (var i in this.enemy) {
+    var enemy = this.enemy[i];
+    if (enemy.data.number > 0) {
+      return enemy;
     }
-    self.run();
-  }, 1000);
+  }
+};
+
+/**
+ * Attribute reward: xp for everyone
+ * @param  {int} xp
+ */
+Game.prototype.attribute_xp = function(xp) {
+  for (var i in this.characters) {
+    var character = this.characters[i];
+    if (character.data.level == 0) continue;
+    character.set_xp(xp);
+  }
+};
+
+/**
+ * Attribute reward: gils
+ * @param  {int} gils
+ */
+Game.prototype.attribute_gils = function(gils) {
+  this.$scope.total_gils += gils;
+  this.scopes.total_gils = this.$scope.total_gils;
 };
 
 /**

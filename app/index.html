@@ -49,31 +49,10 @@
     <div class="wrapper">
 
       <div class="part">
-
-        <section class="explore">
-          <div>Enemy pwr (Difficulty is normal)</div>
-          <div><strong>{{total_enemy_pwr|floor}}</strong></div>
-          <div>{{rate_enemy_pwr|round:2}} per second (net)</div>
-
-          <br />
-
-          <div ng-click="explore()" class="button">EXPLORE</div>
-        </section>
         
         <section class="fight">
-          <div>Experience (Multiplicator x1)</div>
-          <div><strong>{{total_xp|floor}} xp</strong></div>
-          <div>{{rate_xp|round:2}} xp per second</div>
-
-          <br />
-
-          <div>Gils (Multiplicator x0)</div>
+          <div>Infos</div>
           <div><strong>{{total_gils|floor}} gils</strong></div>
-          <div>{{rate_gils|round:2}} gils per second</div>
-
-          <br />
-
-          <div ng-click="fight()" class="button" ng-class="{disabled: total_enemy_pwr < 1}">FIGHT</div>
         </section>
 
         <section class="zone">
@@ -91,16 +70,16 @@
 
         <sections class="enemies">
           <div class="title">Enemy</div>
-          <div ng-repeat="e in enemy | clean" class="enemy" ng-class="{disabled: e.data.number == 0}">
+          <div ng-repeat="(no, e) in enemy | clean" class="enemy" ng-class="{disabled: e.data.number == 0, hidden: no > enemy_level}">
             <div class="actions">
-              <div class="button fight_enemy" ng-click="fight_enemy(e)" ng-class="{disabled: !e.can_be_fought()}">FIGHT</div>
+              <div class="button fight_enemy" ng-click="fight_enemy(e)">FIGHT</div>
               <div class="button escape" ng-click="escape(e)" ng-class="{disabled: !e.can_be_escaped()}">ESCAPE</div>
             </div>
             <div><img ng-src="img/enemy/{{e.data.image}}" alt="avatar" class="avatar" height="48" /></div>
             {{e.data.name}} <strong ng-show="e.data.number > 0">x{{e.data.number}}</strong>
-            <div>Cost: {{e.get_cost()}} pwr</div>
-            <div>{{e.data.xp|round:2}} xp per second</div>
-            <div>{{e.data.gils|round:2}} gils per second</div>
+            <div>{{e.data.current_hp|ceil}} /{{e.data.hp}} HP</div>
+            <div>PWR: {{e.data.pwr}}</div>
+            <div>Rewards: {{e.data.xp}} xp | {{e.data.gils}} gils</div>
           </div>
         </sections>
 
@@ -118,8 +97,10 @@
             <div><img ng-src="img/characters/{{character.data.image}}" alt="avatar" class="avatar" /></div>
             <div>{{character.data.name}} <strong ng-show="character.data.level > 0">(LVL{{character.data.level}})</strong></div>
             <div class="line">"{{character.get_line()}}"</div>
-            <div ng-if="character.data.level > 0">Weapon: {{character.get_weapon().name}} ({{character.get_weapon().hits}} pwr)</div>
-            <div ng-if="character.data.level > 0">{{character.get_hits()|round:2}} hits per second</div>
+            <div ng-if="character.data.level > 0">{{character.data.current_hp|ceil}} /{{character.data.hp}} HP</div>
+            <div ng-if="character.data.level > 0">{{character.data.xp}} /{{character.data.level_cost}} xp</div>
+            <div ng-if="character.data.level > 0">Weapon: {{character.get_weapon().name}} ({{character.get_weapon().hits}} hits)</div>
+            <div ng-if="character.data.level > 0">PWR: {{character.get_hits()|round:2}}</div>
           </div>
         </sections>
 

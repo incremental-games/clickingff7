@@ -23,6 +23,15 @@ app.filter('floor', function() {
 });
 
 /**
+ * Used to get ceil number
+ */
+app.filter('ceil', function() {
+  return function(input) {
+    return Math.ceil(input);
+  }
+});
+
+/**
  * Used to round a number
  */
 app.filter('round', function() {
@@ -75,25 +84,6 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
   // Scope actions
 
   /**
-   * Explore to find enemies
-   */
-  $scope.explore = function() {
-    $scope.total_enemy_pwr += 1;
-    Game.scopes.total_enemy_pwr = $scope.total_enemy_pwr;
-  };
-
-  /**
-   * Fight enemies to get experience
-   */
-  $scope.fight = function() {
-    if ($scope.total_enemy_pwr < 1) return;
-    $scope.total_enemy_pwr -= 1;
-    Game.scopes.total_enemy_pwr = $scope.total_enemy_pwr;
-    $scope.total_xp += 1;
-    Game.scopes.total_xp = $scope.total_xp;
-  };
-
-  /**
    * Use experience to level up characters
    * @param  {object} id Character in the zone
    */
@@ -126,15 +116,7 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
    * @param  {object} id Enemy in the zone
    */
   $scope.fight_enemy = function(enemy) {
-    if (enemy.can_be_fought()) {
-      $scope.total_enemy_pwr -= enemy.get_cost();
-      Game.scopes.total_enemy_pwr = $scope.total_enemy_pwr;
-      enemy.data.number += 1;
-      if (enemy.data.boss) {
-        $scope.boss_defeated = Game.scopes.boss_defeated = true;
-      }
-      Game.refresh();
-    }
+    enemy.data.number += 1;
   };
 
   /**
@@ -142,10 +124,7 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
    * @param  {object} id Enemy in the zone
    */
   $scope.escape = function(enemy) {
-    if (enemy.can_be_escaped()) {
-      enemy.data.number -= 1;
-      Game.refresh();
-    }
+    enemy.data.number -= 1;
   };
 
   /**

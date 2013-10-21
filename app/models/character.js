@@ -10,8 +10,9 @@ function Character(Game, infos) {
 
   // scopes INFOS
   if (!this.data) this.data = {};
-  this.data.level_cost = 10;
-  this.data.weapon_cost = 10;
+  this.data.level_cost = 200;
+  this.data.weapon_cost = 100;
+  this.data.hp = 100;
 
   // INFOS from COOKIE
   if (infos) {
@@ -30,6 +31,12 @@ Character.prototype.init = function() {
   if (!this.data.weapon_level) {
     this.data.weapon_level = 1;
   }
+  if (!this.data.xp) {
+    this.data.xp = 0;
+  }
+  if (!this.data.current_hp) {
+    this.data.current_hp = this.data.hp;
+  }
 };
 
 /**
@@ -43,13 +50,40 @@ Character.prototype.extends = function(data) {
   }
 };
 
+Character.prototype.run = function() {
+  var self = this;
+  var $timeout = this.Game.$timeout;
+
+  this.timer = $timeout(function() {
+    var hits = self.get_hits();
+    var e = self.Game.get_random_enemy();
+    if (e) {
+      e.get_attacked(hits);
+    }
+    self.run();
+  }, 1000);
+};
+
 /**
  * returns character total hits
  * based on level and weapon level
  * @return {int}
  */
 Character.prototype.get_hits = function() {
-  return this.data.level * this.get_weapon().hits * 0.03;
+  return this.data.level * this.get_weapon().hits * 0.1;
+};
+
+/**
+ * Add xp to the character
+ * @param {int} xp
+ */
+Character.prototype.set_xp = function(xp) {
+  this.data.xp += xp;
+  if (this.data.xp >= this.data.level_cost) {
+    this.data.xp = this.data.level_cost - this.data.xp;
+    this.data.level_cost *= 2;
+    this.data.level += 1;
+  }
 };
 
 /**

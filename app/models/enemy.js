@@ -26,6 +26,9 @@ Enemy.prototype.init = function() {
   if (!this.data.number) {
     this.data.number = 0;
   }
+  if (!this.data.current_hp) {
+    this.data.current_hp = this.data.hp;
+  }
 };
 
 /**
@@ -64,6 +67,20 @@ Enemy.prototype.get_xp = function() {
  */
 Enemy.prototype.get_gils = function() {
   return this.data.number * this.data.gils;
+};
+
+/**
+ * Current enemy is under attack
+ * @param  {int} hits
+ */
+Enemy.prototype.get_attacked = function(hits) {
+  this.data.current_hp -= hits;
+  if (this.data.current_hp <= 0) {
+    this.data.number -= 1;
+    this.data.current_hp = this.data.hp;
+    this.Game.attribute_xp(this.data.xp);
+    this.Game.attribute_gils(this.data.gils);
+  }
 };
 
 /**

@@ -69,6 +69,9 @@ footer {
 .character.disabled .avatar, .enemy.disabled .avatar {
   opacity: 0.1;
 }
+.enemy.hidden {
+  display: none;
+}
 
 .actions {
   float: right;
