@@ -117,6 +117,12 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
    */
   $scope.fight_enemy = function(enemy) {
     enemy.data.number += 1;
+    $scope.total_enemy_hp += enemy.data.hp;
+    Game.scopes.total_enemy_hp = $scope.total_enemy_hp;
+
+    if ($scope.total_enemy_hp > 0) {
+      Game.enable_fight();
+    }
   };
 
   /**
@@ -125,6 +131,8 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
    */
   $scope.escape = function(enemy) {
     enemy.data.number -= 1;
+    $scope.total_enemy_hp -= enemy.data.hp;
+    Game.scopes.total_enemy_hp = $scope.total_enemy_hp;
   };
 
   /**

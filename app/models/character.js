@@ -50,18 +50,32 @@ Character.prototype.extends = function(data) {
   }
 };
 
+/**
+ * Character auto-attack process
+ */
 Character.prototype.run = function() {
   var self = this;
   var $timeout = this.Game.$timeout;
 
   this.timer = $timeout(function() {
+    // Stop attacking if fight's over
+    if (!self.Game.fight) return;
+
     var hits = self.get_hits();
-    var e = self.Game.get_random_enemy();
-    if (e) {
-      e.get_attacked(hits);
-    }
+    self.Game.attack_enemy(hits);
+
+    console.log(self.data.name + " attacking");
+
     self.run();
   }, 1000);
+};
+
+/**
+ * Character waiting process
+ */
+Character.prototype.wait = function() {
+  var $timeout = this.Game.$timeout;
+  $timeout.cancel(this.timer);
 };
 
 /**

@@ -66,7 +66,7 @@ Enemy.prototype.get_xp = function() {
  * @return {int}
  */
 Enemy.prototype.get_gils = function() {
-  return this.data.number * this.data.gils;
+  return this.data.gils;
 };
 
 /**

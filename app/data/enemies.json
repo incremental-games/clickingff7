@@ -4,10 +4,10 @@
       "level": 1,
       "name": "1st Ray",
       "image": "1st-ray.png",
-      "pwr": 10,
-      "hp": 18,
-      "xp": 12,
-      "gils": 5
+      "hp": 20,
+      "pwr": 2,
+      "xp": 3,
+      "gils": 0
     },
     "2": {
       "level": 2,

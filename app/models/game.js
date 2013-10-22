@@ -17,9 +17,11 @@ Game.prototype.init = function($scope, $cookieStore, $http, $timeout) {
 
   // Detect first load
   this.loaded = false;
+  this.fight = false;
 
   // scopes INFOS
   this.scopes = {
+    "total_enemy_hp": 0,
     "total_gils": 0,
     "boss_defeated": false
   };
@@ -143,10 +145,6 @@ Game.prototype.begin = function() {
   }
 
   this.refresh();
-
-  for (var i in this.characters) {
-    this.characters[i].run();
-  }
 };
 
 /**
@@ -166,38 +164,36 @@ Game.prototype.extends = function(save) {
 };
 
 /**
- * Select an active enemy randomly
- * @return {Enemy}
+ * Characters start auto-attacking
  */
-Game.prototype.get_random_enemy = function() {
-  var res = {};
+Game.prototype.enable_fight = function() {
+  this.fight = true;
+  for (var i in this.characters) {
+    this.characters[i].run();
+  }
+};
+
+/**
+ * Characters stop attacking and wait for next fight
+ */
+Game.prototype.disable_fight = function() {
+  this.fight = false;
+  for (var i in this.characters) {
+    this.characters[i].wait();
+  }
   for (var i in this.enemy) {
-    var enemy = this.enemy[i];
-    if (enemy.data.number > 0) {
-      return enemy;
+    var number = this.enemy[i].data.number;
+    if (number > 0) {
+      this.enemy[i].number = 0;
+      this.$scope.total_gils += this.enemy[i].data.gils * number;
+      this.scopes.total_gils = this.$scope.total_gils;
+
+      for (var i in this.characters) {
+        var xp = this.enemy[i].data.xp * number;
+        this.characters[i].set_xp(xp);
+      }
     }
   }
-};
-
-/**
- * Attribute reward: xp for everyone
- * @param  {int} xp
- */
-Game.prototype.attribute_xp = function(xp) {
-  for (var i in this.characters) {
-    var character = this.characters[i];
-    if (character.data.level == 0) continue;
-    character.set_xp(xp);
-  }
-};
-
-/**
- * Attribute reward: gils
- * @param  {int} gils
- */
-Game.prototype.attribute_gils = function(gils) {
-  this.$scope.total_gils += gils;
-  this.scopes.total_gils = this.$scope.total_gils;
 };
 
 /**

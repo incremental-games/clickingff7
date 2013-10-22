@@ -23,7 +23,7 @@
 
     <script type="text/javascript">
 
-    var _gaq = _gaq || [];
+    /*var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-44996905-1']);
     _gaq.push(['_trackPageview']);
 
@@ -31,7 +31,7 @@
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
+    })();*/
 
     </script>
   </head>
@@ -48,25 +48,24 @@
 
     <div class="wrapper">
 
+      <div>
+        <div>Total Gils</div>
+        <div><strong>{{total_gils|floor}} gils</strong></div>
+      </div>
+
       <div class="part">
-        
-        <section class="fight">
-          <div>Infos</div>
-          <div><strong>{{total_gils|floor}} gils</strong></div>
-        </section>
 
         <section class="zone">
-          <div>Current zone #{{zone.level}}</div>
-          <div><strong>{{zone.name}}</strong></div>
-          
+          Total Enemy hp
+          {{total_enemy_hp|round:2}}
           <br />
 
-          <div ng-click="next_zone()" class="button" ng-class="{disabled: !boss_defeated}">NEXT ZONE</div>
+          <div ng-click="attack()" class="button">ATTACK</div>
         </section>
 
       </div>
 
-      <div class="part">
+      <div class="part big">
 
         <sections class="enemies">
           <div class="title">Enemy</div>
@@ -77,37 +76,35 @@
             </div>
             <div><img ng-src="img/enemy/{{e.data.image}}" alt="avatar" class="avatar" height="48" /></div>
             {{e.data.name}} <strong ng-show="e.data.number > 0">x{{e.data.number}}</strong>
-            <div>{{e.data.current_hp|ceil}} /{{e.data.hp}} HP</div>
-            <div>PWR: {{e.data.pwr}}</div>
+            <div>hp {{e.data.hp}}</div>
+            <div>pwr {{e.data.pwr}}</div>
             <div>Rewards: {{e.data.xp}} xp | {{e.data.gils}} gils</div>
           </div>
         </sections>
 
       </div>
 
-      <div class="part">
+      <div class="part big">
 
         <sections class="characters">
           <div class="title">Characters</div>
           <div ng-repeat="(i, character) in characters | clean" class="character" ng-class="{disabled: character.data.level == 0}">
-            <div class="actions">
-              <div class="button level_up" ng-click="level_up(character)" ng-class="{disabled: !character.can_level_up()}">LEVEL UP</div>
-              <div class="button weapon_up" ng-click="weapon_up(character)" ng-class="{disabled: !character.can_weapon_up()}">WEAPON UP</div>
-            </div>
             <div><img ng-src="img/characters/{{character.data.image}}" alt="avatar" class="avatar" /></div>
             <div>{{character.data.name}} <strong ng-show="character.data.level > 0">(LVL{{character.data.level}})</strong></div>
             <div class="line">"{{character.get_line()}}"</div>
-            <div ng-if="character.data.level > 0">{{character.data.current_hp|ceil}} /{{character.data.hp}} HP</div>
-            <div ng-if="character.data.level > 0">{{character.data.xp}} /{{character.data.level_cost}} xp</div>
-            <div ng-if="character.data.level > 0">Weapon: {{character.get_weapon().name}} ({{character.get_weapon().hits}} hits)</div>
-            <div ng-if="character.data.level > 0">PWR: {{character.get_hits()|round:2}}</div>
+            <div ng-if="character.data.level > 0">hp {{character.data.hp}}</div>
+            <div ng-if="character.data.level > 0">pwr {{character.get_hits()|round:2}}</div>
           </div>
         </sections>
 
       </div>
 
       <div class="part">
-        <sections class="upgrades"></sections>
+        Total Characters pwr
+
+        <br />
+
+        <div ng-click="cure()" class="button">CURE</div>
       </div>
 
     </div>
