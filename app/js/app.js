@@ -83,22 +83,25 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
   // STEP 3
   // Scope actions
 
-
-
   /**
-   * Loose exp & gils to escape
-   * @param  {object} id Enemy in the zone
+   * Attack manually enemy
    */
   $scope.attack = function() {
     Game.attack_enemy(1);
   };
 
   /**
-   * Loose exp & gils to escape
-   * @param  {object} id Enemy in the zone
+   * Escape fight
    */
   $scope.escape = function() {
     Game.escape();
+  };
+
+  /**
+   * Cure maually characters
+   */
+  $scope.cure = function() {
+    Game.add('characters_hp', 1);
   };
 
   /**
@@ -110,6 +113,8 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
 
     Game.add('enemy_hp_max', enemy.data.hp);
     Game.add('enemy_hp', enemy.data.hp);
+
+    enemy.run();
 
     if ($scope.enemy_hp > 0) {
       Game.enable_fight();

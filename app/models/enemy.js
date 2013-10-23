@@ -43,12 +43,53 @@ Enemy.prototype.extends = function(data) {
 };
 
 /**
+ * Enemy auto-attack process
+ */
+Enemy.prototype.run = function() {
+  var self = this;
+  var $timeout = this.Game.$timeout;
+
+  if (!this.timer) {
+    this.timer = [];
+  }
+
+  this.timer[this.data.number] = $timeout(function() {
+    // Stop attacking if fight's over
+    if (!self.Game.fight) return;
+
+    var hits = self.get_hits();
+    self.Game.attack_characters(hits);
+
+    console.log("- " + self.data.name + " attacking with" + hits);
+
+    self.run();
+  }, 1000);
+};
+
+/**
+ * Enemy waiting process
+ */
+Enemy.prototype.wait = function() {
+  var $timeout = this.Game.$timeout;
+  $timeout.cancel(this.timer);
+};
+
+/**
  * returns enemy cost
  * based on ???
  * @return {int}
  */
 Enemy.prototype.get_cost = function() {
   return (this.data.number + 1) * this.data.cost;
+};
+
+/**
+ * returns enemy hits
+ * based on ???
+ * @return {int}
+ */
+Enemy.prototype.get_hits = function() {
+  return this.data.pwr;
 };
 
 /**

@@ -64,7 +64,7 @@ Character.prototype.run = function() {
     var hits = self.get_hits();
     self.Game.attack_enemy(hits);
 
-    console.log(self.data.name + " attacking");
+    console.log("+ " + self.data.name + " attacking");
 
     self.run();
   }, 1000);

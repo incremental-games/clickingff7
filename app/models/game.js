@@ -199,6 +199,7 @@ Game.prototype.disable_fight = function() {
     }
   }
   this.set('enemy_hp_max', 0);
+  this.set('enemy_hp', 0);
 };
 
 /**
@@ -222,6 +223,16 @@ Game.prototype.escape = function() {
  */
 Game.prototype.attack_enemy = function(hits) {
   if (this.sub('enemy_hp', hits) == 0) {
+    this.disable_fight();
+  }
+};
+
+/**
+ * Inflicts damages to total enemy hp
+ * @param  {int} hits
+ */
+Game.prototype.attack_characters = function(hits) {
+  if (this.sub('characters_hp', hits) == 0) {
     this.disable_fight();
   }
 };
@@ -303,6 +314,14 @@ Game.prototype.set = function(scope, value) {
 Game.prototype.add = function(scope, value) {
   var new_value = this.$scope[scope] + value;
 
+  if (scope == 'enemy_hp') {
+    new_value = Math.min(new_value, this.$scope.enemy_hp_max);
+  }
+
+  if (scope == 'characters_hp') {
+    new_value = Math.min(new_value, this.$scope.characters_hp_max);
+  }
+
   this.$scope[scope] = this.scopes[scope] = new_value;
 
   return new_value;
@@ -315,10 +334,14 @@ Game.prototype.add = function(scope, value) {
  * @return {[type]}       [description]
  */
 Game.prototype.sub = function(scope, value) {
-  var new_value = this.$scope[scope];
+  var new_value = Math.max(this.$scope[scope] - value, 0);
 
   if (scope == 'enemy_hp') {
-    new_value = Math.max(new_value - value, 0);
+    new_value = Math.min(new_value, this.$scope.enemy_hp_max);
+  }
+
+  if (scope == 'characters_hp') {
+    new_value = Math.min(new_value, this.$scope.characters_hp_max);
   }
 
   this.$scope[scope] = this.scopes[scope] = new_value;
