@@ -83,32 +83,22 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
   // STEP 3
   // Scope actions
 
+
+
   /**
-   * Use experience to level up characters
-   * @param  {object} id Character in the zone
+   * Loose exp & gils to escape
+   * @param  {object} id Enemy in the zone
    */
-  $scope.level_up = function(character) {
-    if (character.can_level_up()) {
-      $scope.total_xp -= character.data.level_cost;
-      Game.scopes.total_xp = $scope.total_xp;
-      character.data.level += 1;
-      character.data.level_cost *= 2;
-      Game.refresh();
-    }
+  $scope.attack = function() {
+    Game.attack_enemy(1);
   };
 
   /**
-   * Use experience to level up characters
-   * @param  {object} id Character in the zone
+   * Loose exp & gils to escape
+   * @param  {object} id Enemy in the zone
    */
-  $scope.weapon_up = function(character) {
-    if (character.can_weapon_up()) {
-      $scope.total_gils -= character.data.weapon_cost;
-      Game.scopes.total_gils = $scope.total_gils;
-      character.data.weapon_level += 1;
-      character.data.weapon_cost *= 2;
-      Game.refresh();
-    }
+  $scope.escape = function() {
+    Game.escape();
   };
 
   /**
@@ -117,22 +107,13 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
    */
   $scope.fight_enemy = function(enemy) {
     enemy.data.number += 1;
-    $scope.total_enemy_hp += enemy.data.hp;
-    Game.scopes.total_enemy_hp = $scope.total_enemy_hp;
 
-    if ($scope.total_enemy_hp > 0) {
+    Game.add('enemy_hp_max', enemy.data.hp);
+    Game.add('enemy_hp', enemy.data.hp);
+
+    if ($scope.enemy_hp > 0) {
       Game.enable_fight();
     }
-  };
-
-  /**
-   * Loose exp & gils to escape
-   * @param  {object} id Enemy in the zone
-   */
-  $scope.escape = function(enemy) {
-    enemy.data.number -= 1;
-    $scope.total_enemy_hp -= enemy.data.hp;
-    Game.scopes.total_enemy_hp = $scope.total_enemy_hp;
   };
 
   /**

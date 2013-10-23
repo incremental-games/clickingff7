@@ -2,12 +2,14 @@
   "cloud": {
     "ref": "cloud",
     "name": "Cloud Strife",
-    "image": "cloud.png"
+    "image": "cloud.png",
+    "hp": 14
   },
   "barret": {
     "ref": "barret",
     "name": "Barret Wallace",
-    "image": "barret.png"
+    "image": "barret.png",
+    "hp": 16
   },
   "tifa": {
     "ref": "tifa",

@@ -21,7 +21,8 @@ Game.prototype.init = function($scope, $cookieStore, $http, $timeout) {
 
   // scopes INFOS
   this.scopes = {
-    "total_enemy_hp": 0,
+    "enemy_hp_max": 0,
+    "enemy_hp": 0,
     "total_gils": 0,
     "boss_defeated": false
   };
@@ -139,10 +140,12 @@ Game.prototype.begin = function() {
     }
   }
 
-  // SCOPES
-  for (var i in this.scopes) {
-    $scope[i] = this.scopes[i];
+  var total_characters_hp = 0;
+  for (var i in this.characters) {
+    total_characters_hp += this.characters[i].data.hp;
   }
+  this.set('characters_hp_max', total_characters_hp);
+  this.set('characters_hp', total_characters_hp);
 
   this.refresh();
 };
@@ -167,9 +170,11 @@ Game.prototype.extends = function(save) {
  * Characters start auto-attacking
  */
 Game.prototype.enable_fight = function() {
-  this.fight = true;
-  for (var i in this.characters) {
-    this.characters[i].run();
+  if (!this.fight) {
+    this.fight = true;
+    for (var i in this.characters) {
+      this.characters[i].run();
+    }
   }
 };
 
@@ -184,15 +189,40 @@ Game.prototype.disable_fight = function() {
   for (var i in this.enemy) {
     var number = this.enemy[i].data.number;
     if (number > 0) {
-      this.enemy[i].number = 0;
-      this.$scope.total_gils += this.enemy[i].data.gils * number;
-      this.scopes.total_gils = this.$scope.total_gils;
+      this.enemy[i].data.number = 0;
+      this.add("total_gils", this.enemy[i].data.gils * number);
 
       for (var i in this.characters) {
-        var xp = this.enemy[i].data.xp * number;
+        var xp = this.characters[i].data.xp * number;
         this.characters[i].set_xp(xp);
       }
     }
+  }
+  this.set('enemy_hp_max', 0);
+};
+
+/**
+ * Escape from fight
+ * @return {[type]} [description]
+ */
+Game.prototype.escape = function() {
+  for (var i in this.enemy) {
+    this.enemy[i].data.number = 0;
+  }
+  for (var i in this.characters) {
+    this.characters[i].wait();
+  }
+  this.set('enemy_hp_max', 0);
+  this.set('enemy_hp', 0);
+};
+
+/**
+ * Inflicts damages to total enemy hp
+ * @param  {int} hits
+ */
+Game.prototype.attack_enemy = function(hits) {
+  if (this.sub('enemy_hp', hits) == 0) {
+    this.disable_fight();
   }
 };
 
@@ -206,31 +236,12 @@ Game.prototype.next_zone = function() {
 };
 
 /**
- * Refresh enemy & characters infos
+ * Refresh all scopes
  */
-Game.prototype.refresh = function() {
-  var l_enemy = this.$scope.enemy;
-  var enemy = {};
-  enemy.rate_enemy_pwr = 0;
-  enemy.rate_xp = 0;
-  enemy.rate_gils = 0;
-  for (var i in l_enemy) {
-    if (l_enemy[i].number == 0) continue;
-    enemy.rate_xp += l_enemy[i].get_xp();
-    enemy.rate_gils += l_enemy[i].get_gils();
-    enemy.rate_enemy_pwr += enemy.rate_xp + enemy.rate_gils;
+Game.prototype.refresh = function(key) {
+  for (var i in this.scopes) {
+    this.$scope[i] = this.scopes[i];
   }
-  this.scopes.rate_xp = this.$scope.rate_xp = enemy.rate_xp;
-  this.scopes.rate_gils = this.$scope.rate_gils = enemy.rate_gils;
-
-  var l_characters = this.$scope.characters;
-  var characters = {};
-  characters.rate_enemy_pwr = 0;
-  for (var i in l_characters) {
-    if (l_characters[i].level == 0) continue;
-    characters.rate_enemy_pwr += l_characters[i].get_hits();
-  }
-  this.scopes.rate_enemy_pwr = this.$scope.rate_enemy_pwr = characters.rate_enemy_pwr - enemy.rate_enemy_pwr;
 };
 
 /**
@@ -270,4 +281,47 @@ Game.prototype.reset = function() {
   var $cookieStore = this.$cookieStore;
 
   $cookieStore.remove('game');
+};
+
+/**
+ * Set a scope
+ * @param {[type]} scope [description]
+ * @param {[type]} value [description]
+ */
+Game.prototype.set = function(scope, value) {
+  this.$scope[scope] = this.scopes[scope] = value;
+
+  return value;
+};
+
+/**
+ * Add a scpe
+ * @param  {[type]} scope [description]
+ * @param  {[type]} value [description]
+ * @return {[type]}       [description]
+ */
+Game.prototype.add = function(scope, value) {
+  var new_value = this.$scope[scope] + value;
+
+  this.$scope[scope] = this.scopes[scope] = new_value;
+
+  return new_value;
+};
+
+/**
+ * Sub a scpe
+ * @param  {[type]} scope [description]
+ * @param  {[type]} value [description]
+ * @return {[type]}       [description]
+ */
+Game.prototype.sub = function(scope, value) {
+  var new_value = this.$scope[scope];
+
+  if (scope == 'enemy_hp') {
+    new_value = Math.max(new_value - value, 0);
+  }
+
+  this.$scope[scope] = this.scopes[scope] = new_value;
+
+  return new_value;
 };

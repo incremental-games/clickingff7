@@ -57,10 +57,11 @@
 
         <section class="zone">
           Total Enemy hp
-          {{total_enemy_hp|round:2}}
+          {{enemy_hp|round:2}} / {{enemy_hp_max}}
           <br />
 
           <div ng-click="attack()" class="button">ATTACK</div>
+          <div ng-click="escape()" class="button">ESCAPE</div>
         </section>
 
       </div>
@@ -72,7 +73,6 @@
           <div ng-repeat="(no, e) in enemy | clean" class="enemy" ng-class="{disabled: e.data.number == 0, hidden: no > enemy_level}">
             <div class="actions">
               <div class="button fight_enemy" ng-click="fight_enemy(e)">FIGHT</div>
-              <div class="button escape" ng-click="escape(e)" ng-class="{disabled: !e.can_be_escaped()}">ESCAPE</div>
             </div>
             <div><img ng-src="img/enemy/{{e.data.image}}" alt="avatar" class="avatar" height="48" /></div>
             {{e.data.name}} <strong ng-show="e.data.number > 0">x{{e.data.number}}</strong>
@@ -100,8 +100,8 @@
       </div>
 
       <div class="part">
-        Total Characters pwr
-
+        Total Characters hp
+        {{characters_hp|round:2}} / {{characters_hp_max}}
         <br />
 
         <div ng-click="cure()" class="button">CURE</div>
