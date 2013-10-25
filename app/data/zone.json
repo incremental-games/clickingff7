@@ -1,7 +1,8 @@
 {
   "1": {
     "level": 1,
-    "name": "Sector 1 Reactor"
+    "name": "Sector 1 Reactor",
+    "img": "Sector_1_Reactor.png"
   },
   "2": {
     "level": 2,

@@ -7,6 +7,7 @@ body {
 .wrapper {
   margin: auto;
   width: 1000px;
+  text-align: center;
 }
 
 header {
@@ -17,10 +18,6 @@ header {
   font-size: 1em;
   line-height: 2em;
   margin-bottom: 30px;
-}
-
-.clear {
-  clear: both;
 }
 
 footer {
@@ -48,14 +45,11 @@ footer {
 
 /** PARTS **/
 
-.part {
-  float: left;
-  width: 100px;
-}
-
-.big {
-  width: 400px;
-}
+.part {display: inline-block; vertical-align: top;}
+.w50 {width: 50px;}
+.w100 {width: 100px;}
+.w300 {width: 300px;}
+.w400 {width: 400px;}
 
 .title {
   background-color: #eee;
@@ -63,10 +57,14 @@ footer {
   text-transform: uppercase;
 }
 
-.character, .enemy, .upgrade {
-  border: 1px solid #ccc;
-  margin: 3px;
+.character, .enemy {
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+  position: relative;
 }
+
+.enemy {text-align: left;}
+.character {text-align: right;}
 
 .character.disabled, .enemy.disabled {
   background-color: #eee;
@@ -76,6 +74,26 @@ footer {
 }
 .enemy.hidden {
   display: none;
+}
+
+.xp_progress {
+  background-color: #BEECBE;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  opacity: 0.3;
+}
+
+.label {
+  text-transform: uppercase;
+  font-size: 10px;
+  vertical-align: top;
+  margin-left: 10px;
+}
+
+.line {
+  font-style: italic;
+  color: #999;
 }
 
 .actions {

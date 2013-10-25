@@ -166,11 +166,14 @@ Game.prototype.extends = function(save) {
  * @return {[type]} [description]
  */
 Game.prototype.refresh_characters_hp = function() {
-  var total_characters_hp = 0;
+  var characters_hp = 0;
   for (var i in this.characters) {
-    total_characters_hp += this.characters[i].get_hp();
+    characters_hp += this.characters[i].get_hp();
   }
-  this.set('characters_hp_max', total_characters_hp);
+  this.set('characters_hp_max', characters_hp);
+  if (!this.scopes.characters_hp) {
+    this.set('characters_hp', characters_hp);
+  }
 };
 
 /**
