@@ -10,8 +10,6 @@ function Character(Game, infos) {
 
   // scopes INFOS
   if (!this.data) this.data = {};
-  this.data.level_cost = 200;
-  this.data.weapon_cost = 100;
 
   // INFOS from COOKIE
   if (infos) {
@@ -108,27 +106,10 @@ Character.prototype.set_xp = function(xp) {
   this.data.xp += xp;
   if (this.data.xp >= this.get_xp_max()) {
     this.data.xp -= this.get_xp_max();
-    this.data.level_cost *= 2;
     this.data.level += 1;
 
     this.Game.refresh_characters_hp();
   }
-};
-
-/**
- * Returns true if character can level up
- * @return {boolean}
- */
-Character.prototype.can_level_up = function() {
-  return this.Game.$scope.total_xp >= this.data.level_cost;
-};
-
-/**
- * Returns true if character can upgrade his weapon
- * @return {boolean}
- */
-Character.prototype.can_weapon_up = function() {
-  return this.data.level > 0 && this.data.weapon_level < this.get_nbr_weapon() && this.Game.$scope.total_gils >= this.data.weapon_cost;
 };
 
 /**
@@ -159,5 +140,5 @@ Character.prototype.get_nbr_weapon = function() {
  * Save character data
  */
 Character.prototype.save = function() {
-  return _.omit(this.data, 'image', 'name');
+  return _.omit(this.data, 'hp_base', 'xp_base', 'image', 'name');
 };

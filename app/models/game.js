@@ -171,7 +171,6 @@ Game.prototype.refresh_characters_hp = function() {
     total_characters_hp += this.characters[i].get_hp();
   }
   this.set('characters_hp_max', total_characters_hp);
-  this.set('characters_hp', total_characters_hp);
 };
 
 /**
@@ -271,11 +270,6 @@ Game.prototype.refresh = function(key) {
 Game.prototype.save = function() {
   var $cookieStore = this.$cookieStore;
 
-  var enemy = {};
-  for (var i in this.enemy) {
-    enemy[i] = this.enemy[i].save();
-  }
-
   var characters = {};
   for (var i in this.characters) {
     characters[i] = this.characters[i].save();
@@ -284,13 +278,14 @@ Game.prototype.save = function() {
   var save = {
     "scopes": this.scopes,
     "zone": this.zone,
-    "enemy": enemy,
     "characters": characters
   };
 
   save.scopes.total_enemy_pwr = this.$scope.total_enemy_pwr;
   save.scopes.total_xp = this.$scope.total_xp;
   save.scopes.total_gils = this.$scope.total_gils;
+
+  console.log(save);
 
   $cookieStore.put('game', save);
 };
