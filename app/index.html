@@ -48,9 +48,10 @@
 
     <div class="wrapper">
 
-      <div>
+      <div class="menu">
         <div>Total Gils</div>
         <div><strong>{{total_gils|floor}} gils</strong></div>
+        <div ng-click="next_zone()" class="button" ng-class="{disabled: !boss_defeated}">Go next zone</div>
       </div>
 
       <div class="part">
@@ -91,8 +92,9 @@
           <div ng-repeat="(i, character) in characters | clean" class="character" ng-class="{disabled: character.data.level == 0}">
             <div><img ng-src="img/characters/{{character.data.image}}" alt="avatar" class="avatar" /></div>
             <div>{{character.data.name}} <strong ng-show="character.data.level > 0">(LVL{{character.data.level}})</strong></div>
+            <div>{{character.data.xp}} / {{character.get_xp_max()}} xp</div>
             <div class="line">"{{character.get_line()}}"</div>
-            <div ng-if="character.data.level > 0">hp {{character.data.hp}}</div>
+            <div ng-if="character.data.level > 0">hp {{character.get_hp()}}</div>
             <div ng-if="character.data.level > 0">pwr {{character.get_hits()|round:2}}</div>
           </div>
         </sections>

@@ -90,7 +90,7 @@ Game.prototype.load = function() {
   });
 
   // ENNEMIES
-  $http.get('data/enemies.json').success(function(data) {
+  $http.get('data/enemies.json?v=' + new Date().getTime()).success(function(data) {
     var enemy, _data = {};
     for (var i in data[zone_level]) {
       enemy = new Enemy(self, data[zone_level][i]);
@@ -140,12 +140,7 @@ Game.prototype.begin = function() {
     }
   }
 
-  var total_characters_hp = 0;
-  for (var i in this.characters) {
-    total_characters_hp += this.characters[i].data.hp;
-  }
-  this.set('characters_hp_max', total_characters_hp);
-  this.set('characters_hp', total_characters_hp);
+  this.refresh_characters_hp();
 
   this.refresh();
 };
@@ -167,9 +162,22 @@ Game.prototype.extends = function(save) {
 };
 
 /**
+ * Refresh the total characters hp
+ * @return {[type]} [description]
+ */
+Game.prototype.refresh_characters_hp = function() {
+  var total_characters_hp = 0;
+  for (var i in this.characters) {
+    total_characters_hp += this.characters[i].get_hp();
+  }
+  this.set('characters_hp_max', total_characters_hp);
+  this.set('characters_hp', total_characters_hp);
+};
+
+/**
  * Characters start auto-attacking
  */
-Game.prototype.enable_fight = function() {
+Game.prototype.start_fight = function() {
   if (!this.fight) {
     this.fight = true;
     for (var i in this.characters) {
@@ -180,8 +188,9 @@ Game.prototype.enable_fight = function() {
 
 /**
  * Characters stop attacking and wait for next fight
+ * @param  {boolean} victory
  */
-Game.prototype.disable_fight = function() {
+Game.prototype.end_fight = function(victory) {
   this.fight = false;
   for (var i in this.characters) {
     this.characters[i].wait();
@@ -190,11 +199,19 @@ Game.prototype.disable_fight = function() {
     var number = this.enemy[i].data.number;
     if (number > 0) {
       this.enemy[i].data.number = 0;
-      this.add("total_gils", this.enemy[i].data.gils * number);
 
-      for (var i in this.characters) {
-        var xp = this.characters[i].data.xp * number;
-        this.characters[i].set_xp(xp);
+      // Rewards if victory
+      if (victory) {
+        this.add("total_gils", this.enemy[i].data.gils * number);
+
+        if (this.enemy[i].data.boss) {
+          this.$scope.boss_defeated = this.scopes.boss_defeated = true;
+        }
+
+        for (var j in this.characters) {
+          var xp = this.enemy[i].data.xp * number;
+          this.characters[j].set_xp(xp);
+        }
       }
     }
   }
@@ -207,14 +224,7 @@ Game.prototype.disable_fight = function() {
  * @return {[type]} [description]
  */
 Game.prototype.escape = function() {
-  for (var i in this.enemy) {
-    this.enemy[i].data.number = 0;
-  }
-  for (var i in this.characters) {
-    this.characters[i].wait();
-  }
-  this.set('enemy_hp_max', 0);
-  this.set('enemy_hp', 0);
+  this.end_fight(false);
 };
 
 /**
@@ -223,7 +233,7 @@ Game.prototype.escape = function() {
  */
 Game.prototype.attack_enemy = function(hits) {
   if (this.sub('enemy_hp', hits) == 0) {
-    this.disable_fight();
+    this.end_fight(true);
   }
 };
 
@@ -233,7 +243,7 @@ Game.prototype.attack_enemy = function(hits) {
  */
 Game.prototype.attack_characters = function(hits) {
   if (this.sub('characters_hp', hits) == 0) {
-    this.disable_fight();
+    this.end_fight(false);
   }
 };
 

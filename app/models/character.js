@@ -12,7 +12,6 @@ function Character(Game, infos) {
   if (!this.data) this.data = {};
   this.data.level_cost = 200;
   this.data.weapon_cost = 100;
-  this.data.hp = 100;
 
   // INFOS from COOKIE
   if (infos) {
@@ -33,9 +32,6 @@ Character.prototype.init = function() {
   }
   if (!this.data.xp) {
     this.data.xp = 0;
-  }
-  if (!this.data.current_hp) {
-    this.data.current_hp = this.data.hp;
   }
 };
 
@@ -83,8 +79,25 @@ Character.prototype.wait = function() {
  * based on level and weapon level
  * @return {int}
  */
+Character.prototype.get_hp = function() {
+  return this.data.hp_base * this.data.level;
+};
+
+/**
+ * returns character total hits
+ * based on level and weapon level
+ * @return {int}
+ */
 Character.prototype.get_hits = function() {
   return this.data.level * this.get_weapon().hits * 0.1;
+};
+
+/**
+ * Get the total xp to level up
+ * @return {int}
+ */
+Character.prototype.get_xp_max = function() {
+  return this.data.level * this.data.xp_base;
 };
 
 /**
@@ -94,7 +107,7 @@ Character.prototype.get_hits = function() {
 Character.prototype.set_xp = function(xp) {
   this.data.xp += xp;
   if (this.data.xp >= this.data.level_cost) {
-    this.data.xp = this.data.level_cost - this.data.xp;
+    this.data.xp -= this.data.level_cost;
     this.data.level_cost *= 2;
     this.data.level += 1;
   }

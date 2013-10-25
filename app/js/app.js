@@ -117,7 +117,7 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
     enemy.run();
 
     if ($scope.enemy_hp > 0) {
-      Game.enable_fight();
+      Game.start_fight();
     }
   };
 

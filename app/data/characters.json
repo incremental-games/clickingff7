@@ -3,13 +3,15 @@
     "ref": "cloud",
     "name": "Cloud Strife",
     "image": "cloud.png",
-    "hp": 14
+    "hp_base": 14,
+    "xp_base": 30
   },
   "barret": {
     "ref": "barret",
     "name": "Barret Wallace",
     "image": "barret.png",
-    "hp": 16
+    "hp_base": 16,
+    "xp_base": 28
   },
   "tifa": {
     "ref": "tifa",

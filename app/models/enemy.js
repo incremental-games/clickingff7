@@ -71,7 +71,10 @@ Enemy.prototype.run = function() {
  */
 Enemy.prototype.wait = function() {
   var $timeout = this.Game.$timeout;
-  $timeout.cancel(this.timer);
+  for (var i in this.timer) {
+    $timeout.cancel(this.timer[i]);
+  }
+  this.timer = [];
 };
 
 /**
