@@ -41,28 +41,30 @@
     <header>
       <div class="wrapper">
         clicking ff7
-         | <div class="button" ng-click="save()">SAVE</div>
-         | <div class="button" ng-click="reset()">RESET</div>
       </div>
     </header>
 
     <div class="wrapper">
 
-      <div class="part w100">
-        <div>Total Gils</div>
-        <div><strong>{{total_gils|floor}} gils</strong></div>
+      <div class="part w300">
+        <div>{{zone.name}}</div>
+        <div><span class="label">gils</span> {{total_gils|floor}}</span></div>
       </div><!--
 
-      --><div class="part w100">
-        {{zone.name}}
-        <img ng-src="img/zones/{{zone.img}}" width="100" />
+      --><div class="part w300">
+        <div><img ng-src="img/zones/{{zone.img}}" width="100" /></div>
         <div ng-click="next_zone()" class="button" ng-class="{disabled: !boss_defeated}">Go next zone</div>
+      </div><!--
+
+      --><div class="part w300">
+        <div class="button" ng-click="save()">SAVE</div>
+        <div class="button" ng-click="reset()">RESET</div>
       </div>
 
       <div class="space"></div>
 
       <div class="part w100">
-        <div ng-click="attack()" class="button">ATTACK</div>
+        <div ng-click="attack()" class="button" ng-class="{disabled: !game.fight}">ATTACK</div>
       </div><!--
 
       --><div class="part enemy_hp w300">
@@ -77,15 +79,20 @@
 
       --><div class="part w100">
         <div ng-click="cure()" class="button">CURE</div>
-        <div ng-click="escape()" class="button">ESCAPE</div>
+        <div ng-click="escape()" class="button" ng-class="{disabled: !game.fight}">ESCAPE</div>
       </div>
 
-      <div class="clear"></div>
+      <div class="space"></div>
+
+      <div class="part title w400">Enemy</div>
+      <div class="part title w50">VS</div>
+      <div class="part title w400">Characters</div>
+
+      <div class="space"></div>
 
       <div class="part w400">
 
         <sections class="enemies">
-          <div class="title">Enemy</div>
           <div ng-repeat="(no, e) in enemy | clean" class="enemy" ng-class="{disabled: e.data.number == 0, hidden: no > enemy_level}">
             <div class="actions">
               <div class="button fight_enemy" ng-click="fight_enemy(e)">FIGHT</div>
@@ -112,7 +119,6 @@
       --><div class="part w400">
 
         <sections class="characters">
-          <div class="title">Characters</div>
           <div ng-repeat="(i, character) in characters | clean" class="character" ng-class="{disabled: character.data.level == 0}">
             <div class="xp_progress" style="width:{{character.data.xp/character.get_xp_max()*400}}px;"></div>
             <div class="part infos w300">
