@@ -262,9 +262,28 @@ Game.prototype.next_zone = function() {
  * Refresh all scopes
  */
 Game.prototype.refresh = function(key) {
+  this.$scope.game = this;
   for (var i in this.scopes) {
     this.$scope[i] = this.scopes[i];
   }
+};
+
+/**
+ * Returns in pixels enemy bar width
+ * @param  {int} pixel_max
+ * @return {[int]}
+ */
+Game.prototype.enemy_hp_progress = function(pixels_max) {
+  return (this.scopes.enemy_hp_max == 0 ? 0 : this.scopes.enemy_hp / this.scopes.enemy_hp_max * pixels_max);
+};
+
+/**
+ * Returns in pixels characters bar width
+ * @param  {int} pixel_max
+ * @return {[int]}
+ */
+Game.prototype.characters_hp_progress = function(pixels_max) {
+  return this.scopes.characters_hp / this.scopes.characters_hp_max * pixels_max;
 };
 
 /**

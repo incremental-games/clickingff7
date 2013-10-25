@@ -65,11 +65,13 @@
         <div ng-click="attack()" class="button">ATTACK</div>
       </div><!--
 
-      --><div class="part w300">
+      --><div class="part enemy_hp w300">
+        <div class="enemy_hp_progress" style="width:{{game.enemy_hp_progress(300)}}px;"></div>
         {{enemy_hp|round:2}} / {{enemy_hp_max}}
       </div><!--
 
-      --><div class="part w300">
+      --><div class="part characters_hp w300">
+        <div class="characters_hp_progress" style="width:{{game.characters_hp_progress(300)}}px;"></div>
         {{characters_hp|round:2}} / {{characters_hp_max}}
       </div><!--
 

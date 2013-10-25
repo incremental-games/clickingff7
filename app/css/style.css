@@ -76,11 +76,32 @@ footer {
   display: none;
 }
 
+.enemy_hp {position: relative;}
+.enemy_hp_progress {
+  background-color: #900;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  right: 0;
+  opacity: 0.3;
+}
+
+.characters_hp {position: relative;}
+.characters_hp_progress {
+  background-color: #009;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.3;
+}
+
 .xp_progress {
   background-color: #BEECBE;
   position: absolute;
   height: 100%;
   top: 0;
+  left: 0;
   opacity: 0.3;
 }
 
