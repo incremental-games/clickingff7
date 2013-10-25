@@ -106,10 +106,12 @@ Character.prototype.get_xp_max = function() {
  */
 Character.prototype.set_xp = function(xp) {
   this.data.xp += xp;
-  if (this.data.xp >= this.data.level_cost) {
-    this.data.xp -= this.data.level_cost;
+  if (this.data.xp >= this.get_xp_max()) {
+    this.data.xp -= this.get_xp_max();
     this.data.level_cost *= 2;
     this.data.level += 1;
+
+    this.Game.refresh_characters_hp();
   }
 };
 
