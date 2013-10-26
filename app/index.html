@@ -17,6 +17,7 @@
     <script src="models/enemy.js"></script>
     <script src="models/character.js"></script>
  
+    <script src="js/jquery.min.js"></script>
     <script src="js/angular.min.js"></script>
     <script src="js/angular-cookies.min.js"></script>
     <script src="js/app.js"></script>
@@ -78,7 +79,7 @@
       </div><!--
 
       --><div class="part w100">
-        <div ng-click="cure()" class="button">CURE</div>
+        <div ng-click="cure()" class="button" id="cure">CURE</div>
         <div ng-click="escape()" class="button" ng-class="{disabled: !game.fight}">ESCAPE</div>
       </div>
 
@@ -138,6 +139,8 @@
       </div>
 
     </div>
+
+    <div class="tmps"></div>
     
     <div class="clear"></div>
 
