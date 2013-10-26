@@ -132,7 +132,7 @@ Enemy.prototype.get_attacked = function(hits) {
  * @return {boolean}
  */
 Enemy.prototype.can_be_fought = function() {
-  return this.Game.$scope.total_enemy_pwr >= this.get_cost();
+  return this.Game.$rootScope.total_enemy_pwr >= this.get_cost();
 };
 
 /**

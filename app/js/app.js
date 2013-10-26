@@ -4,7 +4,7 @@
  * App module
  * @type {object}
  */
-var app = angular.module('clickingff7', ['ngCookies']);
+var app = angular.module('clickingff7', ['ngRoute', 'ngCookies']);
 
 /**
  * Game Service
@@ -57,15 +57,33 @@ app.filter('clean', function() {
 });
 
 /**
- * MAIN CLASS
- * @param {[type]} $scope       [description]
- * @param {[type]} $http        [description]
- * @param {[type]} $timeout     [description]
- * @param {[type]} Game         [description]
- * @param {[type]} $cookieStore [description]
+ * Routes logic
+ */
+app.config(['$routeProvider',
+  function($routeProvider) {
+
+    $routeProvider.
+    when('/game', {
+      templateUrl: 'partials/game.html',
+      controller: GameCtrl
+    }).
+    //when('/registration', {templateUrl: '../partials/shows.html', controller: RegistrationCtrl}).
+    when('/shop', {
+      templateUrl: 'partials/shop.html',
+      controller: ShopCtrl
+    }).
+    //when('/planning', {templateUrl: '../partials/shows.html', controller: PlanningCtrl}).
+    otherwise({
+      redirectTo: '/game'
+    });
+  }
+]);
+
+/**
+ * /Game
  */
 
-function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
+function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
 
   // STEP 1
   // Load saved game from COOKIE
@@ -103,12 +121,19 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
     });
   };
 
+  var go = function(path) {
+    $('#' + path).show();
+  };
+
   // STEP 2
   // Extend COOKIE with background information
 
   // GAME
-  Game.init($scope, $cookieStore, $http, $timeout);
+  if (Game.loaded) {
+    return;
+  }
 
+  Game.init($rootScope, $cookieStore, $http, $timeout);
   Game.preload();
 
   // STEP 3
@@ -117,7 +142,7 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
   /**
    * Attack manually enemy
    */
-  $scope.attack = function() {
+  $rootScope.attack = function() {
     if (Game.can_attack()) {
       var characters_hits = Game.characters_hits();
       var d = Math.pow(10, 2);
@@ -130,7 +155,7 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
   /**
    * Escape fight
    */
-  $scope.escape = function() {
+  $rootScope.escape = function() {
     if (Game.can_escape()) {
       Game.escape();
       animate('Success!');
@@ -140,7 +165,7 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
   /**
    * Cure maually characters
    */
-  $scope.cure = function() {
+  $rootScope.cure = function() {
     if (Game.can_cure()) {
       var characters_hp = Game.characters_hp();
       var res = Math.ceil(characters_hp / 50);
@@ -153,7 +178,7 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
    * Use ??? to search enemy
    * @param  {object} id Enemy in the zone
    */
-  $scope.fight = function(enemy) {
+  $rootScope.fight = function(enemy) {
     enemy.data.number += 1;
     animate('+1');
 
@@ -162,7 +187,7 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
 
     enemy.run();
 
-    if ($scope.enemy_hp > 0) {
+    if ($rootScope.enemy_hp > 0) {
       Game.start_fight();
     }
   };
@@ -170,7 +195,7 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
   /**
    * Go next zone
    */
-  $scope.next_zone = function() {
+  $rootScope.next_zone = function() {
     if (Game.can_next_zone()) {
       if (Game.zone.level == 2) {
         alert("Congrates! You've cleaned the game!\nThere should be more to come.. Stay tuned!");
@@ -181,9 +206,18 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
   };
 
   /**
+   * Go to the shop
+   */
+  $rootScope.shop = function() {
+    if (Game.can_shop()) {
+      $location.path("/shop");
+    }
+  };
+
+  /**
    * Save the game
    */
-  $scope.save = function() {
+  $rootScope.save = function() {
     if (Game.can_save()) {
       Game.save();
       animate('OK!');
@@ -193,7 +227,7 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
   /**
    * Reset the game
    */
-  $scope.reset = function() {
+  $rootScope.reset = function() {
     if (Game.can_reset() && confirm('Are you sure ? You\'ll lose everything !')) {
       Game.reset();
       animate('OK!');
@@ -202,3 +236,15 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
   };
 
 };
+
+/**
+ * /Shop
+ */
+
+function ShopCtrl($rootScope, $location, Game) {
+
+  $rootScope.back_game = function() {
+    $location.path("/game");
+  }
+
+}

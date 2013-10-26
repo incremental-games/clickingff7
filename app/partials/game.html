@@ -1,0 +1,91 @@
+<div class="part w300">
+  <div>{{game.zone.name}}</div>
+  <div><span class="label">gils</span> {{game.scopes.total_gils|floor}}</span></div>
+</div><!--
+
+--><div class="part w300">
+  <div><img ng-src="img/zones/{{game.zone.img}}" width="100" /></div>
+  <div ng-click="next_zone()" class="button" ng-class="{disabled: !game.can_next_zone()}">Go next zone</div>
+</div><!--
+
+--><div class="part w300">
+  <div class="button" ng-click="shop()" ng-class="{disabled: !game.can_shop()}">SHOP</div>
+  <div class="button" ng-click="save()" ng-class="{disabled: !game.can_save()}">SAVE</div>
+  <div class="button" ng-click="reset()" ng-class="{disabled: !game.can_reset()}">RESET</div>
+</div>
+
+<div class="space"></div>
+
+<div class="part w100">
+  <div ng-click="attack()" class="button" ng-class="{disabled: !game.can_attack()}">ATTACK</div>
+</div><!--
+
+--><div class="part enemy_hp w300">
+  <div class="enemy_hp_progress" style="width:{{game.enemy_hp_progress(300)}}px;"></div>
+  {{enemy_hp|round:2}} / {{enemy_hp_max}}
+</div><!--
+
+--><div class="part characters_hp w300">
+  <div class="characters_hp_progress" style="width:{{game.characters_hp_progress(300)}}px;"></div>
+  {{characters_hp|round:2}} / {{characters_hp_max}}
+</div><!--
+
+--><div class="part w100">
+  <div ng-click="cure()" class="button" ng-class="{disabled: !game.can_cure()}">CURE</div>
+  <div ng-click="escape()" class="button" ng-class="{disabled: !game.can_escape()}">ESCAPE</div>
+</div>
+
+<div class="space"></div>
+
+<div class="part title w400">Enemy</div>
+<div class="part title w50">VS</div>
+<div class="part title w400">Characters</div>
+
+<div class="space"></div>
+
+<div class="part w400">
+
+  <sections class="enemies">
+    <div ng-repeat="(no, e) in game.enemy | clean" class="enemy" ng-class="{disabled: e.data.number == 0, hidden: no > enemy_level}">
+      <div class="actions">
+        <div class="button fight_enemy" ng-click="fight(e)">FIGHT</div>
+      </div>
+      <div class="part avatar w50">
+        <img ng-src="img/enemy/{{e.data.image}}" alt="avatar" height="48" />
+      </div>
+      <div class="part infos w300">
+        {{e.data.name}} <strong ng-show="e.data.number > 0">x{{e.data.number}}</strong>
+        <div>
+          <span class="label">hp</span> {{e.data.hp}} 
+          <span class="label">pwr</span> {{e.data.pwr}}
+        </div>
+        <div>
+          <span class="label">xp</span> {{e.data.xp}} 
+          <span class="label">gils</span> {{e.data.gils}}
+        </div>
+      </div>
+    </div>
+  </sections>
+
+</div><!--
+
+--><div class="part w400">
+
+  <sections class="characters">
+    <div ng-repeat="(i, character) in game.characters | clean" class="character" ng-class="{disabled: character.data.level == 0}">
+      <div class="xp_progress" style="width:{{character.data.xp/character.get_xp_max()*400}}px;"></div>
+      <div class="part infos w300">
+        <div>{{character.data.name}} <strong>(LVL{{character.data.level}})</strong></div>
+        <div ng-if="character.data.level > 0">
+          <span class="label">hp</span> {{character.get_hp()}} 
+          <span class="label">pwr</span> {{character.get_hits()|round:2}}
+        </div>
+        <div class="line">"{{character.get_line()}}"</div>
+      </div><!--
+      --><div class="part avatar w50">
+        <img ng-src="img/characters/{{character.data.image}}" alt="avatar" />
+      </div>
+    </div>
+  </sections>
+
+</div>

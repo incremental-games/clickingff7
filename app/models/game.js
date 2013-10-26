@@ -6,11 +6,11 @@ function Game() {};
 
 /**
  * Init the game
- * @param {object} $scope
+ * @param {object} $rootScope
  * @param {object} infos
  */
-Game.prototype.init = function($scope, $cookieStore, $http, $timeout) {
-  this.$scope = $scope;
+Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
+  this.$rootScope = $rootScope;
   this.$cookieStore = $cookieStore;
   this.$http = $http;
   this.$timeout = $timeout;
@@ -71,7 +71,7 @@ Game.prototype.load = function() {
   }
 
   var self = this;
-  var $scope = this.$scope;
+  var $rootScope = this.$rootScope;
   var $http = this.$http;
 
   var zone_level = (save ? save.zone.level : this.zone.level);
@@ -89,7 +89,7 @@ Game.prototype.load = function() {
 
   // ZONE
   $http.get('data/zone.json').success(function(data) {
-    $scope.zone = self.zone = data[zone_level];
+    $rootScope.zone = self.zone = data[zone_level];
 
     self.tmp += 1;
     if (self.tmp == tmp_max) self.begin();
@@ -103,7 +103,7 @@ Game.prototype.load = function() {
       enemy.init();
       _data[i] = enemy;
     }
-    $scope.enemy = self.enemy = _data;
+    $rootScope.enemy = self.enemy = _data;
 
     self.tmp += 1;
     if (self.tmp == tmp_max) self.begin();
@@ -122,7 +122,7 @@ Game.prototype.load = function() {
       }
       _data[ref] = character;
     }
-    $scope.characters = self.characters = _data;
+    $rootScope.characters = self.characters = _data;
 
     self.tmp += 1;
     if (self.tmp == tmp_max) self.begin();
@@ -133,7 +133,7 @@ Game.prototype.load = function() {
  * Operations that begins after getting data
  */
 Game.prototype.begin = function() {
-  var $scope = this.$scope;
+  var $rootScope = this.$rootScope;
   var $cookieStore = this.$cookieStore;
   var $timeout = this.$timeout;
 
@@ -165,6 +165,14 @@ Game.prototype.extends = function(save) {
   }
   this.scopes = save.scopes;
   this.zone = save.zone;
+};
+
+/**
+ * Returns if it is possible to go to the shop
+ * @return {boolean}
+ */
+Game.prototype.can_shop = function() {
+  return !this.fight;
 };
 
 /**
@@ -261,7 +269,7 @@ Game.prototype.end_fight = function(victory) {
         this.add("total_gils", this.enemy[i].data.gils * number);
 
         if (this.enemy[i].data.boss) {
-          this.$scope.boss_defeated = this.scopes.boss_defeated = true;
+          this.$rootScope.boss_defeated = this.scopes.boss_defeated = true;
         }
 
         for (var j in this.characters) {
@@ -316,9 +324,9 @@ Game.prototype.next_zone = function() {
  * Refresh all scopes
  */
 Game.prototype.refresh = function(key) {
-  this.$scope.game = this;
+  this.$rootScope.game = this;
   for (var i in this.scopes) {
-    this.$scope[i] = this.scopes[i];
+    this.$rootScope[i] = this.scopes[i];
   }
 };
 
@@ -377,9 +385,9 @@ Game.prototype.save = function() {
     "characters": characters
   };
 
-  save.scopes.total_enemy_pwr = this.$scope.total_enemy_pwr;
-  save.scopes.total_xp = this.$scope.total_xp;
-  save.scopes.total_gils = this.$scope.total_gils;
+  save.scopes.total_enemy_pwr = this.$rootScope.total_enemy_pwr;
+  save.scopes.total_xp = this.$rootScope.total_xp;
+  save.scopes.total_gils = this.$rootScope.total_gils;
 
   console.log(save);
 
@@ -401,7 +409,7 @@ Game.prototype.reset = function() {
  * @param {[type]} value [description]
  */
 Game.prototype.set = function(scope, value) {
-  this.$scope[scope] = this.scopes[scope] = value;
+  this.$rootScope[scope] = this.scopes[scope] = value;
 
   return value;
 };
@@ -413,17 +421,17 @@ Game.prototype.set = function(scope, value) {
  * @return {[type]}       [description]
  */
 Game.prototype.add = function(scope, value) {
-  var new_value = this.$scope[scope] + value;
+  var new_value = this.$rootScope[scope] + value;
 
   if (scope == 'enemy_hp') {
-    new_value = Math.min(new_value, this.$scope.enemy_hp_max);
+    new_value = Math.min(new_value, this.$rootScope.enemy_hp_max);
   }
 
   if (scope == 'characters_hp') {
-    new_value = Math.min(new_value, this.$scope.characters_hp_max);
+    new_value = Math.min(new_value, this.$rootScope.characters_hp_max);
   }
 
-  this.$scope[scope] = this.scopes[scope] = new_value;
+  this.$rootScope[scope] = this.scopes[scope] = new_value;
 
   return new_value;
 };
@@ -435,17 +443,17 @@ Game.prototype.add = function(scope, value) {
  * @return {[type]}       [description]
  */
 Game.prototype.sub = function(scope, value) {
-  var new_value = Math.max(this.$scope[scope] - value, 0);
+  var new_value = Math.max(this.$rootScope[scope] - value, 0);
 
   if (scope == 'enemy_hp') {
-    new_value = Math.min(new_value, this.$scope.enemy_hp_max);
+    new_value = Math.min(new_value, this.$rootScope.enemy_hp_max);
   }
 
   if (scope == 'characters_hp') {
-    new_value = Math.min(new_value, this.$scope.characters_hp_max);
+    new_value = Math.min(new_value, this.$rootScope.characters_hp_max);
   }
 
-  this.$scope[scope] = this.scopes[scope] = new_value;
+  this.$rootScope[scope] = this.scopes[scope] = new_value;
 
   return new_value;
 };
