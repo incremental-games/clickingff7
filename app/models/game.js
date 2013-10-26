@@ -326,6 +326,26 @@ Game.prototype.enemy_hp_progress = function(pixels_max) {
 };
 
 /**
+ * Returns total characters hits
+ * @return {[int]}
+ */
+Game.prototype.characters_hits = function(pixels_max) {
+  var hits = 0;
+  for (var i in this.characters) {
+    hits += this.characters[i].get_hits();
+  }
+  return hits;
+}
+
+/**
+ * Returns total characters hp max
+ * @return {[int]}
+ */
+Game.prototype.characters_hp = function(pixels_max) {
+  return this.scopes.characters_hp_max;
+};
+
+/**
  * Returns in pixels characters bar width
  * @param  {int} pixel_max
  * @return {[int]}

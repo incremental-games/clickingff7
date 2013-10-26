@@ -119,8 +119,9 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
    */
   $scope.attack = function() {
     if (Game.can_attack) {
-      Game.attack_enemy(1);
-      animate('+1');
+      var characters_hits = Game.characters_hits();
+      Game.attack_enemy(characters_hits);
+      animate('+' + characters_hits);
     }
   };
 
@@ -139,8 +140,10 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
    */
   $scope.cure = function() {
     if (Game.can_cure()) {
-      Game.add('characters_hp', 1);
-      animate('+1');
+      var characters_hp = Game.characters_hp();
+      var res = Math.ceil(characters_hp / 50);
+      Game.add('characters_hp', res);
+      animate('+' + res);
     }
   };
 
