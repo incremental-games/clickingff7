@@ -133,17 +133,19 @@ footer {
 }
 
 .button {
-  border: 1px solid #444;
+  border: 1px solid #bbb;
   display: inline-block;
   font-size: 10px;
   padding: 3px;
   text-transform: uppercase;
-  color: #444;
+  color: #bbb;
   cursor: pointer;
 }
 
 .button.disabled {
-  color: #999;
+  color: #bbb;
   cursor: auto;
-  border-color: #999;
+  border-color: #fff;
+  background-color: #fff;
+  text-decoration: line-through;
 }
