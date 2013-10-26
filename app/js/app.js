@@ -197,6 +197,7 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
     if (Game.can_reset() && confirm('Are you sure ? You\'ll lose everything !')) {
       Game.reset();
       animate('OK!');
+      location.reload();
     }
   };
 
