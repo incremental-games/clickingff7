@@ -4,18 +4,23 @@
     "name": "Cloud Strife",
     "image": "cloud.png",
     "hp_base": 14,
-    "xp_base": 30
+    "xp_base": 30,
+    "level": 1
   },
   "barret": {
     "ref": "barret",
     "name": "Barret Wallace",
     "image": "barret.png",
     "hp_base": 16,
-    "xp_base": 28
+    "xp_base": 28,
+    "level": 1
   },
   "tifa": {
     "ref": "tifa",
     "name": "Tifa Lockhart",
-    "image": "tifa.png"
+    "image": "tifa.png",
+    "hp_base": 13,
+    "xp_base": 26,
+    "level": 9
   }
 }

@@ -65,10 +65,16 @@ Game.prototype.preload = function() {
  * depending the zone level
  */
 Game.prototype.load = function() {
+  // Data from save
+  if (!this.loaded) {
+    var save = this.$cookieStore.get('game');
+  }
+
   var self = this;
-  var zone_level = this.zone.level;
   var $scope = this.$scope;
   var $http = this.$http;
+
+  var zone_level = (save ? save.zone.level : this.zone.level);
 
   this.tmp = 0;
   var tmp_max = 4;
@@ -131,14 +137,14 @@ Game.prototype.begin = function() {
   var $cookieStore = this.$cookieStore;
   var $timeout = this.$timeout;
 
-  // Data from save
   if (!this.loaded) {
-    this.loaded = true;
-    var save = $cookieStore.get('game');
+    var save = this.$cookieStore.get('game');
     if (save) {
       this.extends(save);
     }
   }
+
+  this.loaded = true;
 
   this.refresh_characters_hp();
 

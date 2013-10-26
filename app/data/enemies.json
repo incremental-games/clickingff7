@@ -24,7 +24,7 @@
       "image": "mp.png",
       "hp": 80,
       "pwr": 5,
-      "xp": 9,
+      "xp": 10,
       "gils": 0
     },
     "4": {
@@ -32,8 +32,8 @@
       "name": "Grunt",
       "image": "grunt.png",
       "hp": 150,
-      "pwr": 9,
-      "xp": 17,
+      "pwr": 10,
+      "xp": 15,
       "gils": 0
     },
     "5": {
@@ -41,8 +41,8 @@
       "name": "Sweeper",
       "image": "sweeper.png",
       "hp": 300,
-      "pwr": 17,
-      "xp": 33,
+      "pwr": 15,
+      "xp": 30,
       "gils": 0
     },
     "6": {
@@ -50,8 +50,8 @@
       "name": "Guard Scorpion",
       "image": "guard-scorpion.png",
       "hp": 900,
-      "pwr": 51,
-      "xp": 99,
+      "pwr": 50,
+      "xp": 100,
       "gils": 0,
       "boss": true
     }
@@ -60,37 +60,42 @@
     "1": {
       "name": "Smogger",
       "image": "smogger.png",
-      "cost": 90,
-      "xp": 0.32,
-      "gils": 0.6
+      "hp": 600,
+      "pwr": 30,
+      "xp": 60,
+      "gils": 0
     },
     "2": {
       "name": "Special Combatant",
       "image": "special-combatant.png",
-      "cost": 60,
-      "xp": 0.28,
-      "gils": 0.4
+      "hp": 1200,
+      "pwr": 50,
+      "xp": 100,
+      "gils": 0
     },
     "3": {
       "name": "Proto Machinegun",
       "image": "proto-machinegun.png",
-      "cost": 100,
-      "xp": 0.16,
-      "gils": 0.15
+      "hp": 2000,
+      "pwr": 100,
+      "xp": 200,
+      "gils": 0
     },
     "4": {
       "name": "Blood Taste",
       "image": "blood-taste.png",
-      "cost": 72,
-      "xp": 0.24,
-      "gils": 0.32
+      "hp": 2500,
+      "pwr": 150,
+      "xp": 350,
+      "gils": 0
     },
     "5": {
       "name": "Air Buster",
       "image": "air-buster.png",
-      "cost": 1200,
-      "xp": 1.8,
-      "gils": 1.5,
+      "hp": 5000,
+      "pwr": 300,
+      "xp": 1000,
+      "gils": 0,
       "boss": true
     }
   }
