@@ -118,31 +118,37 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
    * Attack manually enemy
    */
   $scope.attack = function() {
-    Game.attack_enemy(1);
-    animate('+1');
+    if (Game.can_attack) {
+      Game.attack_enemy(1);
+      animate('+1');
+    }
   };
 
   /**
    * Escape fight
    */
   $scope.escape = function() {
-    Game.escape();
-    animate('Success!');
+    if (Game.can_escape()) {
+      Game.escape();
+      animate('Success!');
+    }
   };
 
   /**
    * Cure maually characters
    */
   $scope.cure = function() {
-    Game.add('characters_hp', 1);
-    animate('+1');
+    if (Game.can_cure()) {
+      Game.add('characters_hp', 1);
+      animate('+1');
+    }
   };
 
   /**
    * Use ??? to search enemy
    * @param  {object} id Enemy in the zone
    */
-  $scope.fight_enemy = function(enemy) {
+  $scope.fight = function(enemy) {
     enemy.data.number += 1;
     animate('+1');
 
@@ -160,7 +166,7 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
    * Go next zone
    */
   $scope.next_zone = function() {
-    if ($scope.boss_defeated) {
+    if (Game.can_next_zone()) {
       if (Game.zone.level == 2) {
         alert("Congrates! You've cleaned the game!\nThere should be more to come.. Stay tuned!");
         return;
@@ -173,17 +179,19 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
    * Save the game
    */
   $scope.save = function() {
-    Game.save();
-    animate('Saved!');
+    if (Game.can_save()) {
+      Game.save();
+      animate('OK!');
+    }
   };
 
   /**
    * Reset the game
    */
   $scope.reset = function() {
-    if (confirm('Are you sure ? You\'ll lose everything !')) {
+    if (Game.can_reset() && confirm('Are you sure ? You\'ll lose everything !')) {
       Game.reset();
-      animate('reset!');
+      animate('OK!');
     }
   };
 

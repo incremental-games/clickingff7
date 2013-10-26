@@ -54,18 +54,18 @@
 
       --><div class="part w300">
         <div><img ng-src="img/zones/{{zone.img}}" width="100" /></div>
-        <div ng-click="next_zone()" class="button" ng-class="{disabled: !boss_defeated}">Go next zone</div>
+        <div ng-click="next_zone()" class="button" ng-class="{disabled: !game.can_next_zone()}">Go next zone</div>
       </div><!--
 
       --><div class="part w300">
-        <div class="button" ng-click="save()">SAVE</div>
-        <div class="button" ng-click="reset()">RESET</div>
+        <div class="button" ng-click="save()" ng-class="{disabled: !game.can_save()}">SAVE</div>
+        <div class="button" ng-click="reset()" ng-class="{disabled: !game.can_reset()}">RESET</div>
       </div>
 
       <div class="space"></div>
 
       <div class="part w100">
-        <div ng-click="attack()" class="button" ng-class="{disabled: !game.fight}">ATTACK</div>
+        <div ng-click="attack()" class="button" ng-class="{disabled: !game.can_attack()}">ATTACK</div>
       </div><!--
 
       --><div class="part enemy_hp w300">
@@ -79,8 +79,8 @@
       </div><!--
 
       --><div class="part w100">
-        <div ng-click="cure()" class="button" id="cure">CURE</div>
-        <div ng-click="escape()" class="button" ng-class="{disabled: !game.fight}">ESCAPE</div>
+        <div ng-click="cure()" class="button" ng-class="{disabled: !game.can_cure()}">CURE</div>
+        <div ng-click="escape()" class="button" ng-class="{disabled: !game.can_escape()}">ESCAPE</div>
       </div>
 
       <div class="space"></div>
@@ -96,7 +96,7 @@
         <sections class="enemies">
           <div ng-repeat="(no, e) in enemy | clean" class="enemy" ng-class="{disabled: e.data.number == 0, hidden: no > enemy_level}">
             <div class="actions">
-              <div class="button fight_enemy" ng-click="fight_enemy(e)">FIGHT</div>
+              <div class="button fight_enemy" ng-click="fight(e)">FIGHT</div>
             </div>
             <div class="part avatar w50">
               <img ng-src="img/enemy/{{e.data.image}}" alt="avatar" height="48" />

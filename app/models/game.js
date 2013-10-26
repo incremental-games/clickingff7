@@ -162,6 +162,54 @@ Game.prototype.extends = function(save) {
 };
 
 /**
+ * Returns if it is possible to save the game
+ * @return {boolean}
+ */
+Game.prototype.can_save = function() {
+  return !this.fight;
+};
+
+/**
+ * Returns if it is possible to reset the game (= clear cookie)
+ * @return {boolean}
+ */
+Game.prototype.can_reset = function() {
+  return !this.fight;
+};
+
+/**
+ * Returns if it is possible to go next zone
+ * @return {boolean}
+ */
+Game.prototype.can_next_zone = function() {
+  return !this.fight && this.scopes.boss_defeated;
+};
+
+/**
+ * Returns if it is possible to attack enemy hp
+ * @return {boolean}
+ */
+Game.prototype.can_attack = function() {
+  return this.fight;
+};
+
+/**
+ * Returns if it is possible to cure characters hp
+ * @return {boolean}
+ */
+Game.prototype.can_cure = function() {
+  return (this.scopes.characters_hp < this.scopes.characters_hp_max);
+};
+
+/**
+ * Returns if it is possible to escape from enemy
+ * @return {boolean}
+ */
+Game.prototype.can_escape = function() {
+  return this.fight;
+};
+
+/**
  * Refresh the total characters hp
  * @return {[type]} [description]
  */
