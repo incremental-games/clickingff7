@@ -118,8 +118,10 @@ function HomeCtrl($scope, $cookieStore, $http, $timeout, Game) {
    * Attack manually enemy
    */
   $scope.attack = function() {
-    if (Game.can_attack) {
+    if (Game.can_attack()) {
       var characters_hits = Game.characters_hits();
+      var d = Math.pow(10, 2);
+      characters_hits = Math.round(characters_hits * d) / d;
       Game.attack_enemy(characters_hits);
       animate('+' + characters_hits);
     }
