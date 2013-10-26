@@ -243,6 +243,11 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
 
 function ShopCtrl($rootScope, $location, Game) {
 
+  if (!Game.loaded) {
+    $location.path("/game");
+    return;
+  }
+
   $rootScope.back_game = function() {
     $location.path("/game");
   }
