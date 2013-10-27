@@ -164,6 +164,7 @@ Game.prototype.extends = function(save) {
   }
 
   this.zone = save.zone;
+  this.total_gils = save.total_gils;
   this.characters_hp = save.characters_hp;
   this.characters_limit = save.characters_limit;
 };
@@ -442,6 +443,7 @@ Game.prototype.save = function() {
 
   save.characters = characters;
   save.zone = this.zone,
+  save.total_gils = this.total_gils;
   save.characters_hp = this.characters_hp;
   save.characters_limit = this.characters_limit;
 
