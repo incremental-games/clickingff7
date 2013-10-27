@@ -158,14 +158,13 @@ Game.prototype.begin = function() {
  * @param  {object} infos
  */
 Game.prototype.extends = function(save) {
-  var self = this;
   for (var i in save.characters) {
-    self.characters[i].extends(save.characters[i]);
+    this.characters[i].extends(save.characters[i]);
   }
-  for (var i in save.enemy) {
-    self.enemy[i].extends(save.enemy[i]);
-  }
+
   this.zone = save.zone;
+  this.characters_hp = save.characters_hp;
+  this.characters_limit = save.characters_limit;
 };
 
 /**
@@ -399,21 +398,21 @@ Game.prototype.characters_limit_progress = function(pixels_max) {
  * TODO filter
  */
 Game.prototype.save = function() {
-  var $cookieStore = this.$cookieStore;
-
   var characters = {};
   for (var i in this.characters) {
     characters[i] = this.characters[i].save();
   }
 
-  var save = {
-    "zone": this.zone,
-    "characters": characters
-  };
+  var save = {};
+
+  save.characters = characters;
+  save.zone = this.zone,
+  save.characters_hp = this.characters_hp;
+  save.characters_limit = this.characters_limit;
 
   console.log(save);
 
-  $cookieStore.put('game', save);
+  this.$cookieStore.put('game', save);
 };
 
 /**
