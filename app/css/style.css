@@ -89,7 +89,7 @@ footer {
 .enemy_hp_progress {
   background-color: #900;
   position: absolute;
-  height: 100%;
+  height: 18px;
   top: 0;
   right: 0;
   opacity: 0.3;
@@ -99,7 +99,17 @@ footer {
 .characters_hp_progress {
   background-color: #009;
   position: absolute;
-  height: 100%;
+  height: 18px;
+  top: 0;
+  left: 0;
+  opacity: 0.3;
+}
+
+.characters_limit {border-top: 1px solid #FDAD87; position: relative;}
+.characters_limit_progress {
+  background-color: #FDAD87;
+  position: absolute;
+  height: 9px;
   top: 0;
   left: 0;
   opacity: 0.3;

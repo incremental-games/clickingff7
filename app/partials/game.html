@@ -1,6 +1,6 @@
 <div class="part w300">
   <div>{{game.zone.name}}</div>
-  <div><span class="label">gils</span> {{game.scopes.total_gils|floor}}</span></div>
+  <div><span class="label">gils</span> {{game.total_gils|floor}}</span></div>
 </div><!--
 
 --><div class="part w300">
@@ -17,23 +17,36 @@
 <div class="space"></div>
 
 <div class="part w100">
+  <div ng-click="limit()" class="button" ng-class="{disabled: !game.can_limit()}">LIMIT</div>
   <div ng-click="attack()" class="button" ng-class="{disabled: !game.can_attack()}">ATTACK</div>
 </div><!--
 
 --><div class="part enemy_hp w300">
   <div class="enemy_hp_progress" style="width:{{game.enemy_hp_progress(300)}}px;"></div>
-  {{enemy_hp|round:2}} / {{enemy_hp_max}}
+  {{game.enemy_hp|round:2}} / {{game.enemy_hp_max}}
 </div><!--
 
 --><div class="part characters_hp w300">
   <div class="characters_hp_progress" style="width:{{game.characters_hp_progress(300)}}px;"></div>
-  {{characters_hp|round:2}} / {{characters_hp_max}}
+  {{game.characters_hp|round:2}} / {{game.characters_hp_max}}
 </div><!--
 
 --><div class="part w100">
   <div ng-click="cure()" class="button" ng-class="{disabled: !game.can_cure()}">CURE</div>
   <div ng-click="escape()" class="button" ng-class="{disabled: !game.can_escape()}">ESCAPE</div>
 </div>
+
+<div></div>
+
+<div class="part w100"></div><!--
+
+--><div class="part w300"></div><!--
+
+--><div class="part characters_limit w300">
+  <div class="characters_limit_progress" style="width:{{game.characters_limit_progress(300)}}px;"></div>
+</div><!--
+
+--><div class="part w100"></div>
 
 <div class="space"></div>
 
