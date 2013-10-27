@@ -66,13 +66,13 @@ footer {
   text-transform: uppercase;
 }
 
-.character, .enemy {
+.character, .enemy, .weapon {
   border-bottom: 1px solid #ccc;
   padding: 10px 0;
   position: relative;
 }
 
-.enemy {text-align: left;}
+.enemy, .weapon {text-align: left;}
 .character {text-align: right;}
 
 .character.disabled, .enemy.disabled {

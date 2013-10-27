@@ -1,4 +1,47 @@
-SHOP
+<div class="part w300">
+  <div>{{game.zone.name}}</div>
+  <div><span class="label">gils</span> {{game.total_gils|floor}}</span></div>
+</div><!--
 
+--><div class="part w300">
+  <div><img ng-src="img/zones/{{game.zone.img}}" width="100" /></div>
+</div><!--
 
-<div class="button" ng-click="back_game()">Back to game</div>
+--><div class="part w300">
+  <div class="button" ng-click="back_game()">Back to game</div>
+</div>
+
+<div class="space"></div>
+
+<div class="part title w400">Weapons</div>
+<div class="part title w50"></div>
+<div class="part title w400"></div>
+
+<div class="space"></div>
+
+<div class="part w400">
+
+  <sections class="items">
+    <div ng-repeat="(no, weapon) in game.weapons | clean" class="weapon">
+      <div class="actions">
+        <div class="button buy" ng-click="buy(weapon)" ng-class="!game.can_buy(weapon)">BUY</div>
+      </div>
+      <div class="part avatar w50">
+        
+      </div>
+      <div class="part infos w300">
+        {{weapon.name}} ({{weapon.character}})
+        <div>
+          <span class="label">hits</span> {{weapon.hits}} 
+          <span class="label">gils</span> {{weapon.gils}}
+        </div>
+      </div>
+    </div>
+    <div ng-show="game.no_weapons()">
+      <em>No weapons avalaible!</em>
+    </div>
+  </sections>
+
+</div><!--
+
+--><div class="part w400"></div>

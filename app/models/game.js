@@ -46,7 +46,7 @@ Game.prototype.preload = function() {
     self.data = {};
   }
 
-  // WEAPONS
+  // CHARACTERS
   $http.get('data/characters.json').success(function(data) {
     self.data.characters = data;
 
@@ -55,7 +55,7 @@ Game.prototype.preload = function() {
   });
 
   // WEAPONS
-  $http.get('data/weapons.json').success(function(data) {
+  $http.get('data/weapons.json?v=' + new Date().getTime()).success(function(data) {
     self.data.weapons = data;
 
     self.tmp += 1;
@@ -98,7 +98,7 @@ Game.prototype.load = function() {
   });
 
   // ENNEMIES
-  $http.get('data/enemies.json?v=' + new Date().getTime()).success(function(data) {
+  $http.get('data/enemy.json?v=' + new Date().getTime()).success(function(data) {
     var enemy, _data = {};
     for (var i in data[zone_level]) {
       enemy = new Enemy(self, data[zone_level][i]);
@@ -147,6 +147,7 @@ Game.prototype.begin = function() {
 
   this.loaded = true;
 
+  this.refresh_weapons();
   this.refresh_characters_hp();
   this.refresh_characters_limit();
 
@@ -232,6 +233,33 @@ Game.prototype.can_escape = function() {
 };
 
 /**
+ * Returns if it is possible to buy an item from the shop
+ * @return {boolean}
+ */
+Game.prototype.can_buy = function(weapon) {
+  return !this.fight && this.total_gils >= weapon.gils;
+};
+
+/**
+ * Refresh available weapons in the shop
+ */
+Game.prototype.refresh_weapons = function() {
+  var weapons = {}, n = 1;
+  for (var i in this.data.weapons) {
+    for (var j in this.data.weapons[i]) {
+      var weapon = this.data.weapons[i][j];
+      if (this.zone.level >= weapon.zone) {
+        weapon.character = i;
+        weapon.level = j;
+        weapons[n] = weapon;
+        n++;
+      }
+    }
+  }
+  this.weapons = weapons;
+};
+
+/**
  * Refresh the total characters hp
  * @return {[type]} [description]
  */
@@ -261,6 +289,13 @@ Game.prototype.refresh_characters_limit = function() {
   }
 };
 
+
+/**
+ * Returns true if there are no weapons available on the shop
+ */
+Game.prototype.no_weapons = function() {
+  return Object.keys(this.weapons).length == 0;
+};
 /**
  * Characters start auto-attacking
  */

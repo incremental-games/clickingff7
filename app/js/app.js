@@ -121,10 +121,6 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
     });
   };
 
-  var go = function(path) {
-    $('#' + path).show();
-  };
-
   // STEP 2
   // Extend COOKIE with background information
 
@@ -258,13 +254,58 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
 
 function ShopCtrl($rootScope, $location, Game) {
 
+  var last_float = 0;
+
+  var animate = function(str) {
+    var elc = $('<div class="tmp">' + str + '</div>');
+    $('.tmps').append(elc);
+
+    elc.show();
+    elc.offset({
+      left: event.pageX - 0,
+      top: event.pageY - 30
+    });
+    var end_y = event.clientY - 150;
+    elc.css('opacity', 100);
+
+    if (last_float == 1) {
+      var this_float = event.pageX;
+      last_float = 0;
+    } else {
+      var this_float = event.pageX - 60;
+      last_float = 1;
+    }
+
+    elc.animate({
+      'top': end_y.toString() + 'px',
+      'opacity': 0,
+      'left': this_float.toString() + 'px'
+    }, 750, function() {
+      elc.remove();
+    });
+  };
+
   if (!Game.loaded) {
     $location.path("/game");
     return;
   }
 
+  /**
+   * Back to the game
+   */
   $rootScope.back_game = function() {
     $location.path("/game");
-  }
+  };
+
+  /**
+   * Buy a weapon from the store
+   */
+  $rootScope.buy = function(weapon) {
+    if (Game.can_buy(weapon)) {
+      Game.characters[weapon.character].data.weapon_level = weapon.level;
+      Game.sub('total_gils', weapon.gils);
+      animate('OK!');
+    }
+  };
 
 }

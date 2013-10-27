@@ -109,6 +109,7 @@ Character.prototype.set_xp = function(xp) {
     this.data.level += 1;
 
     this.Game.refresh_characters_hp();
+    this.Game.refresh_characters_limit();
   }
 };
 
