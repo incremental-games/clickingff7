@@ -249,7 +249,7 @@ Game.prototype.refresh_weapons = function() {
   for (var i in this.data.weapons) {
     for (var j in this.data.weapons[i]) {
       var weapon = this.data.weapons[i][j];
-      if (this.zone.level >= weapon.zone) {
+      if (this.zone.level >= weapon.zone && this.characters[i].data.weapon_level < j) {
         weapon.character = i;
         weapon.level = j;
         weapons[n] = weapon;
