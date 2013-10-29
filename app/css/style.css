@@ -172,3 +172,12 @@ footer {
   background-color: #fff;
   text-decoration: line-through;
 }
+
+/* ANIMATIONS */
+
+.xp_progress, .enemy_hp_progress, .characters_hp_progress, .characters_limit_progress {
+  -webkit-transition:0.5s linear all;
+  -moz-transition:0.5s linear all;
+  -o-transition:0.5s linear all;
+  transition:0.5s linear all;
+}
