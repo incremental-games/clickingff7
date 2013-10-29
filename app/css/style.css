@@ -73,13 +73,16 @@ footer {
 }
 
 .character, .enemy, .weapon {
-  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
   padding: 10px 0;
   position: relative;
 }
 
 .enemy, .weapon {text-align: left;}
-.character {text-align: right;}
+.character {
+  border-top: 1px solid #77B477;
+  text-align: right;
+}
 
 .character.disabled, .enemy.disabled {
   color: #999;
@@ -124,10 +127,9 @@ footer {
 .xp_progress {
   background-color: #BEECBE;
   position: absolute;
-  height: 100%;
+  height: 9px;
   top: 0;
   left: 0;
-  opacity: 0.3;
 }
 
 .label {
@@ -149,13 +151,18 @@ footer {
 }
 
 .button {
-  border: 1px solid #bbb;
   display: inline-block;
   font-size: 10px;
   padding: 3px;
   text-transform: uppercase;
-  color: #bbb;
+  color: #fff;
   cursor: pointer;
+  background-color: #6C7DB3;
+}
+
+.button.limit {
+  background-color: #900;
+  color: #fff;
 }
 
 .button.disabled {
