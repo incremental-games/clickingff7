@@ -136,21 +136,6 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
   // Scope actions
 
   /**
-   * Limit manually enemy
-   */
-  $rootScope.limit = function() {
-    if (Game.can_limit()) {
-      var characters_hits = Game.characters_hits();
-      var d = Math.pow(10, 2);
-      characters_hits = Math.round(characters_hits * d) / d;
-      characters_hits *= 2;
-      Game.set('characters_limit', 0);
-      Game.attack_enemy(characters_hits);
-      animate('+' + characters_hits);
-    }
-  };
-
-  /**
    * Attack manually enemy
    */
   $rootScope.attack = function() {
@@ -158,6 +143,11 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
       var characters_hits = Game.characters_hits();
       var d = Math.pow(10, 2);
       characters_hits = Math.round(characters_hits * d) / d;
+      // checks limit
+      if (Game.can_limit()) {
+        characters_hits *= 2;
+        Game.set('characters_limit', 0);
+      }
       Game.attack_enemy(characters_hits);
       animate('+' + characters_hits);
     }
@@ -304,6 +294,7 @@ function ShopCtrl($rootScope, $location, Game) {
     if (Game.can_buy(weapon)) {
       Game.characters[weapon.character].data.weapon_level = weapon.level;
       Game.sub('total_gils', weapon.gils);
+      Game.refresh_weapons();
       animate('OK!');
     }
   };

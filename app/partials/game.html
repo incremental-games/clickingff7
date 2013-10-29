@@ -1,6 +1,6 @@
 <div class="part w300">
-  <div>{{game.zone.name}}</div>
-  <div><span class="label">gils</span> {{game.total_gils|floor}}</span></div>
+  <div>{{game.zone.name}} (<em>#{{game.zone.level}}</em>)</div>
+  <div><span class="label">gils</span> <strong>{{game.total_gils|floor}}</strong></span></div>
 </div><!--
 
 --><div class="part w300">
@@ -17,8 +17,10 @@
 <div class="space"></div>
 
 <div class="part w100">
-  <div ng-click="limit()" class="button" ng-class="{disabled: !game.can_limit()}">LIMIT</div>
-  <div ng-click="attack()" class="button" ng-class="{disabled: !game.can_attack()}">ATTACK</div>
+  <div ng-click="attack()" class="button" ng-class="{disabled: !game.can_attack(), limit: game.can_limit()}">
+    <span ng-if="!game.can_limit()">ATTACK</span>
+    <span ng-if="game.can_limit()">LIMIT</span>
+  </div>
 </div><!--
 
 --><div class="part enemy_hp w300">
