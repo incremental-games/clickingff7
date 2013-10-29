@@ -4,7 +4,7 @@
     "name": "Cloud Strife",
     "image": "cloud.png",
     "hp_base": 14,
-    "xp_base": 30,
+    "xp_formula": "Math.pow(x,2)*30",
     "level": 1
   },
   "barret": {
@@ -12,7 +12,7 @@
     "name": "Barret Wallace",
     "image": "barret.png",
     "hp_base": 16,
-    "xp_base": 28,
+    "xp_formula": "Math.pow(x,2)*28",
     "level": 1
   },
   "tifa": {
@@ -20,7 +20,7 @@
     "name": "Tifa Lockhart",
     "image": "tifa.png",
     "hp_base": 13,
-    "xp_base": 26,
+    "xp_formula": "Math.pow(x,2)*26",
     "level": 9
   }
 }

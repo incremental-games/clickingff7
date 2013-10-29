@@ -95,7 +95,7 @@ Character.prototype.get_hits = function() {
  * @return {int}
  */
 Character.prototype.get_xp_max = function() {
-  return this.data.level * this.data.xp_base;
+  return eval(this.data.xp_formula.replace('x', this.data.level));
 };
 
 /**
@@ -104,7 +104,7 @@ Character.prototype.get_xp_max = function() {
  */
 Character.prototype.set_xp = function(xp) {
   this.data.xp += xp;
-  if (this.data.xp >= this.get_xp_max()) {
+  while (this.data.xp >= this.get_xp_max()) {
     this.data.xp -= this.get_xp_max();
     this.data.level += 1;
 
