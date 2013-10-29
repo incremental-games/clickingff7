@@ -87,8 +87,8 @@
 --><div class="part w400">
 
   <sections class="characters">
-    <div ng-repeat="(i, character) in game.characters | clean" class="character" ng-class="{disabled: character.data.level == 0}">
-      <div class="xp_progress" style="width:{{character.data.xp/character.get_xp_max()*400}}px;"></div>
+    <div ng-repeat="(i, character) in game.characters | clean" class="character">
+      <div class="xp_progress" style="width:{{character.xp_progress(400)}}px;"></div>
       <div class="part infos w300">
         <div>{{character.data.name}} <strong>(LVL{{character.data.level}})</strong></div>
         <div ng-if="character.data.level > 0">

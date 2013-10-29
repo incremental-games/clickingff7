@@ -99,6 +99,15 @@ Character.prototype.get_xp_max = function() {
 };
 
 /**
+ * Returns in pixels XP bar width
+ * @param  {int} pixel_max
+ * @return {int}
+ */
+Character.prototype.xp_progress = function(pixels_max) {
+  return (this.data.xp == 0 ? 0 : this.data.xp / this.get_xp_max() * pixels_max);
+};
+
+/**
  * Add xp to the character
  * @param {int} xp
  */
