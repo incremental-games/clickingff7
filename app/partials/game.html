@@ -4,7 +4,7 @@
 </div><!--
 
 --><div class="part w300">
-  <div><img ng-src="img/zones/{{game.zone.img}}" width="100" /></div>
+  <div ng-if="game.zone.img"><img ng-src="img/zones/{{game.zone.img}}" width="100" /></div>
   <div ng-click="next_zone()" class="button" ng-class="{disabled: !game.can_next_zone()}" data-step="11" data-intro="Well, that's all. Now try your best to go to the next zone ;)">Go next zone</div>
 </div><!--
 
