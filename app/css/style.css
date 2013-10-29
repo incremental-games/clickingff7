@@ -139,6 +139,12 @@ footer {
   margin-left: 10px;
 }
 
+.boss {
+  color: #900;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
 .line {
   font-style: italic;
   color: #999;

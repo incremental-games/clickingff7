@@ -236,6 +236,15 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
     }
   };
 
+  /**
+   * Show the help
+   */
+  $rootScope.help = function(ev) {
+    if (!Game.fight) {
+      introJs().start();
+    }
+  };
+
 };
 
 /**
