@@ -92,23 +92,23 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
 
   var last_float = 0;
 
-  var animate = function(str) {
+  var animate = function(ev, str) {
     var elc = $('<div class="tmp">' + str + '</div>');
     $('.tmps').append(elc);
 
     elc.show();
     elc.offset({
-      left: event.pageX - 0,
-      top: event.pageY - 30
+      left: ev.pageX - 0,
+      top: ev.pageY - 30
     });
-    var end_y = event.clientY - 150;
+    var end_y = ev.clientY - 150;
     elc.css('opacity', 100);
 
     if (last_float == 1) {
-      var this_float = event.pageX;
+      var this_float = ev.pageX;
       last_float = 0;
     } else {
-      var this_float = event.pageX - 60;
+      var this_float = ev.pageX - 60;
       last_float = 1;
     }
 
@@ -138,7 +138,7 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
   /**
    * Attack manually enemy
    */
-  $rootScope.attack = function() {
+  $rootScope.attack = function(ev) {
     if (Game.can_attack()) {
       var characters_hits = Game.characters_hits();
       var d = Math.pow(10, 2);
@@ -149,29 +149,29 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
         Game.set('characters_limit', 0);
       }
       Game.attack_enemy(characters_hits);
-      animate('+' + characters_hits);
+      animate(ev, '+' + characters_hits);
     }
   };
 
   /**
    * Escape fight
    */
-  $rootScope.escape = function() {
+  $rootScope.escape = function(ev) {
     if (Game.can_escape()) {
       Game.escape();
-      animate('Success!');
+      animate(ev, 'Success!');
     }
   };
 
   /**
    * Cure maually characters
    */
-  $rootScope.cure = function() {
+  $rootScope.cure = function(ev) {
     if (Game.can_cure()) {
       var characters_hp = Game.characters_hp_max;
       var res = Math.ceil(characters_hp / 50);
       Game.add('characters_hp', res);
-      animate('+' + res);
+      animate(ev, '+' + res);
     }
   };
 
@@ -179,9 +179,9 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
    * Use ??? to search enemy
    * @param  {object} id Enemy in the zone
    */
-  $rootScope.fight = function(enemy) {
+  $rootScope.fight = function(ev, enemy) {
     enemy.data.number += 1;
-    animate('+1');
+    animate(ev, '+1');
 
     Game.add('enemy_hp_max', enemy.data.hp);
     Game.add('enemy_hp', enemy.data.hp);
@@ -218,20 +218,20 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
   /**
    * Save the game
    */
-  $rootScope.save = function() {
+  $rootScope.save = function(ev) {
     if (Game.can_save()) {
       Game.save();
-      animate('OK!');
+      animate(ev, 'OK!');
     }
   };
 
   /**
    * Reset the game
    */
-  $rootScope.reset = function() {
+  $rootScope.reset = function(ev) {
     if (Game.can_reset() && confirm('Are you sure ? You\'ll lose everything !')) {
       Game.reset();
-      animate('OK!');
+      animate(ev, 'OK!');
       location.reload();
     }
   };
@@ -246,23 +246,23 @@ function ShopCtrl($rootScope, $location, Game) {
 
   var last_float = 0;
 
-  var animate = function(str) {
+  var animate = function(ev, str) {
     var elc = $('<div class="tmp">' + str + '</div>');
     $('.tmps').append(elc);
 
     elc.show();
     elc.offset({
-      left: event.pageX - 0,
-      top: event.pageY - 30
+      left: ev.pageX - 0,
+      top: ev.pageY - 30
     });
-    var end_y = event.clientY - 150;
+    var end_y = ev.clientY - 150;
     elc.css('opacity', 100);
 
     if (last_float == 1) {
-      var this_float = event.pageX;
+      var this_float = ev.pageX;
       last_float = 0;
     } else {
-      var this_float = event.pageX - 60;
+      var this_float = ev.pageX - 60;
       last_float = 1;
     }
 
@@ -290,12 +290,12 @@ function ShopCtrl($rootScope, $location, Game) {
   /**
    * Buy a weapon from the store
    */
-  $rootScope.buy = function(weapon) {
+  $rootScope.buy = function(ev, weapon) {
     if (Game.can_buy(weapon)) {
       Game.characters[weapon.character].data.weapon_level = weapon.level;
       Game.sub('total_gils', weapon.gils);
       Game.refresh_weapons();
-      animate('OK!');
+      animate(ev, 'OK!');
     }
   };
 

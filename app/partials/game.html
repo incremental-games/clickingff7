@@ -10,14 +10,14 @@
 
 --><div class="part w300">
   <div class="button" ng-click="shop()" ng-class="{disabled: !game.can_shop()}">SHOP</div>
-  <div class="button" ng-click="save()" ng-class="{disabled: !game.can_save()}">SAVE</div>
-  <div class="button" ng-click="reset()" ng-class="{disabled: !game.can_reset()}">RESET</div>
+  <div class="button" ng-click="save($event)" ng-class="{disabled: !game.can_save()}">SAVE</div>
+  <div class="button" ng-click="reset($event)" ng-class="{disabled: !game.can_reset()}">RESET</div>
 </div>
 
 <div class="space"></div>
 
 <div class="part w100">
-  <div ng-click="attack()" class="button" ng-class="{disabled: !game.can_attack(), limit: game.can_limit()}">
+  <div ng-click="attack($event)" class="button" ng-class="{disabled: !game.can_attack(), limit: game.can_limit()}">
     <span ng-if="!game.can_limit()">ATTACK</span>
     <span ng-if="game.can_limit()">LIMIT</span>
   </div>
@@ -34,8 +34,8 @@
 </div><!--
 
 --><div class="part w100">
-  <div ng-click="cure()" class="button" ng-class="{disabled: !game.can_cure()}">CURE</div>
-  <div ng-click="escape()" class="button" ng-class="{disabled: !game.can_escape()}">ESCAPE</div>
+  <div ng-click="cure($event)" class="button" ng-class="{disabled: !game.can_cure()}">CURE</div>
+  <div ng-click="escape($event)" class="button" ng-class="{disabled: !game.can_escape()}">ESCAPE</div>
 </div>
 
 <div></div>
@@ -63,7 +63,7 @@
   <sections class="enemies">
     <div ng-repeat="(no, e) in game.enemy | clean" class="enemy" ng-class="{disabled: e.data.number == 0, hidden: no > enemy_level}">
       <div class="actions">
-        <div class="button fight_enemy" ng-click="fight(e)">FIGHT</div>
+        <div class="button fight_enemy" ng-click="fight($event, e)">FIGHT</div>
       </div>
       <div class="part avatar w50">
         <img ng-src="img/enemy/{{e.data.image}}" alt="avatar" height="48" />

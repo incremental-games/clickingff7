@@ -24,7 +24,7 @@
   <sections class="items">
     <div ng-repeat="(no, weapon) in game.weapons | clean" class="weapon">
       <div class="actions">
-        <div class="button buy" ng-click="buy(weapon)" ng-class="{disabled: !game.can_buy(weapon)}">BUY</div>
+        <div class="button buy" ng-click="buy($event, weapon)" ng-class="{disabled: !game.can_buy(weapon)}">BUY</div>
       </div>
       <div class="part avatar w50">
         
