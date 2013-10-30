@@ -42,7 +42,7 @@ Game.prototype.preload = function() {
   var $http = this.$http;
 
   this.tmp = 0;
-  var tmp_max = 3;
+  var tmp_max = 2;
 
   if (!self.data) {
     self.data = {};
@@ -51,17 +51,6 @@ Game.prototype.preload = function() {
   // CHARACTERS
   $http.get('data/characters.json').success(function(data) {
     self.data.characters = data;
-
-    self.tmp += 1;
-    if (self.tmp == tmp_max) self.load();
-  });
-
-  // MATERIAS
-  $http.get('data/materias.json?v=' + new Date().getTime()).success(function(data) {
-    self.data.materias = data;
-
-    // Add beginning materia (restore)
-    self.materias['restore'] = new Materia(self, data['restore']);
 
     self.tmp += 1;
     if (self.tmp == tmp_max) self.load();
@@ -92,7 +81,7 @@ Game.prototype.load = function() {
   var zone_level = (save ? save.zone.level : this.zone.level);
 
   this.tmp = 0;
-  var tmp_max = 5;
+  var tmp_max = 6;
 
   // LINES
   $http.get('data/lines.json').success(function(data) {
@@ -141,6 +130,23 @@ Game.prototype.load = function() {
 
     self.tmp += 1;
     if (self.tmp == tmp_max) self.begin();
+  });
+
+  // MATERIAS
+  $http.get('data/materias.json?v=' + new Date().getTime()).success(function(data) {
+    self.data.materias = {};
+    for (var i in data) {
+      var materia = data[i];
+      if (zone_level >= materia.zone) {
+        self.data.materias[i] = new Materia(self, data[i]);
+      }
+    }
+
+    // Add beginning materia (restore)
+    self.materias['restore'] = new Materia(self, data['restore']);
+
+    self.tmp += 1;
+    if (self.tmp == tmp_max) self.load();
   });
 
   // ITEMS
