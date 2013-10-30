@@ -9,7 +9,7 @@
 </div><!--
 
 --><div class="part w300">
-  <div class="button" ng-click="help()" ng-class="{disabled: game.fight()}">HELP</div>
+  <div class="button" ng-click="help()" ng-class="{disabled: game.fight()}">HOW TO PLAY</div>
   <div class="button" ng-click="shop()" ng-class="{disabled: !game.can_shop()}" data-step="10" data-intro="If you have GILS, you should go to the shop and buy items to get your characters stronger.">SHOP</div>
   <div style="display:inline-block;" data-step="11" data-intro="Oh yes, you should think about saving your progress. So, next time you will come, you will be able to continue where you were.">
     <div class="button" ng-click="save($event)" ng-class="{disabled: !game.can_save()}">SAVE</div>
