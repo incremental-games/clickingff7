@@ -31,6 +31,7 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
 
   this.characters = this.enemy = {};
   this.materias = {};
+  this.items = {};
 };
 
 /**
@@ -140,6 +141,14 @@ Game.prototype.load = function() {
 
     self.tmp += 1;
     if (self.tmp == tmp_max) self.begin();
+  });
+
+  // ITEMS
+  $http.get('data/items.json?v=' + new Date().getTime()).success(function(data) {
+    self.data.items = data;
+
+    self.tmp += 1;
+    if (self.tmp == tmp_max) self.load();
   });
 };
 

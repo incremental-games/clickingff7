@@ -179,6 +179,10 @@ footer {
   text-decoration: line-through;
 }
 
+.button:hover {
+  box-shadow: 0px 0px 5px #6C7DB3;
+}
+
 /* ANIMATIONS */
 
 .xp_progress, .enemy_hp_progress, .characters_hp_progress, .characters_limit_progress {
