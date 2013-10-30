@@ -150,5 +150,5 @@ Character.prototype.get_nbr_weapon = function() {
  * Save character data
  */
 Character.prototype.save = function() {
-  return _.omit(this.data, 'hp_base', 'xp_base', 'image', 'name');
+  return _.omit(this.data, 'hp_base', 'xp_formula', 'image', 'name');
 };
