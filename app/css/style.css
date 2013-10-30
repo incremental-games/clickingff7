@@ -75,14 +75,14 @@ footer {
   text-transform: uppercase;
 }
 
-.character, .enemy, .weapon {
+.character, .enemy, .weapon, .materia {
   border-top: 1px solid #ccc;
   padding: 10px 0;
   position: relative;
 }
 
 .enemy, .weapon {text-align: left;}
-.character {
+.character, .materia {
   border-top: 1px solid #77B477;
   text-align: right;
 }
@@ -92,9 +92,6 @@ footer {
 }
 .character.disabled .avatar, .enemy.disabled .avatar {
   opacity: 0.1;
-}
-.enemy.hidden {
-  display: none;
 }
 
 .enemy_hp {border-top: 1px solid #ecc; position: relative;}
@@ -127,7 +124,7 @@ footer {
   opacity: 0.3;
 }
 
-.xp_progress {
+.xp_progress, .ap_progress {
   background-color: #BEECBE;
   position: absolute;
   height: 9px;

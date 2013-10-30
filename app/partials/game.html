@@ -111,3 +111,29 @@
   </sections>
 
 </div>
+
+<div class="space"></div>
+
+<div class="part title w400"></div>
+<div class="part title w50"></div>
+<div class="part title w400">Materias</div>
+
+<div class="space"></div>
+
+<div class="part w400"></div><!--
+
+--><div class="part w400">
+
+  <section class="materias">
+    <div ng-repeat="(i, materia) in game.materias | clean" class="materia">
+      <div class="ap_progress" style="width:{{materia.ap_progress(400)}}px;"></div>
+      <div class="part infos w300">
+        <div>{{materia.data.name}} <strong>(LVL{{materia.data.level}})</strong></div>
+        <div class="line">"{{materia.get_desc()}}"</div>
+      </div><!--
+      --><div class="part avatar w50"></div>
+    </div>
+  </sections>
+
+</div>
+

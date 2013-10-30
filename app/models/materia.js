@@ -1,0 +1,86 @@
+/**
+ * Materia class
+ * @param {object} Game
+ * @param {object} infos
+ */
+
+function Materia(Game, infos) {
+
+  this.Game = Game;
+
+  // scopes INFOS
+  if (!this.data) this.data = {};
+  this.data.ap = 0;
+
+  // INFOS from COOKIE
+  if (infos) {
+    this.extends(infos);
+  }
+
+};
+
+/**
+ * Extends the data properties with saved data
+ * @param  {object} infos
+ */
+Materia.prototype.extends = function(data) {
+  self = this;
+  for (var i in data) {
+    self.data[i] = data[i];
+  }
+};
+
+/**
+ * Return description of the materia
+ */
+Materia.prototype.get_desc = function() {
+  var text = '';
+
+  switch (this.data.ref) {
+    case 'restore':
+      text = 'You can cure your characters HP by ' + (this.data.level * 10) + '%';
+      break;
+
+  };
+
+  return text;
+};
+
+/**
+ * Get the total ap to level up
+ * @return {int}
+ */
+Materia.prototype.get_ap_max = function() {
+  return eval(this.data.ap_formula.replace('x', this.data.level));
+};
+
+/**
+ * Returns in pixels AP bar width
+ * @param  {int} pixel_max
+ * @return {int}
+ */
+Materia.prototype.ap_progress = function(pixels_max) {
+  return (this.data.ap == 0 ? 0 : this.data.ap / this.get_ap_max() * pixels_max);
+};
+
+/**
+ * Add ap to the materia
+ * @param {int} ap
+ */
+Materia.prototype.set_ap = function(ap) {
+  this.data.ap += ap;
+  while (this.data.ap >= this.get_ap_max()) {
+    this.data.ap -= this.get_ap_max();
+    this.data.level += 1;
+
+    this.Game.refresh_characters_hp();
+    this.Game.refresh_characters_limit();
+  }
+};
+
+/**
+ * Save materia data
+ */
+Materia.prototype.save = function() {
+  return _.omit(this.data, 'name', 'ap_formula');
+};

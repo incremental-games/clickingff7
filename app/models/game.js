@@ -30,6 +30,7 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
   };
 
   this.characters = this.enemy = {};
+  this.materias = {};
 };
 
 /**
@@ -40,7 +41,7 @@ Game.prototype.preload = function() {
   var $http = this.$http;
 
   this.tmp = 0;
-  var tmp_max = 2;
+  var tmp_max = 3;
 
   if (!self.data) {
     self.data = {};
@@ -49,6 +50,17 @@ Game.prototype.preload = function() {
   // CHARACTERS
   $http.get('data/characters.json').success(function(data) {
     self.data.characters = data;
+
+    self.tmp += 1;
+    if (self.tmp == tmp_max) self.load();
+  });
+
+  // MATERIAS
+  $http.get('data/materias.json?v=' + new Date().getTime()).success(function(data) {
+    self.data.materias = data;
+
+    // Add beginning materia (restore)
+    self.materias['restore'] = new Materia(self, data['restore']);
 
     self.tmp += 1;
     if (self.tmp == tmp_max) self.load();
@@ -161,6 +173,14 @@ Game.prototype.begin = function() {
 Game.prototype.extends = function(save) {
   for (var i in save.characters) {
     this.characters[i].extends(save.characters[i]);
+  }
+
+  for (var i in save.materias) {
+    if (i in this.materias) {
+      this.materias[i].extends(save.materias[i]);
+    } else {
+      this.materias[i] = new Materia(this, save.materias[i]);
+    }
   }
 
   this.zone = save.zone;
@@ -329,9 +349,16 @@ Game.prototype.end_fight = function(victory) {
           this.boss_defeated = true;
         }
 
+        // XP for characters
         for (var j in this.characters) {
           var xp = this.enemy[i].data.xp * number;
           this.characters[j].set_xp(xp);
+        }
+
+        // AP for materias
+        for (var j in this.materias) {
+          var ap = this.enemy[i].data.xp * number;
+          this.materias[j].set_ap(ap);
         }
       }
     }
@@ -439,9 +466,15 @@ Game.prototype.save = function() {
     characters[i] = this.characters[i].save();
   }
 
+  var materias = {};
+  for (var i in this.materias) {
+    materias[i] = this.materias[i].save();
+  }
+
   var save = {};
 
   save.characters = characters;
+  save.materias = materias;
   save.zone = this.zone,
   save.total_gils = this.total_gils;
   save.characters_hp = this.characters_hp;
