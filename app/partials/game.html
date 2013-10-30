@@ -64,7 +64,7 @@
 <div class="part w400">
 
   <section class="enemies" data-step="2" data-intro="This is the enemy ! They are ordered by power. So, you should fight the first one to begin, then the second, etc." data-position="right">
-    <div ng-repeat="(no, e) in game.enemy | clean" class="enemy" ng-class="{disabled: e.data.number == 0}">
+    <div ng-repeat="(no, e) in game.enemy | clean" class="left div400 enemy" ng-class="{disabled: e.data.number == 0}">
       <div class="actions">
         <div class="button fight_enemy" ng-click="fight($event, e)">FIGHT</div>
       </div>
@@ -95,7 +95,7 @@
 --><div class="part w400">
 
   <section class="characters" data-step="1" data-intro="This is your team ! You begin with 2 characters. If they win battles, characters will level up and get stronger." data-position="left">
-    <div ng-repeat="(i, character) in game.characters | clean" class="character">
+    <div ng-repeat="(i, character) in game.characters | clean" class="right div400 character">
       <div class="xp_progress" style="width:{{character.xp_progress(400)}}px;"></div>
       <div class="part infos w300">
         <div>{{character.data.name}} <strong>(LVL{{character.data.level}})</strong></div>
@@ -126,7 +126,7 @@
 --><div class="part w400">
 
   <section class="materias" data-step="4" data-intro="This is your first materia ! If your character win battles, your materias will grow up and get stronger." data-position="right">
-    <div ng-repeat="(i, materia) in game.materias | clean" class="materia">
+    <div ng-repeat="(i, materia) in game.materias | clean" class="right div400 materia">
       <div class="ap_progress" style="width:{{materia.ap_progress(400)}}px;"></div>
       <div class="part infos w300">
         <div>{{materia.data.name}} <strong>(LVL{{materia.data.level}})</strong></div>

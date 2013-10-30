@@ -29,7 +29,9 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
     "level": 1
   };
 
-  this.characters = this.enemy = {};
+  this.enemy = {};
+  this.characters = {};
+  this.weapons = {};
   this.materias = {};
   this.items = {};
 };
@@ -42,7 +44,7 @@ Game.prototype.preload = function() {
   var $http = this.$http;
 
   this.tmp = 0;
-  var tmp_max = 2;
+  var tmp_max = 1;
 
   if (!self.data) {
     self.data = {};
@@ -51,14 +53,6 @@ Game.prototype.preload = function() {
   // CHARACTERS
   $http.get('data/characters.json').success(function(data) {
     self.data.characters = data;
-
-    self.tmp += 1;
-    if (self.tmp == tmp_max) self.load();
-  });
-
-  // WEAPONS
-  $http.get('data/weapons.json?v=' + new Date().getTime()).success(function(data) {
-    self.data.weapons = data;
 
     self.tmp += 1;
     if (self.tmp == tmp_max) self.load();
@@ -81,7 +75,7 @@ Game.prototype.load = function() {
   var zone_level = (save ? save.zone.level : this.zone.level);
 
   this.tmp = 0;
-  var tmp_max = 6;
+  var tmp_max = 7;
 
   // LINES
   $http.get('data/lines.json').success(function(data) {
@@ -132,12 +126,28 @@ Game.prototype.load = function() {
     if (self.tmp == tmp_max) self.begin();
   });
 
+  // WEAPONS
+  $http.get('data/weapons.json?v=' + new Date().getTime()).success(function(data) {
+    self.data.weapons = {};
+    for (var i in data) {
+      if (zone_level >= data[i].zone) {
+        self.data.weapons[i] = new Weapon(self, data[i]);
+
+        if (data[i].owned) {
+          self.weapons[data[i].character] = self.data.weapons[i];
+        }
+      }
+    }
+
+    self.tmp += 1;
+    if (self.tmp == tmp_max) self.load();
+  });
+
   // MATERIAS
   $http.get('data/materias.json?v=' + new Date().getTime()).success(function(data) {
     self.data.materias = {};
     for (var i in data) {
-      var materia = data[i];
-      if (zone_level >= materia.zone) {
+      if (zone_level >= data[i].zone) {
         self.data.materias[i] = new Materia(self, data[i]);
       }
     }
@@ -153,8 +163,7 @@ Game.prototype.load = function() {
   $http.get('data/items.json?v=' + new Date().getTime()).success(function(data) {
     self.data.items = {};
     for (var i in data) {
-      var item = data[i];
-      if (zone_level >= item.zone) {
+      if (zone_level >= data[i].zone) {
         self.data.items[i] = new Item(self, data[i]);
       }
     }
@@ -180,7 +189,6 @@ Game.prototype.begin = function() {
 
   this.loaded = true;
 
-  this.refresh_weapons();
   this.refresh_characters_hp();
   this.refresh_characters_limit();
 
@@ -288,25 +296,6 @@ Game.prototype.can_escape = function() {
  */
 Game.prototype.can_buy = function(weapon) {
   return !this.fight && this.total_gils >= weapon.gils;
-};
-
-/**
- * Refresh available weapons in the shop
- */
-Game.prototype.refresh_weapons = function() {
-  var weapons = {}, n = 1;
-  for (var i in this.data.weapons) {
-    for (var j in this.data.weapons[i]) {
-      var weapon = this.data.weapons[i][j];
-      if (this.zone.level >= weapon.zone && this.characters[i].data.weapon_level < j) {
-        weapon.character = i;
-        weapon.level = j;
-        weapons[n] = weapon;
-        n++;
-      }
-    }
-  }
-  this.weapons = weapons;
 };
 
 /**

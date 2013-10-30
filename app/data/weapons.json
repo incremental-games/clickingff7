@@ -1,26 +1,28 @@
 {
-  "cloud": {
-    "1": {
-      "name": "Buster Sword",
-      "hits": 18
-    }
+  "buster-sword": {
+    "name": "Buster Sword",
+    "character": "cloud",
+    "hits": 16,
+    "owned": true
   },
-  "barret": {
-    "1": {
-      "name": "Gatling Gun",
-      "hits": 14
-    },
-    "2": {
-      "name": "Assault Gun",
-      "hits": 17,
-      "gils": 80,
-      "zone": 2
-    }
+  "gatling-gun": {
+    "name": "Gatling Gun",
+    "character": "barret",
+    "hits": 14,
+    "owned": true
   },
-  "tifa": {
-    "1": {
-      "name": "Leather Glove",
-      "hits": 13
-    }
+  "leather-glove": {
+    "name": "Leather Glove",
+    "character": "tifa",
+    "hits": 13,
+    "zone": 2,
+    "owned": true
+  },
+  "assault-gun": {
+    "name": "Assault Gun",
+    "character": "barret",
+    "hits": 17,
+    "gils": 80,
+    "zone": 2
   }
 }

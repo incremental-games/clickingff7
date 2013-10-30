@@ -22,13 +22,11 @@
 <div class="part w400">
 
   <sections class="items">
-    <div ng-repeat="(no, item) in game.data.items | clean" class="item">
+    <div ng-repeat="(no, item) in game.data.items | clean" class="left div400">
       <div class="actions">
         <div class="button buy" ng-click="buy($event, item)" ng-class="{disabled: !game.can_buy(item)}">BUY</div>
       </div>
-      <div class="part avatar w50">
-        
-      </div>
+      <div class="part w50"></div>
       <div class="part infos w300">
         {{item.data.name}}
         <div>
@@ -44,20 +42,18 @@
 --><div class="part w400">
   
     <sections class="weapons">
-    <div ng-repeat="(no, weapon) in game.weapons | clean" class="weapon">
+    <div ng-repeat="(no, weapon) in game.data.weapons | clean" class="right div400">
       <div class="actions">
         <div class="button buy" ng-click="buy($event, weapon)" ng-class="{disabled: !game.can_buy(weapon)}">BUY</div>
       </div>
-      <div class="part avatar w50">
-        
-      </div>
       <div class="part infos w300">
-        {{weapon.name}} ({{weapon.character}})
+        {{weapon.data.name}} ({{weapon.data.character}})
         <div>
-          <span class="label">hits</span> {{weapon.hits}} 
-          <span class="label">gils</span> {{weapon.gils}}
+          <span class="label">hits</span> {{weapon.data.hits}} 
+          <span class="label">gils</span> {{weapon.data.gils}}
         </div>
       </div>
+      <div class="part w50"></div>
     </div>
     <div ng-show="game.no_weapons()">
       <em>No weapons avalaible!</em>

@@ -75,22 +75,35 @@ footer {
   text-transform: uppercase;
 }
 
-.character, .enemy, .weapon, .materia, .item {
+.div400 {
   border-top: 1px solid #ccc;
   padding: 10px 0;
   position: relative;
 }
 
-.enemy, .item {text-align: left;}
-.character, .materia, .weapon {
-  border-top: 1px solid #77B477;
-  text-align: right;
+.left {text-align: left;}
+.right {text-align: right;}
+
+.left .actions {
+  position: absolute;
+  left: -60px;
+  top: 20px;
 }
 
-.character.disabled, .enemy.disabled {
+.right .actions {
+  position: absolute;
+  right: -60px;
+  top: 20px;
+}
+
+.character, .materia {
+  border-top: 1px solid #77B477;
+}
+
+.disabled {
   color: #999;
 }
-.character.disabled .avatar, .enemy.disabled .avatar {
+.disabled .avatar {
   opacity: 0.1;
 }
 
@@ -150,12 +163,6 @@ footer {
   color: #999;
 }
 
-.actions {
-  position: absolute;
-  left: -60px;
-  top: 20px;
-}
-
 .button {
   display: inline-block;
   font-size: 10px;
@@ -181,6 +188,10 @@ footer {
 
 .button:hover {
   box-shadow: 0px 0px 5px #6C7DB3;
+}
+
+.button.disabled:hover {
+  box-shadow: none;
 }
 
 /* ANIMATIONS */

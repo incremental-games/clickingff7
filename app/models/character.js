@@ -87,7 +87,7 @@ Character.prototype.get_hp = function() {
  * @return {int}
  */
 Character.prototype.get_hits = function() {
-  return this.data.level * this.get_weapon().hits * 0.1;
+  return this.data.level * this.Game.weapons[this.data.ref].data.hits * 0.1;
 };
 
 /**
@@ -128,22 +128,6 @@ Character.prototype.set_xp = function(xp) {
  */
 Character.prototype.get_line = function() {
   return this.Game.lines[this.data.ref];
-};
-
-/**
- * Returns current weapon object
- * @return {string}
- */
-Character.prototype.get_weapon = function() {
-  return this.Game.data.weapons[this.data.ref][this.data.weapon_level];
-};
-
-/**
- * Returns avalaible weapons number
- * @return {int}
- */
-Character.prototype.get_nbr_weapon = function() {
-  return Object.keys(this.Game.data.weapons[this.data.ref]).length;
 };
 
 /**
