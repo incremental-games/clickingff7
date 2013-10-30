@@ -357,7 +357,7 @@ Game.prototype.end_fight = function(victory) {
 
         // AP for materias
         for (var j in this.materias) {
-          var ap = this.enemy[i].data.xp * number;
+          var ap = this.enemy[i].data.ap * number;
           this.materias[j].set_ap(ap);
         }
       }

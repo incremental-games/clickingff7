@@ -2,7 +2,7 @@
   "restore": {
     "ref": "restore",
     "name": "Restore",
-    "ap_formula": "Math.pow(x,3)*30",
+    "ap_formula": "Math.pow(x+1,6)*30",
     "level": 1
   }
 }

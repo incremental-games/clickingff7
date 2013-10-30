@@ -169,7 +169,8 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
   $rootScope.cure = function(ev) {
     if (Game.can_cure()) {
       var characters_hp = Game.characters_hp_max;
-      var res = Math.ceil(characters_hp / 50);
+      var restore = Game.materias['restore'].data.level;
+      var res = Math.ceil(characters_hp * (restore * 2 / 100));
       Game.add('characters_hp', res);
       animate(ev, '+' + res);
     }

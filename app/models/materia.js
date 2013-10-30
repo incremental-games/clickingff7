@@ -38,7 +38,7 @@ Materia.prototype.get_desc = function() {
 
   switch (this.data.ref) {
     case 'restore':
-      text = 'You can cure your characters HP by ' + (this.data.level * 10) + '%';
+      text = 'You can cure your characters HP by ' + (this.data.level * 2) + '%';
       break;
 
   };
@@ -72,9 +72,6 @@ Materia.prototype.set_ap = function(ap) {
   while (this.data.ap >= this.get_ap_max()) {
     this.data.ap -= this.get_ap_max();
     this.data.level += 1;
-
-    this.Game.refresh_characters_hp();
-    this.Game.refresh_characters_limit();
   }
 };
 
