@@ -13,15 +13,37 @@
 
 <div class="space"></div>
 
-<div class="part title w400">Weapons</div>
+<div class="part title w400">Items</div>
 <div class="part title w50"></div>
-<div class="part title w400"></div>
+<div class="part title w400">Weapons</div>
 
 <div class="space"></div>
 
 <div class="part w400">
 
   <sections class="items">
+    <div ng-repeat="(no, item) in game.data.items | clean" class="item">
+      <div class="actions">
+        <div class="button buy" ng-click="buy($event, item)" ng-class="{disabled: !game.can_buy(item)}">BUY</div>
+      </div>
+      <div class="part avatar w50">
+        
+      </div>
+      <div class="part infos w300">
+        {{item.data.name}}
+        <div>
+          <span class="label">gils</span> {{item.data.gils}}
+        </div>
+        <div class="line">{{item.get_desc()}}</div>
+      </div>
+    </div>
+  </sections>
+
+</div><!--
+
+--><div class="part w400">
+  
+    <sections class="weapons">
     <div ng-repeat="(no, weapon) in game.weapons | clean" class="weapon">
       <div class="actions">
         <div class="button buy" ng-click="buy($event, weapon)" ng-class="{disabled: !game.can_buy(weapon)}">BUY</div>
@@ -42,6 +64,4 @@
     </div>
   </sections>
 
-</div><!--
-
---><div class="part w400"></div>
+</div>

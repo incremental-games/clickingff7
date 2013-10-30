@@ -92,7 +92,7 @@ Game.prototype.load = function() {
   var zone_level = (save ? save.zone.level : this.zone.level);
 
   this.tmp = 0;
-  var tmp_max = 4;
+  var tmp_max = 5;
 
   // LINES
   $http.get('data/lines.json').success(function(data) {
@@ -145,7 +145,13 @@ Game.prototype.load = function() {
 
   // ITEMS
   $http.get('data/items.json?v=' + new Date().getTime()).success(function(data) {
-    self.data.items = data;
+    self.data.items = {};
+    for (var i in data) {
+      var item = data[i];
+      if (zone_level >= item.zone) {
+        self.data.items[i] = new Item(self, data[i]);
+      }
+    }
 
     self.tmp += 1;
     if (self.tmp == tmp_max) self.load();
@@ -189,6 +195,14 @@ Game.prototype.extends = function(save) {
       this.materias[i].extends(save.materias[i]);
     } else {
       this.materias[i] = new Materia(this, save.materias[i]);
+    }
+  }
+
+  for (var i in save.items) {
+    if (i in this.items) {
+      this.items[i].extends(save.items[i]);
+    } else {
+      this.items[i] = new Item(this, save.items[i]);
     }
   }
 

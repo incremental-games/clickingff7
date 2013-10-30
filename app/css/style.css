@@ -75,14 +75,14 @@ footer {
   text-transform: uppercase;
 }
 
-.character, .enemy, .weapon, .materia {
+.character, .enemy, .weapon, .materia, .item {
   border-top: 1px solid #ccc;
   padding: 10px 0;
   position: relative;
 }
 
-.enemy, .weapon {text-align: left;}
-.character, .materia {
+.enemy, .item {text-align: left;}
+.character, .materia, .weapon {
   border-top: 1px solid #77B477;
   text-align: right;
 }
