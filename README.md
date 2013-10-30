@@ -2,15 +2,15 @@
 
 # About
 
-This game was inspired by Cookie Clicker & Clicking Bad.
+Clicking FF7 is a clicking game based on FF7 universe, where you have to power up your characters to fight enemy and go through the different zones to clear the game.
 
-In that FF7 version, you have to fight enemy with main characters, where both parts get more and more stronger... The final aim is to go through all the zones.
+This game was inspired by Cookie Clicker & Clicking Bad.
 
 ## Useful links
 
 Play: http://clickingff7.menencia.com
 
-Dev blog: http://clickingff7.tumblr.com
+Reddit (news, bugs, suggestions) : http://www.reddit.com/r/clickingff7/
 
 Twitter: http://twitter.com/clickingff7
 
