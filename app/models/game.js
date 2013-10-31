@@ -34,29 +34,8 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
   this.weapons = {};
   this.materias = {};
   this.items = {};
-};
 
-/**
- * Preload characters & weapons infos
- */
-Game.prototype.preload = function() {
-  var self = this;
-  var $http = this.$http;
-
-  this.tmp = 0;
-  var tmp_max = 1;
-
-  if (!self.data) {
-    self.data = {};
-  }
-
-  // CHARACTERS
-  $http.get('data/characters.json').success(function(data) {
-    self.data.characters = data;
-
-    self.tmp += 1;
-    if (self.tmp == tmp_max) self.load();
-  });
+  this.data = {};
 };
 
 /**
@@ -108,19 +87,13 @@ Game.prototype.load = function() {
   });
 
   // CHARACTERS
-  $http.get('data/characters_zone.json').success(function(data) {
+  $http.get('data/characters.json').success(function(data) {
     var character, _data = {};
-    for (var i in data[zone_level]) {
-      var ref = data[zone_level][i];
-      character = new Character(self, self.data.characters[ref]);
-      if (ref in self.characters) {
-        character.extends(self.characters[ref].data);
-      } else {
-        character.init();
+    for (var i in data) {
+      if ($.inArray(zone_level, data[i].zones) != -1) {
+        self.characters[i] = new Character(self, data[i]);
       }
-      _data[ref] = character;
     }
-    self.characters = _data;
 
     self.tmp += 1;
     if (self.tmp == tmp_max) self.begin();

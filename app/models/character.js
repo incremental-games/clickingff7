@@ -10,27 +10,15 @@ function Character(Game, infos) {
 
   // scopes INFOS
   if (!this.data) this.data = {};
+  this.data.level = 1;
+  this.data.weapon_level = 1;
+  this.data.xp = 0;
 
   // INFOS from COOKIE
   if (infos) {
     this.extends(infos);
   }
 
-};
-
-/**
- * Init the character if does not exist in COOKIE
- */
-Character.prototype.init = function() {
-  if (!this.data.level) {
-    this.data.level = 1;
-  }
-  if (!this.data.weapon_level) {
-    this.data.weapon_level = 1;
-  }
-  if (!this.data.xp) {
-    this.data.xp = 0;
-  }
 };
 
 /**

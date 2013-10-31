@@ -5,7 +5,8 @@
     "image": "cloud.png",
     "hp_base": 14,
     "xp_formula": "Math.pow(x,2)*30",
-    "level": 1
+    "level": 1,
+    "zones": [1, 2]
   },
   "barret": {
     "ref": "barret",
@@ -13,7 +14,8 @@
     "image": "barret.png",
     "hp_base": 16,
     "xp_formula": "Math.pow(x,2)*28",
-    "level": 1
+    "level": 1,
+    "zones": [1, 2]
   },
   "tifa": {
     "ref": "tifa",
@@ -21,6 +23,7 @@
     "image": "tifa.png",
     "hp_base": 13,
     "xp_formula": "Math.pow(x,2)*26",
-    "level": 9
+    "level": 9,
+    "zones": [2]
   }
 }

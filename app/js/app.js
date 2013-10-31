@@ -130,7 +130,7 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
   }
 
   Game.init($rootScope, $cookieStore, $http, $timeout);
-  Game.preload();
+  Game.load();
 
   // STEP 3
   // Scope actions
