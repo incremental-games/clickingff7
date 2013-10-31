@@ -131,16 +131,16 @@ Game.prototype.load = function() {
     self.data.weapons = {};
     for (var i in data) {
       if (zone_level >= data[i].zone) {
-        self.data.weapons[i] = new Weapon(self, data[i]);
-
         if (data[i].owned) {
-          self.weapons[data[i].character] = self.data.weapons[i];
+          self.weapons[data[i].character] = new Weapon(self, data[i]);
+        } else {
+          self.data.weapons[i] = new Weapon(self, data[i]);
         }
       }
     }
 
     self.tmp += 1;
-    if (self.tmp == tmp_max) self.load();
+    if (self.tmp == tmp_max) self.begin();
   });
 
   // MATERIAS
@@ -156,7 +156,7 @@ Game.prototype.load = function() {
     self.materias['restore'] = new Materia(self, data['restore']);
 
     self.tmp += 1;
-    if (self.tmp == tmp_max) self.load();
+    if (self.tmp == tmp_max) self.begin();
   });
 
   // ITEMS
@@ -169,7 +169,7 @@ Game.prototype.load = function() {
     }
 
     self.tmp += 1;
-    if (self.tmp == tmp_max) self.load();
+    if (self.tmp == tmp_max) self.begin();
   });
 };
 

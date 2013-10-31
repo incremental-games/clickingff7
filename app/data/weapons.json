@@ -3,12 +3,14 @@
     "name": "Buster Sword",
     "character": "cloud",
     "hits": 16,
+    "zone": 1,
     "owned": true
   },
   "gatling-gun": {
     "name": "Gatling Gun",
     "character": "barret",
     "hits": 14,
+    "zone": 1,
     "owned": true
   },
   "leather-glove": {
