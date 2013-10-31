@@ -197,6 +197,7 @@ Game.prototype.extends = function(save) {
   this.total_gils = save.total_gils;
   this.characters_hp = save.characters_hp;
   this.characters_limit = save.characters_limit;
+  this.boss_defeated = save.boss_defeated;
 };
 
 /**
@@ -470,6 +471,7 @@ Game.prototype.save = function() {
   save.total_gils = this.total_gils;
   save.characters_hp = this.characters_hp;
   save.characters_limit = this.characters_limit;
+  save.boss_defeated = this.boss_defeated;
 
   console.log(save);
 
