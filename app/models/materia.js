@@ -9,8 +9,12 @@ function Materia(Game, infos) {
   this.Game = Game;
 
   // scopes INFOS
-  if (!this.data) this.data = {};
-  this.data.ap = 0;
+  if (!this.data) {
+    this.data = {};
+  }
+  if (!('number_cost' in this.data)) {
+    this.data.ap = 0;
+  }
 
   // INFOS from COOKIE
   if (infos) {

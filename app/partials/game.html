@@ -95,7 +95,7 @@
 --><div class="part w400">
 
   <section class="characters" data-step="1" data-intro="This is your team ! You begin with 2 characters. If they win battles, characters will level up and get stronger." data-position="left">
-    <div ng-repeat="(i, character) in game.characters | clean" class="right div400 character">
+    <div ng-repeat="(i, character) in game.characters | clean" class="right div400 character" ng-class="{disabled: !character.data.available}">
       <div class="xp_progress" style="width:{{character.xp_progress(400)}}px;"></div>
       <div class="part infos w300">
         <div>{{character.data.name}} <strong>(LVL{{character.data.level}})</strong></div>

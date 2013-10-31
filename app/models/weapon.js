@@ -9,7 +9,9 @@ function Weapon(Game, infos) {
   this.Game = Game;
 
   // scopes INFOS
-  if (!this.data) this.data = {};
+  if (!this.data) {
+    this.data = {};
+  }
 
   // INFOS from COOKIE
   if (infos) {

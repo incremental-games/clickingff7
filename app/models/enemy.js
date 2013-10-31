@@ -9,8 +9,12 @@ function Enemy(Game, infos) {
   this.Game = Game;
 
   // scopes INFOS
-  if (!this.data) this.data = {};
-  this.data.number_cost = 10;
+  if (!this.data) {
+    this.data = {};
+  }
+  if (!('number_cost' in this.data)) {
+    this.data.number_cost = 10;
+  }
 
   // INFOS from COOKIE
   if (infos) {

@@ -101,6 +101,7 @@ footer {
 }
 
 .disabled {
+  border-top: 1px solid #ccc;
   color: #999;
 }
 .disabled .avatar {
@@ -144,6 +145,8 @@ footer {
   top: 0;
   left: 0;
 }
+
+.disabled .xp_progress {background-color: #ccc;}
 
 .label {
   text-transform: uppercase;

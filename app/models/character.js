@@ -9,10 +9,21 @@ function Character(Game, infos) {
   this.Game = Game;
 
   // scopes INFOS
-  if (!this.data) this.data = {};
-  this.data.level = 1;
-  this.data.weapon_level = 1;
-  this.data.xp = 0;
+  if (!this.data) {
+    this.data = {};
+  }
+  if (!('level' in this.data)) {
+    this.data.level = 1;
+  }
+  if (!('weapon_level' in this.data)) {
+    this.data.weapon_level = 1;
+  }
+  if (!('xp' in this.data)) {
+    this.data.xp = 0;
+  }
+  if (!('avalaible' in this.data)) {
+    this.data.available = true;
+  }
 
   // INFOS from COOKIE
   if (infos) {

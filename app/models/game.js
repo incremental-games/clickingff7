@@ -90,8 +90,12 @@ Game.prototype.load = function() {
   $http.get('data/characters.json').success(function(data) {
     var character, _data = {};
     for (var i in data) {
-      if ($.inArray(zone_level, data[i].zones) != -1) {
+      if (!(i in self.characters)) {
         self.characters[i] = new Character(self, data[i]);
+      }
+
+      if ($.inArray(zone_level, data[i].zones) != -1) {
+        self.characters[i].data.available = false;
       }
     }
 
