@@ -2,7 +2,7 @@
   "buster-sword": {
     "name": "Buster Sword",
     "character": "cloud",
-    "hits": 16,
+    "hits": 18,
     "zone": 1,
     "owned": true
   },
