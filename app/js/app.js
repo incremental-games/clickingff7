@@ -389,12 +389,8 @@ function InventoryCtrl($rootScope, $location, Game) {
    * Use an item from the inventory
    */
   $rootScope.use = function(ev, item) {
-    if (Game.can_buy(item)) {
-      item.use();
-
-      animate(ev, 'OK!');
-
-    }
+    item.use();
+    animate(ev, 'OK!');
   };
 
   /**
@@ -402,7 +398,6 @@ function InventoryCtrl($rootScope, $location, Game) {
    */
   $rootScope.equip = function(ev, item) {
     item.equip();
-
     animate(ev, 'OK!');
   };
 
