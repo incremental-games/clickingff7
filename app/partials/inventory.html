@@ -43,8 +43,15 @@
   
     <sections class="weapons">
     <div ng-repeat="(no, weapon) in game.weapons | clean" class="right div400">
+      <div class="actions">
+        <div class="button equip" ng-click="equip($event, weapon)" ng-show="!weapon.is_equipped()">USE</div>
+      </div>
       <div class="part infos w300">
-        {{weapon.data.name}} ({{weapon.data.character}})
+        {{weapon.data.name}} 
+        <span ng-if="weapon.is_equipped()">
+          <span class="boss">Equipped</span> 
+        </span> 
+        ({{weapon.data.character}})
         <div>
           <span class="label">hits</span> {{weapon.data.hits}} 
           <span class="label">gils</span> {{weapon.data.gils}}

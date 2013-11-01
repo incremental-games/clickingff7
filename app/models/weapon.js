@@ -35,6 +35,14 @@ Weapon.prototype.extends = function(data) {
 };
 
 /**
+ * Returns true if the weapon is currently equipped
+ * @return {boolean}
+ */
+Weapon.prototype.is_equipped = function() {
+  return (this.data.ref == this.Game.characters[this.data.character].data.weapon.data.ref);
+};
+
+/**
  * Save materia data
  */
 Weapon.prototype.save = function() {
