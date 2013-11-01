@@ -67,12 +67,14 @@ app.config(['$routeProvider',
       templateUrl: 'partials/game.html',
       controller: GameCtrl
     }).
-    //when('/registration', {templateUrl: '../partials/shows.html', controller: RegistrationCtrl}).
     when('/shop', {
       templateUrl: 'partials/shop.html',
       controller: ShopCtrl
     }).
-    //when('/planning', {templateUrl: '../partials/shows.html', controller: PlanningCtrl}).
+    when('/inventory', {
+      templateUrl: 'partials/inventory.html',
+      controller: InventoryCtrl
+    }).
     otherwise({
       redirectTo: '/game'
     });
@@ -208,6 +210,15 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
   };
 
   /**
+   * Go to the inventory
+   */
+  $rootScope.inventory = function() {
+    if (!Game.fight) {
+      $location.path("/inventory");
+    }
+  };
+
+  /**
    * Go to the shop
    */
   $rootScope.shop = function() {
@@ -308,10 +319,61 @@ function ShopCtrl($rootScope, $location, Game) {
         Game.items[item.data.ref] = item;
       }
 
-      Game.sub('total_gils', item.gils);
+      Game.sub('total_gils', item.data.gils);
       animate(ev, 'OK!');
 
     }
+  };
+
+}
+
+/**
+ * /Inventory
+ */
+
+function InventoryCtrl($rootScope, $location, Game) {
+
+  var last_float = 0;
+
+  var animate = function(ev, str) {
+    var elc = $('<div class="tmp">' + str + '</div>');
+    $('.tmps').append(elc);
+
+    elc.show();
+    elc.offset({
+      left: ev.pageX - 0,
+      top: ev.pageY - 30
+    });
+    var end_y = ev.clientY - 150;
+    elc.css('opacity', 100);
+
+    if (last_float == 1) {
+      var this_float = ev.pageX;
+      last_float = 0;
+    } else {
+      var this_float = ev.pageX - 60;
+      last_float = 1;
+    }
+
+    elc.animate({
+      'top': end_y.toString() + 'px',
+      'opacity': 0,
+      'left': this_float.toString() + 'px'
+    }, 750, function() {
+      elc.remove();
+    });
+  };
+
+  if (!Game.loaded) {
+    $location.path("/game");
+    return;
+  }
+
+  /**
+   * Back to the game
+   */
+  $rootScope.back_game = function() {
+    $location.path("/game");
   };
 
 }

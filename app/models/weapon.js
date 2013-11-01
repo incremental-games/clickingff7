@@ -41,5 +41,5 @@ Weapon.prototype.extends = function(data) {
  * Save materia data
  */
 Weapon.prototype.save = function() {
-  return _.omit(this.data, 'name', 'ap_formula');
+  return _.omit(this.data, 'name', 'type');
 };

@@ -16,7 +16,7 @@ function Item(Game, infos) {
     this.data.type = 'items';
   }
   if (!('number' in this.data)) {
-    this.data.number = 0;
+    this.data.number = 1;
   }
 
   // INFOS from COOKIE
@@ -60,5 +60,5 @@ Item.prototype.get_desc = function() {
  * Save materia data
  */
 Item.prototype.save = function() {
-  return _.omit(this.data, 'name', 'ap_formula');
+  return _.pick(this.data, 'ref', 'number');
 };

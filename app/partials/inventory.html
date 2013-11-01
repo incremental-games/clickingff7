@@ -4,7 +4,7 @@
 </div><!--
 
 --><div class="part w300">
-  <div><img ng-src="img/zones/{{game.zone.img}}" width="100" /><br />SHOP</div>
+  <div><img ng-src="img/zones/{{game.zone.img}}" width="100" /><br />INVENTORY</div>
 </div><!--
 
 --><div class="part w300">
@@ -22,13 +22,13 @@
 <div class="part w400">
 
   <sections class="items">
-    <div ng-repeat="(no, item) in game.data.items | clean" class="left div400">
+    <div ng-repeat="(no, item) in game.items | clean" class="left div400">
       <div class="actions">
-        <div class="button buy" ng-click="buy($event, item)" ng-class="{disabled: !game.can_buy(item)}">BUY</div>
+        <div class="button use" ng-click="use($event, item)">USE</div>
       </div>
       <div class="part w50"></div>
       <div class="part infos w300">
-        {{item.data.name}}
+        {{item.data.name}} <strong ng-show="item.data.number > 0">x{{item.data.number}}</strong>
         <div>
           <span class="label">gils</span> {{item.data.gils}}
         </div>
@@ -42,10 +42,7 @@
 --><div class="part w400">
   
     <sections class="weapons">
-    <div ng-repeat="(no, weapon) in game.data.weapons | clean" class="right div400">
-      <div class="actions">
-        <div class="button buy" ng-click="buy($event, weapon)" ng-class="{disabled: !game.can_buy(weapon)}">BUY</div>
-      </div>
+    <div ng-repeat="(no, weapon) in game.weapons | clean" class="right div400">
       <div class="part infos w300">
         {{weapon.data.name}} ({{weapon.data.character}})
         <div>

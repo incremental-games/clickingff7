@@ -214,11 +214,23 @@ Game.prototype.extends = function(save) {
     this.characters[i].extends(save.characters[i]);
   }
 
+  for (var i in save.weapons) {
+    if (i in this.weapons) {
+      this.weapons[i].extends(save.weapons[i]);
+    } else {
+      this.weapons[i] = new Materia(this, save.weapons[i]);
+      this.weapons[i].extends(this.data.weapons[i].data);
+      this.weapons[i].extends(save.weapons[i]);
+    }
+  }
+
   for (var i in save.materias) {
     if (i in this.materias) {
       this.materias[i].extends(save.materias[i]);
     } else {
       this.materias[i] = new Materia(this, save.materias[i]);
+      this.materias[i].extends(this.data.materias[i].data);
+      this.materias[i].extends(save.materias[i]);
     }
   }
 
@@ -226,7 +238,9 @@ Game.prototype.extends = function(save) {
     if (i in this.items) {
       this.items[i].extends(save.items[i]);
     } else {
-      this.items[i] = new Item(this, save.items[i]);
+      this.items[i] = new Item(this);
+      this.items[i].extends(this.data.items[i].data);
+      this.items[i].extends(save.items[i]);
     }
   }
 
@@ -509,15 +523,27 @@ Game.prototype.save = function() {
     characters[i] = this.characters[i].save();
   }
 
+  var weapons = {};
+  for (var i in this.weapons) {
+    weapons[i] = this.weapons[i].save();
+  }
+
   var materias = {};
   for (var i in this.materias) {
     materias[i] = this.materias[i].save();
   }
 
+  var items = {};
+  for (var i in this.items) {
+    items[i] = this.items[i].save();
+  }
+
   var save = {};
 
   save.characters = characters;
+  save.weapons = weapons;
   save.materias = materias;
+  save.items = items;
   save.zone = this.zone,
   save.total_gils = this.total_gils;
   save.characters_hp = this.characters_hp;
