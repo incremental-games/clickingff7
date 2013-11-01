@@ -35,11 +35,26 @@ Weapon.prototype.extends = function(data) {
 };
 
 /**
+ * Returns true if the weapon is owned in the inventory
+ * @return {boolean}
+ */
+Weapon.prototype.is_owned = function() {
+  return (this.data.ref in this.Game.weapons);
+};
+
+/**
  * Returns true if the weapon is currently equipped
  * @return {boolean}
  */
 Weapon.prototype.is_equipped = function() {
   return (this.data.ref == this.Game.characters[this.data.character].data.weapon.data.ref);
+};
+
+/**
+ * Equip a weapon
+ */
+Weapon.prototype.equip = function() {
+  this.Game.characters[this.data.character].data.weapon = this;
 };
 
 /**

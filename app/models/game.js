@@ -235,7 +235,7 @@ Game.prototype.extends = function(save) {
     if (i in this.weapons) {
       this.weapons[i].extends(save.weapons[i]);
     } else {
-      this.weapons[i] = new Materia(this, i);
+      this.weapons[i] = new Weapon(this, i);
       this.weapons[i].extends(this.data.weapons[i].data);
       this.weapons[i].extends(save.weapons[i]);
     }
@@ -370,13 +370,27 @@ Game.prototype.refresh_characters_limit = function() {
   }
 };
 
+/**
+ * Returns true if there are no weapons in stock
+ */
+Game.prototype.no_items = function() {
+  return Object.keys(this.items).length == 0;
+};
 
 /**
- * Returns true if there are no weapons available on the shop
+ * Returns true if there are no weapons to buy
  */
 Game.prototype.no_weapons = function() {
-  return Object.keys(this.weapons).length == 0;
+  var res = 1;
+  for (var i in this.data.weapons) {
+    if (!(i in this.weapons)) {
+      res = 0;
+      break;
+    }
+  }
+  return res;
 };
+
 /**
  * Characters start auto-attacking
  */

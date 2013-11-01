@@ -35,6 +35,9 @@
         <div class="line">{{item.get_desc()}}</div>
       </div>
     </div>
+    <div ng-show="game.no_items()">
+      <em>No items in stock!</em>
+    </div>
   </sections>
 
 </div><!--
@@ -44,7 +47,7 @@
     <sections class="weapons">
     <div ng-repeat="(no, weapon) in game.weapons | clean" class="right div400">
       <div class="actions">
-        <div class="button equip" ng-click="equip($event, weapon)" ng-show="!weapon.is_equipped()">USE</div>
+        <div class="button equip" ng-click="equip($event, weapon)" ng-show="!weapon.is_equipped()">EQUIP</div>
       </div>
       <div class="part infos w300">
         {{weapon.data.name}} 
@@ -58,9 +61,6 @@
         </div>
       </div>
       <div class="part w50"></div>
-    </div>
-    <div ng-show="game.no_weapons()">
-      <em>No weapons avalaible!</em>
     </div>
   </sections>
 

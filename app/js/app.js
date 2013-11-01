@@ -392,12 +392,9 @@ function InventoryCtrl($rootScope, $location, Game) {
    * Use an item from the inventory
    */
   $rootScope.equip = function(ev, item) {
-    if (Game.can_buy(item)) {
-      item.equip();
+    item.equip();
 
-      animate(ev, 'OK!');
-
-    }
+    animate(ev, 'OK!');
   };
 
 }

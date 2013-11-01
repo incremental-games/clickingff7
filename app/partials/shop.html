@@ -42,7 +42,7 @@
 --><div class="part w400">
   
     <sections class="weapons">
-    <div ng-repeat="(no, weapon) in game.data.weapons | clean" class="right div400">
+    <div ng-repeat="(no, weapon) in game.data.weapons | clean" class="right div400" ng-if="!weapon.is_owned()">
       <div class="actions">
         <div class="button buy" ng-click="buy($event, weapon)" ng-class="{disabled: !game.can_buy(weapon)}">BUY</div>
       </div>
@@ -56,7 +56,7 @@
       <div class="part w50"></div>
     </div>
     <div ng-show="game.no_weapons()">
-      <em>No weapons avalaible!</em>
+      <em>No weapons to buy!</em>
     </div>
   </sections>
 
