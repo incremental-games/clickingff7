@@ -121,13 +121,49 @@
       "gils": 100
     },
     "2": {
+      "name": "Whole Eater",
+      "image": "whole-eater.png",
+      "hp": 1120,
+      "pwr": 45,
+      "xp": 487,
+      "ap": 11,
+      "gils": 110
+    },
+    "3": {
+      "name": "Hedgehog Pie",
+      "image": "hedgehog-pie.png",
+      "hp": 1340,
+      "pwr": 50,
+      "xp": 788,
+      "ap": 12,
+      "gils": 120
+    },
+    "4": {
+      "name": "Vice",
+      "image": "vice.png",
+      "hp": 1580,
+      "pwr": 50,
+      "xp": 1275,
+      "ap": 13,
+      "gils": 130
+    },
+    "5": {
+      "name": "Corneo's Lackey",
+      "image": "corneos-lackey.png",
+      "hp": 1840,
+      "pwr": 55,
+      "xp": 2063,
+      "ap": 14,
+      "gils": 140
+    },
+    "6": {
       "name": "Aps",
       "image": "aps.png",
       "hp": 2160,
       "pwr": 95,
       "xp": 240,
-      "ap": 22,
-      "gils": 253,
+      "ap": 28,
+      "gils": 280,
       "boss": true
     }
   }
