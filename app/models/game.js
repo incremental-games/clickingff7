@@ -269,14 +269,6 @@ Game.prototype.extends = function(save) {
 };
 
 /**
- * Returns if it is possible to go to the shop
- * @return {boolean}
- */
-Game.prototype.can_shop = function() {
-  return !this.fight;
-};
-
-/**
  * Returns if it is possible to save the game
  * @return {boolean}
  */
@@ -368,6 +360,21 @@ Game.prototype.refresh_characters_limit = function() {
   if (!this.characters_limit) {
     this.set('characters_limit', 0);
   }
+};
+
+/**
+ * Return item number in stock
+ * @param  {string} i
+ * @return {int}
+ */
+Game.prototype.get_item_stock = function(i) {
+  var res = 0;
+
+  if (i in this.items) {
+    res = this.items[i].data.number;
+  }
+
+  return res;
 };
 
 /**

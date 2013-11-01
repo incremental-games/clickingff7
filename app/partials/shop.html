@@ -9,6 +9,7 @@
 
 --><div class="part w300">
   <div class="button" ng-click="back_game()">Back to game</div>
+  <div class="button" ng-click="inventory()" ng-class="{disabled: game.fight}">INVENTORY</div>
 </div>
 
 <div class="space"></div>
@@ -30,6 +31,7 @@
       <div class="part infos w300">
         {{item.data.name}}
         <div>
+          <span class="label">stock</span> {{game.get_item_stock(no)}}
           <span class="label">gils</span> {{item.data.gils}}
         </div>
         <div class="line">{{item.get_desc()}}</div>

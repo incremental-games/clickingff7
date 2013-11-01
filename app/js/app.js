@@ -222,7 +222,7 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
    * Go to the shop
    */
   $rootScope.shop = function() {
-    if (Game.can_shop()) {
+    if (!Game.fight) {
       $location.path("/shop");
     }
   };
@@ -325,6 +325,15 @@ function ShopCtrl($rootScope, $location, Game) {
     }
   };
 
+  /**
+   * Go to the inventory
+   */
+  $rootScope.inventory = function() {
+    if (!Game.fight) {
+      $location.path("/inventory");
+    }
+  };
+
 }
 
 /**
@@ -395,6 +404,15 @@ function InventoryCtrl($rootScope, $location, Game) {
     item.equip();
 
     animate(ev, 'OK!');
+  };
+
+  /**
+   * Go to the shop
+   */
+  $rootScope.shop = function() {
+    if (!Game.fight) {
+      $location.path("/shop");
+    }
   };
 
 }
