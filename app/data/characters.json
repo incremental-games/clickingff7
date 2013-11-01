@@ -5,6 +5,7 @@
     "image": "cloud.png",
     "hp_base": 14,
     "xp_formula": "Math.pow(x,2)*30",
+    "weapon": "buster-sword",
     "level": 1,
     "zones": [1, 2]
   },
@@ -14,6 +15,7 @@
     "image": "barret.png",
     "hp_base": 16,
     "xp_formula": "Math.pow(x,2)*28",
+    "weapon": "gatling-gun",
     "level": 1,
     "zones": [1, 2]
   },
@@ -23,6 +25,7 @@
     "image": "tifa.png",
     "hp_base": 13,
     "xp_formula": "Math.pow(x,2)*26",
+    "weapon": "leather-glove",
     "level": 9,
     "zones": [2]
   }

@@ -116,17 +116,20 @@ Game.prototype._load_enemy = function(finish) {
 };
 
 Game.prototype._load_weapons = function(finish) {
-  var self = this;
-  // WEAPONS
+  var self = this,
+    weapon;
   this.$http.get('data/weapons.json?v=' + new Date().getTime()).success(function(data) {
     self.data.weapons = {};
     for (var i in data) {
-      if (self.zone.level >= data[i].zone) {
-        if (data[i].owned) {
-          self.weapons[data[i].character] = new Weapon(self, data[i]);
-        } else {
-          self.data.weapons[i] = new Weapon(self, data[i]);
+      var in_zone = (self.zone.level >= data[i].zone);
+      var in_current = (data[i].number > 0);
+      if (in_zone) {
+        weapon = new Weapon(self, i);
+        weapon.extends(data[i]);
+        if (in_current) {
+          self.weapons[i] = weapon;
         }
+        self.data.weapons[i] = weapon;
       }
     }
 
@@ -135,29 +138,42 @@ Game.prototype._load_weapons = function(finish) {
 };
 
 Game.prototype._load_materias = function(finish) {
-  var self = this;
+  var self = this,
+    materia;
   this.$http.get('data/materias.json?v=' + new Date().getTime()).success(function(data) {
     self.data.materias = {};
     for (var i in data) {
-      if (self.zone.level >= data[i].zone) {
-        self.data.materias[i] = new Materia(self, data[i]);
+      var in_zone = (self.zone.level >= data[i].zone);
+      var in_current = (data[i].level > 0);
+      if (in_zone) {
+        materia = new Materia(self, i);
+        materia.extends(data[i]);
+        if (in_current) {
+          self.materias[i] = materia;
+        }
+        self.data.materias[i] = materia;
       }
     }
-
-    // Add beginning materia (restore)
-    self.materias['restore'] = new Materia(self, data['restore']);
 
     finish();
   });
 };
 
 Game.prototype._load_items = function(finish) {
-  var self = this;
+  var self = this,
+    item;
   this.$http.get('data/items.json?v=' + new Date().getTime()).success(function(data) {
     self.data.items = {};
     for (var i in data) {
-      if (self.zone.level >= data[i].zone) {
-        self.data.items[i] = new Item(self, data[i]);
+      var in_zone = (self.zone.level >= data[i].zone);
+      var in_current = (data[i].number > 0);
+      if (in_zone) {
+        item = new Item(self, i);
+        item.extends(data[i]);
+        if (in_current) {
+          self.items[i] = item;
+        }
+        self.data.items[i] = item;
       }
     }
 
@@ -168,16 +184,17 @@ Game.prototype._load_items = function(finish) {
 Game.prototype._load_characters = function(finish) {
   var self = this;
   this.$http.get('data/characters.json').success(function(data) {
-    var character, _data = {};
+    self.data.characters = {};
     for (var i in data) {
       var in_zone = ($.inArray(self.zone.level, data[i].zones) != -1);
-
-      if (!(i in self.characters)) {
-        self.characters[i] = new Character(self, data[i]);
+      var in_current = (i in self.characters);
+      if (!in_current) {
+        self.characters[i] = new Character(self, i);
+        self.characters[i].extends(data[i]);
       }
-
       self.characters[i].data.available = in_zone;
     }
+    self.data.characters = self.characters;
 
     finish();
   });
@@ -218,7 +235,7 @@ Game.prototype.extends = function(save) {
     if (i in this.weapons) {
       this.weapons[i].extends(save.weapons[i]);
     } else {
-      this.weapons[i] = new Materia(this, save.weapons[i]);
+      this.weapons[i] = new Materia(this, i);
       this.weapons[i].extends(this.data.weapons[i].data);
       this.weapons[i].extends(save.weapons[i]);
     }
@@ -228,7 +245,7 @@ Game.prototype.extends = function(save) {
     if (i in this.materias) {
       this.materias[i].extends(save.materias[i]);
     } else {
-      this.materias[i] = new Materia(this, save.materias[i]);
+      this.materias[i] = new Materia(this, i);
       this.materias[i].extends(this.data.materias[i].data);
       this.materias[i].extends(save.materias[i]);
     }
@@ -238,7 +255,7 @@ Game.prototype.extends = function(save) {
     if (i in this.items) {
       this.items[i].extends(save.items[i]);
     } else {
-      this.items[i] = new Item(this);
+      this.items[i] = new Item(this, i);
       this.items[i].extends(this.data.items[i].data);
       this.items[i].extends(save.items[i]);
     }

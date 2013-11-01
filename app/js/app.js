@@ -314,9 +314,9 @@ function ShopCtrl($rootScope, $location, Game) {
   $rootScope.buy = function(ev, item) {
     if (Game.can_buy(item)) {
       if (item.data.ref in Game[item.data.type]) {
-        Game.items[item.data.ref].data.number++;
+        Game[item.data.type][item.data.ref].data.number++;
       } else {
-        Game.items[item.data.ref] = item;
+        Game[item.data.type][item.data.ref] = item;
       }
 
       Game.sub('total_gils', item.data.gils);

@@ -1,10 +1,10 @@
 /**
  * Weapon class
  * @param {object} Game
- * @param {object} infos
+ * @param {string} ref
  */
 
-function Weapon(Game, infos) {
+function Weapon(Game, ref) {
 
   this.Game = Game;
 
@@ -12,18 +12,15 @@ function Weapon(Game, infos) {
   if (!this.data) {
     this.data = {};
   }
+  if (!('ref' in this.data)) {
+    this.data.ref = ref;
+  }
   if (!('type' in this.data)) {
     this.data.type = 'weapons';
   }
   if (!('number' in this.data)) {
     this.data.number = 1;
   }
-
-  // INFOS from COOKIE
-  if (infos) {
-    this.extends(infos);
-  }
-
 };
 
 /**
@@ -41,5 +38,5 @@ Weapon.prototype.extends = function(data) {
  * Save materia data
  */
 Weapon.prototype.save = function() {
-  return _.omit(this.data, 'name', 'type');
+  return _.pick(this.data, 'number');
 };

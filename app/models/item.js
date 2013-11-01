@@ -1,10 +1,10 @@
 /**
  * Item class
  * @param {object} Game
- * @param {object} infos
+ * @param {string} ref
  */
 
-function Item(Game, infos) {
+function Item(Game, ref) {
 
   this.Game = Game;
 
@@ -12,18 +12,15 @@ function Item(Game, infos) {
   if (!this.data) {
     this.data = {};
   }
+  if (!('ref' in this.data)) {
+    this.data.ref = ref;
+  }
   if (!('type' in this.data)) {
     this.data.type = 'items';
   }
   if (!('number' in this.data)) {
     this.data.number = 1;
   }
-
-  // INFOS from COOKIE
-  if (infos) {
-    this.extends(infos);
-  }
-
 };
 
 /**
@@ -60,5 +57,5 @@ Item.prototype.get_desc = function() {
  * Save materia data
  */
 Item.prototype.save = function() {
-  return _.pick(this.data, 'ref', 'number');
+  return _.pick(this.data, 'number');
 };

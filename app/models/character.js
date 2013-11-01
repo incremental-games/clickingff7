@@ -1,16 +1,19 @@
 /**
  * Character class
  * @param {object} Game
- * @param {object} infos
+ * @param {string} ref
  */
 
-function Character(Game, infos) {
+function Character(Game, ref) {
 
   this.Game = Game;
 
   // scopes INFOS
   if (!this.data) {
     this.data = {};
+  }
+  if (!('ref' in this.data)) {
+    this.data.ref = ref;
   }
   if (!('level' in this.data)) {
     this.data.level = 1;
@@ -24,12 +27,6 @@ function Character(Game, infos) {
   if (!('avalaible' in this.data)) {
     this.data.available = true;
   }
-
-  // INFOS from COOKIE
-  if (infos) {
-    this.extends(infos);
-  }
-
 };
 
 /**
@@ -37,9 +34,8 @@ function Character(Game, infos) {
  * @param  {object} infos
  */
 Character.prototype.extends = function(data) {
-  self = this;
   for (var i in data) {
-    self.data[i] = data[i];
+    this.data[i] = data[i];
   }
 };
 
@@ -86,7 +82,12 @@ Character.prototype.get_hp = function() {
  * @return {int}
  */
 Character.prototype.get_hits = function() {
-  return this.data.level * this.Game.weapons[this.data.ref].data.hits * 0.1;
+  // get weapon if not existing
+  if (typeof this.data.weapon == 'string') {
+    this.data.weapon = this.Game.weapons[this.data.weapon];
+  }
+
+  return this.data.level * this.data.weapon.data.hits * 0.1;
 };
 
 /**
@@ -133,5 +134,9 @@ Character.prototype.get_line = function() {
  * Save character data
  */
 Character.prototype.save = function() {
-  return _.omit(this.data, 'hp_base', 'xp_formula', 'image', 'name');
+  var json = _.pick(this.data, 'available', 'level', 'weapon_level', 'xp');
+
+  json.weapon = (typeof this.data.weapon == 'string') ? this.data.weapon : this.data.weapon.data.ref;
+
+  return json;
 };

@@ -1,10 +1,10 @@
 /**
  * Materia class
  * @param {object} Game
- * @param {object} infos
+ * @param {string} ref
  */
 
-function Materia(Game, infos) {
+function Materia(Game, ref) {
 
   this.Game = Game;
 
@@ -12,15 +12,12 @@ function Materia(Game, infos) {
   if (!this.data) {
     this.data = {};
   }
+  if (!('ref' in this.data)) {
+    this.data.ref = ref;
+  }
   if (!('number_cost' in this.data)) {
     this.data.ap = 0;
   }
-
-  // INFOS from COOKIE
-  if (infos) {
-    this.extends(infos);
-  }
-
 };
 
 /**
@@ -83,5 +80,5 @@ Materia.prototype.set_ap = function(ap) {
  * Save materia data
  */
 Materia.prototype.save = function() {
-  return _.omit(this.data, 'name', 'ap_formula');
+  return _.pick(this.data, 'ap', 'level');
 };

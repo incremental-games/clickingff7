@@ -3,22 +3,25 @@
     "name": "Buster Sword",
     "character": "cloud",
     "hits": 18,
+    "gils": 40,
     "zone": 1,
-    "owned": true
+    "number": 1
   },
   "gatling-gun": {
     "name": "Gatling Gun",
     "character": "barret",
     "hits": 14,
+    "gils": 40,
     "zone": 1,
-    "owned": true
+    "number": 1
   },
   "leather-glove": {
     "name": "Leather Glove",
     "character": "tifa",
     "hits": 13,
+    "gils": 40,
     "zone": 2,
-    "owned": true
+    "number": 1
   },
   "assault-gun": {
     "name": "Assault Gun",
