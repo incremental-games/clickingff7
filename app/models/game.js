@@ -126,7 +126,7 @@ Game.prototype._load_weapons = function(finish) {
       if (in_zone) {
         weapon = new Weapon(self, i);
         weapon.extends(data[i]);
-        if (in_current) {
+        if (!in_current) {
           self.weapons[i] = weapon;
         }
         self.data.weapons[i] = weapon;
@@ -148,7 +148,7 @@ Game.prototype._load_materias = function(finish) {
       if (in_zone) {
         materia = new Materia(self, i);
         materia.extends(data[i]);
-        if (in_current) {
+        if (!in_current) {
           self.materias[i] = materia;
         }
         self.data.materias[i] = materia;
@@ -170,7 +170,7 @@ Game.prototype._load_items = function(finish) {
       if (in_zone) {
         item = new Item(self, i);
         item.extends(data[i]);
-        if (in_current) {
+        if (!in_current) {
           self.items[i] = item;
         }
         self.data.items[i] = item;
