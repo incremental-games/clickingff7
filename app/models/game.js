@@ -22,7 +22,7 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
   // scopes INFOS
   this.enemy_hp_max = 0;
   this.enemy_hp = 0;
-  this.total_gils = 100;
+  this.total_gils = 0;
   this.boss_defeated = false;
 
   this.zone = {
