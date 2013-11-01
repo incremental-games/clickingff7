@@ -35,6 +35,26 @@ Item.prototype.extends = function(data) {
 };
 
 /**
+ * Use an item
+ */
+Item.prototype.use = function() {
+  switch (this.data.ref) {
+    case 'health-potion':
+      this.Game.add('characters_hp', 100);
+      break;
+    case 'xp-potion':
+      this.Game.get_characters(function(i, character) {
+        character.set_xp(100);
+      });
+      break;
+  }
+  this.data.number--;
+  if (this.data.number == 0) {
+    delete this.Game.items[this.data.ref];
+  }
+};
+
+/**
  * Return description of the materia
  */
 Item.prototype.get_desc = function() {
@@ -48,7 +68,7 @@ Item.prototype.get_desc = function() {
       text = 'Your characters earn ' + this.data.bonus + ' XP';
       break;
 
-  };
+  }
 
   return text;
 };

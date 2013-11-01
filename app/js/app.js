@@ -376,4 +376,28 @@ function InventoryCtrl($rootScope, $location, Game) {
     $location.path("/game");
   };
 
+  /**
+   * Use an item from the inventory
+   */
+  $rootScope.use = function(ev, item) {
+    if (Game.can_buy(item)) {
+      item.use();
+
+      animate(ev, 'OK!');
+
+    }
+  };
+
+  /**
+   * Use an item from the inventory
+   */
+  $rootScope.equip = function(ev, item) {
+    if (Game.can_buy(item)) {
+      item.equip();
+
+      animate(ev, 'OK!');
+
+    }
+  };
+
 }
