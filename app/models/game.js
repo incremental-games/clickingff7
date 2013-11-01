@@ -183,7 +183,7 @@ Game.prototype._load_items = function(finish) {
 
 Game.prototype._load_characters = function(finish) {
   var self = this;
-  this.$http.get('data/characters.json').success(function(data) {
+  this.$http.get('data/characters.json?v=' + new Date().getTime()).success(function(data) {
     self.data.characters = {};
     for (var i in data) {
       var in_zone = ($.inArray(self.zone.level, data[i].zones) != -1);

@@ -7,8 +7,8 @@
       "hp": 20,
       "pwr": 2,
       "xp": 3,
-      "ap": 10,
-      "gils": 0
+      "ap": 1,
+      "gils": 10
     },
     "2": {
       "level": 2,
@@ -17,8 +17,8 @@
       "hp": 40,
       "pwr": 3,
       "xp": 7,
-      "ap": 20,
-      "gils": 1
+      "ap": 2,
+      "gils": 20
     },
     "3": {
       "level": 3,
@@ -27,8 +27,8 @@
       "hp": 80,
       "pwr": 5,
       "xp": 10,
-      "ap": 30,
-      "gils": 2
+      "ap": 3,
+      "gils": 30
     },
     "4": {
       "level": 4,
@@ -37,8 +37,8 @@
       "hp": 140,
       "pwr": 10,
       "xp": 17,
-      "ap": 40,
-      "gils": 3
+      "ap": 4,
+      "gils": 40
     },
     "5": {
       "level": 5,
@@ -47,18 +47,18 @@
       "hp": 220,
       "pwr": 15,
       "xp": 27,
-      "ap": 50,
-      "gils": 4
+      "ap": 5,
+      "gils": 50
     },
     "6": {
       "level": 6,
       "name": "Guard Scorpion",
       "image": "guard-scorpion.png",
-      "hp": 700,
+      "hp": 480,
       "pwr": 25,
-      "xp": 100,
-      "ap": 60,
-      "gils": 10,
+      "xp": 54,
+      "ap": 10,
+      "gils": 100,
       "boss": true
     }
   },
@@ -69,8 +69,8 @@
       "hp": 320,
       "pwr": 20,
       "xp": 44,
-      "ap": 70,
-      "gils": 5
+      "ap": 6,
+      "gils": 60
     },
     "2": {
       "name": "Special Combatant",
@@ -78,8 +78,8 @@
       "hp": 440,
       "pwr": 25,
       "xp": 71,
-      "ap": 80,
-      "gils": 6
+      "ap": 7,
+      "gils": 70
     },
     "3": {
       "name": "Proto Machinegun",
@@ -87,8 +87,8 @@
       "hp": 580,
       "pwr": 30,
       "xp": 115,
-      "ap": 90,
-      "gils": 7
+      "ap": 8,
+      "gils": 80
     },
     "4": {
       "name": "Blood Taste",
@@ -96,17 +96,38 @@
       "hp": 740,
       "pwr": 35,
       "xp": 186,
-      "ap": 100,
-      "gils": 8
+      "ap": 9,
+      "gils": 90
     },
     "5": {
       "name": "Air Buster",
       "image": "air-buster.png",
-      "hp": 1000,
-      "pwr": 45,
-      "xp": 250,
-      "ap": 110,
-      "gils": 20,
+      "hp": 1290,
+      "pwr": 70,
+      "xp": 372,
+      "ap": 18,
+      "gils": 180,
+      "boss": true
+    }
+  },
+  "3": {
+    "1": {
+      "name": "Hell House",
+      "image": "hell-house.png",
+      "hp": 920,
+      "pwr": 40,
+      "xp": 301,
+      "ap": 10,
+      "gils": 100
+    },
+    "2": {
+      "name": "Aps",
+      "image": "aps.png",
+      "hp": 2160,
+      "pwr": 95,
+      "xp": 240,
+      "ap": 22,
+      "gils": 253,
       "boss": true
     }
   }

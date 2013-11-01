@@ -68,6 +68,14 @@ Character.prototype.wait = function() {
 };
 
 /**
+ * Return the current weapon of the character
+ * @return {Weapon}
+ */
+Character.prototype.get_weapon = function() {
+  return this.Game.data.weapons[this.data.weapon];
+};
+
+/**
  * returns character total hits
  * based on level and weapon level
  * @return {int}
@@ -82,12 +90,7 @@ Character.prototype.get_hp = function() {
  * @return {int}
  */
 Character.prototype.get_hits = function() {
-  // get weapon if not existing
-  if (typeof this.data.weapon == 'string') {
-    this.data.weapon = this.Game.weapons[this.data.weapon];
-  }
-
-  return this.data.level * this.data.weapon.data.hits * 0.1;
+  return this.data.level * this.get_weapon().data.hits * 0.1;
 };
 
 /**

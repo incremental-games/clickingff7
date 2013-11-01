@@ -47,14 +47,14 @@ Weapon.prototype.is_owned = function() {
  * @return {boolean}
  */
 Weapon.prototype.is_equipped = function() {
-  return (this.data.ref == this.Game.characters[this.data.character].data.weapon.data.ref);
+  return (this.data.ref == this.Game.characters[this.data.character].data.weapon);
 };
 
 /**
  * Equip a weapon
  */
 Weapon.prototype.equip = function() {
-  this.Game.characters[this.data.character].data.weapon = this;
+  this.Game.characters[this.data.character].data.weapon = this.data.ref;
 };
 
 /**

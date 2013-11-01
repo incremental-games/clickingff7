@@ -8,5 +8,10 @@
     "level": 2,
     "name": "Sector 5 Reactor",
     "img": "Sector_5_Reactor.png"
+  },
+  "3": {
+    "level": 3,
+    "name": "Sector 6",
+    "img": "Sector_6.png"
   }
 }

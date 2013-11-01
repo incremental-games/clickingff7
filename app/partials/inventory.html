@@ -46,7 +46,7 @@
 --><div class="part w400">
   
     <sections class="weapons">
-    <div ng-repeat="(no, weapon) in game.weapons | clean" class="right div400">
+    <div ng-repeat="(no, weapon) in game.weapons | clean" class="right div400" ng-class="{disabled: !weapon.is_equipped()}">
       <div class="actions">
         <div class="button equip" ng-click="equip($event, weapon)" ng-show="!weapon.is_equipped()">EQUIP</div>
       </div>
@@ -61,7 +61,9 @@
           <span class="label">gils</span> {{weapon.data.gils}}
         </div>
       </div>
-      <div class="part w50"></div>
+      <div class="part avatar w50">
+        <img ng-src="img/weapons/{{weapon.data.image}}" alt="weapon" height="48">
+      </div>
     </div>
   </sections>
 

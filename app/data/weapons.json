@@ -1,33 +1,52 @@
 {
   "buster-sword": {
     "name": "Buster Sword",
+    "image": "buster-sword.png",
     "character": "cloud",
     "hits": 18,
-    "gils": 40,
     "zone": 1,
     "number": 1
   },
   "gatling-gun": {
     "name": "Gatling Gun",
+    "image": "gatling-gun.png",
     "character": "barret",
     "hits": 14,
-    "gils": 40,
     "zone": 1,
     "number": 1
   },
   "leather-glove": {
     "name": "Leather Glove",
+    "image": "leather-glove.png",
     "character": "tifa",
     "hits": 13,
-    "gils": 40,
+    "gils": 120,
     "zone": 2,
     "number": 1
   },
+  "metal-knuckle": {
+    "name": "Metal Knuckle",
+    "image": "metal-knuckle.png",
+    "character": "tifa",
+    "hits": 18,
+    "gils": 320,
+    "zone": 3
+  },
   "assault-gun": {
     "name": "Assault Gun",
+    "image": "assault-gun.png",
     "character": "barret",
     "hits": 17,
-    "gils": 80,
+    "gils": 350,
     "zone": 2
+  },
+  "guard-stick": {
+    "name": "Guard Stick",
+    "image": "guard-stick.jpg",
+    "character": "aerith",
+    "hits": 12,
+    "gils": 140,
+    "zone": 3,
+    "number": 1
   }
 }

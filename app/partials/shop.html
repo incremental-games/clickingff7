@@ -55,7 +55,9 @@
           <span class="label">gils</span> {{weapon.data.gils}}
         </div>
       </div>
-      <div class="part w50"></div>
+      <div class="part w50">
+        <img ng-src="img/weapons/{{weapon.data.image}}" alt="weapon" height="48">
+      </div>
     </div>
     <div ng-show="game.no_weapons()">
       <em>No weapons to buy!</em>

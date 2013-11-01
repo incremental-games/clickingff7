@@ -7,7 +7,7 @@
     "xp_formula": "Math.pow(x,2)*30",
     "weapon": "buster-sword",
     "level": 1,
-    "zones": [1, 2]
+    "zones": [1, 2, 3]
   },
   "barret": {
     "ref": "barret",
@@ -26,7 +26,17 @@
     "hp_base": 13,
     "xp_formula": "Math.pow(x,2)*26",
     "weapon": "leather-glove",
-    "level": 6,
-    "zones": [2]
+    "level": 5,
+    "zones": [2, 3]
+  },
+  "aerith": {
+    "ref": "aerith",
+    "name": "Aerith Gainsborough",
+    "image": "aerith.png",
+    "hp_base": 11,
+    "xp_formula": "Math.pow(x,2)*32",
+    "weapon": "guard-stick",
+    "level": 10,
+    "zones": [3]
   }
 }

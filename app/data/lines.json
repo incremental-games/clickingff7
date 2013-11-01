@@ -4,8 +4,13 @@
     "barret": "The planet's dyin', Cloud!"
   },
   "2": {
-    "cloud": "No way! It's just a machine.",
     "barret": "I don't care what it is! I'm gonna bust him up!",
+    "cloud": "No way! It's just a machine.",
     "tifa": "THIS is from SOLDIER?"
+  },
+  "3": {
+    "aerith": "Well, the worst is over...",
+    "cloud": "You alright?",
+    "tifa": "Man! This is terrible."
   }
 }
