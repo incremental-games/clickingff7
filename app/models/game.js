@@ -122,11 +122,11 @@ Game.prototype._load_weapons = function(finish) {
     self.data.weapons = {};
     for (var i in data) {
       var in_zone = (self.zone.level >= data[i].zone);
-      var in_current = (data[i].number > 0);
+      var in_current = (i in self.weapons);
       if (in_zone) {
         weapon = new Weapon(self, i);
         weapon.extends(data[i]);
-        if (in_current) {
+        if (!in_current && data[i].number > 0) {
           self.weapons[i] = weapon;
         }
         self.data.weapons[i] = weapon;
@@ -144,11 +144,11 @@ Game.prototype._load_materias = function(finish) {
     self.data.materias = {};
     for (var i in data) {
       var in_zone = (self.zone.level >= data[i].zone);
-      var in_current = (data[i].level > 0);
+      var in_current = (i in self.materias);
       if (in_zone) {
         materia = new Materia(self, i);
         materia.extends(data[i]);
-        if (in_current) {
+        if (!in_current && data[i].level > 0) {
           self.materias[i] = materia;
         }
         self.data.materias[i] = materia;
@@ -166,11 +166,11 @@ Game.prototype._load_items = function(finish) {
     self.data.items = {};
     for (var i in data) {
       var in_zone = (self.zone.level >= data[i].zone);
-      var in_current = (data[i].number > 0);
+      var in_current = (i in self.items);
       if (in_zone) {
         item = new Item(self, i);
         item.extends(data[i]);
-        if (in_current) {
+        if (!in_current && data[i].number > 0) {
           self.items[i] = item;
         }
         self.data.items[i] = item;

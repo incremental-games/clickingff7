@@ -26,7 +26,7 @@
     "hp_base": 13,
     "xp_formula": "Math.pow(x,2)*26",
     "weapon": "leather-glove",
-    "level": 9,
+    "level": 6,
     "zones": [2]
   }
 }
