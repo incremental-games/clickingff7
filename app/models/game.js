@@ -46,67 +46,82 @@ Game.prototype.load = function() {
   // Data from save
   if (!this.loaded) {
     var save = this.$cookieStore.get('game');
+    if (save) {
+      this.zone.level = save.zone.level;
+    }
+  }
+
+  this._loadJSON([
+    ['lines', 'zone', 'enemy', 'weapons', 'materias', 'items'],
+    ['characters']
+  ]);
+};
+
+/**
+ * Load JSON files
+ * @param  {array} jsons
+ */
+Game.prototype._loadJSON = function(jsons) {
+  if (jsons.length == 0) {
+    this.begin();
+    return;
   }
 
   var self = this;
-  var $http = this.$http;
+  var n = 0;
+  var max = jsons[0].length;
+  for (var i in jsons[0]) {
+    var loader = '_load_' + jsons[0][i];
+    self[loader](function() {
+      n++;
+      if (n == max) {
+        jsons.splice(0, 1);
+        self._loadJSON(jsons);
+      }
+    });
+  }
+};
 
-  var zone_level = (save ? save.zone.level : this.zone.level);
+Game.prototype._load_lines = function(finish) {
+  var self = this;
+  this.$http.get('data/lines.json').success(function(data) {
+    self.lines = data[self.zone.level];
 
-  this.tmp = 0;
-  var tmp_max = 7;
-
-  // LINES
-  $http.get('data/lines.json').success(function(data) {
-    self.lines = data[zone_level];
-
-    self.tmp += 1;
-    if (self.tmp == tmp_max) self.begin();
+    finish();
   });
+};
 
-  // ZONE
-  $http.get('data/zone.json').success(function(data) {
-    self.zone = data[zone_level];
+Game.prototype._load_zone = function(finish) {
+  var self = this;
+  this.$http.get('data/zone.json').success(function(data) {
+    self.zone = data[self.zone.level];
 
-    self.tmp += 1;
-    if (self.tmp == tmp_max) self.begin();
+    finish();
   });
+};
 
-  // ENNEMIES
-  $http.get('data/enemy.json?v=' + new Date().getTime()).success(function(data) {
+Game.prototype._load_enemy = function(finish) {
+  var self = this;
+  this.$http.get('data/enemy.json?v=' + new Date().getTime()).success(function(data) {
     var enemy, _data = {};
-    for (var i in data[zone_level]) {
-      enemy = new Enemy(self, data[zone_level][i]);
+    for (var i in data[self.zone.level]) {
+      enemy = new Enemy(self, data[self.zone.level][i]);
       enemy.init();
       _data[i] = enemy;
     }
     self.enemy = _data;
 
-    self.tmp += 1;
-    if (self.tmp == tmp_max) self.begin();
+    finish();
   });
+};
 
-  // CHARACTERS
-  $http.get('data/characters.json').success(function(data) {
-    var character, _data = {};
-    for (var i in data) {
-      var in_zone = ($.inArray(zone_level, data[i].zones) != -1);
-      if (i in self.characters) {
-        self.characters[i].data.available = in_zone;
-      } else if (!(i in self.characters) && in_zone) {
-        self.characters[i] = new Character(self, data[i]);
-      }
-    }
-
-    self.tmp += 1;
-    if (self.tmp == tmp_max) self.begin();
-  });
-
+Game.prototype._load_weapons = function(finish) {
+  var self = this;
   // WEAPONS
-  $http.get('data/weapons.json?v=' + new Date().getTime()).success(function(data) {
+  this.$http.get('data/weapons.json?v=' + new Date().getTime()).success(function(data) {
     self.data.weapons = {};
     for (var i in data) {
-      if (zone_level >= data[i].zone) {
+      if (self.zone.level >= data[i].zone) {
         if (data[i].owned) {
           self.weapons[data[i].character] = new Weapon(self, data[i]);
         } else {
@@ -115,15 +130,16 @@ Game.prototype.load = function() {
       }
     }
 
-    self.tmp += 1;
-    if (self.tmp == tmp_max) self.begin();
+    finish();
   });
+};
 
-  // MATERIAS
-  $http.get('data/materias.json?v=' + new Date().getTime()).success(function(data) {
+Game.prototype._load_materias = function(finish) {
+  var self = this;
+  this.$http.get('data/materias.json?v=' + new Date().getTime()).success(function(data) {
     self.data.materias = {};
     for (var i in data) {
-      if (zone_level >= data[i].zone) {
+      if (self.zone.level >= data[i].zone) {
         self.data.materias[i] = new Materia(self, data[i]);
       }
     }
@@ -131,21 +147,39 @@ Game.prototype.load = function() {
     // Add beginning materia (restore)
     self.materias['restore'] = new Materia(self, data['restore']);
 
-    self.tmp += 1;
-    if (self.tmp == tmp_max) self.begin();
+    finish();
   });
+};
 
-  // ITEMS
-  $http.get('data/items.json?v=' + new Date().getTime()).success(function(data) {
+Game.prototype._load_items = function(finish) {
+  var self = this;
+  this.$http.get('data/items.json?v=' + new Date().getTime()).success(function(data) {
     self.data.items = {};
     for (var i in data) {
-      if (zone_level >= data[i].zone) {
+      if (self.zone.level >= data[i].zone) {
         self.data.items[i] = new Item(self, data[i]);
       }
     }
 
-    self.tmp += 1;
-    if (self.tmp == tmp_max) self.begin();
+    finish();
+  });
+};
+
+Game.prototype._load_characters = function(finish) {
+  var self = this;
+  this.$http.get('data/characters.json').success(function(data) {
+    var character, _data = {};
+    for (var i in data) {
+      var in_zone = ($.inArray(self.zone.level, data[i].zones) != -1);
+
+      if (!(i in self.characters)) {
+        self.characters[i] = new Character(self, data[i]);
+      }
+
+      self.characters[i].data.available = in_zone;
+    }
+
+    finish();
   });
 };
 
@@ -281,9 +315,9 @@ Game.prototype.can_buy = function(weapon) {
  */
 Game.prototype.refresh_characters_hp = function() {
   var characters_hp = 0;
-  for (var i in this.characters) {
-    characters_hp += this.characters[i].get_hp();
-  }
+  this.get_characters(function(i, character) {
+    characters_hp += character.get_hp();
+  });
   this.set('characters_hp_max', characters_hp);
   if (!this.characters_hp) {
     this.set('characters_hp', characters_hp);
@@ -296,9 +330,9 @@ Game.prototype.refresh_characters_hp = function() {
  */
 Game.prototype.refresh_characters_limit = function() {
   var characters_limit = 0;
-  for (var i in this.characters) {
-    characters_limit += this.characters[i].get_hp();
-  }
+  this.get_characters(function(i, character) {
+    characters_limit += character.get_hp();
+  });
   this.set('characters_limit_max', characters_limit);
   if (!this.characters_limit) {
     this.set('characters_limit', 0);
@@ -318,9 +352,10 @@ Game.prototype.no_weapons = function() {
 Game.prototype.start_fight = function() {
   if (!this.fight) {
     this.fight = true;
-    for (var i in this.characters) {
-      this.characters[i].run();
-    }
+
+    this.get_characters(function(i, character) {
+      character.run();
+    });
   }
 };
 
@@ -332,27 +367,29 @@ Game.prototype.end_fight = function(victory) {
   this.fight = false;
 
   for (var i in this.enemy) {
-    var number = this.enemy[i].data.number;
+    var enemy = this.enemy[i];
+    var number = enemy.data.number;
     if (number > 0) {
-      this.enemy[i].data.number = 0;
+      enemy.data.number = 0;
 
       // Rewards if victory
       if (victory) {
-        this.add("total_gils", this.enemy[i].data.gils * number);
+        this.add("total_gils", enemy.data.gils * number);
 
-        if (this.enemy[i].data.boss) {
+        if (enemy.data.boss) {
           this.boss_defeated = true;
         }
 
         // XP for characters
-        for (var j in this.characters) {
-          var xp = this.enemy[i].data.xp * number;
-          this.characters[j].set_xp(xp);
-        }
+
+        this.get_characters(function(j, character) {
+          var xp = enemy.data.xp * number;
+          character.set_xp(xp);
+        });
 
         // AP for materias
         for (var j in this.materias) {
-          var ap = this.enemy[i].data.ap * number;
+          var ap = enemy.data.ap * number;
           this.materias[j].set_ap(ap);
         }
       }
@@ -422,14 +459,25 @@ Game.prototype.enemy_hp_progress = function(pixels_max) {
 };
 
 /**
+ * Iterate through available characters
+ */
+Game.prototype.get_characters = function(callback) {
+  for (var i in this.characters) {
+    if (this.characters[i].data.available) {
+      callback(i, this.characters[i]);
+    }
+  }
+}
+
+/**
  * Returns total characters hits
  * @return {int}
  */
 Game.prototype.characters_hits = function(pixels_max) {
   var hits = 0;
-  for (var i in this.characters) {
-    hits += this.characters[i].get_hits();
-  }
+  this.get_characters(function(i, character) {
+    hits += character.get_hits();
+  });
   return hits;
 }
 
