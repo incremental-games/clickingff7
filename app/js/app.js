@@ -300,12 +300,17 @@ function ShopCtrl($rootScope, $location, Game) {
   /**
    * Buy a weapon from the store
    */
-  $rootScope.buy = function(ev, weapon) {
-    if (Game.can_buy(weapon)) {
-      Game.characters[weapon.character].data.weapon_level = weapon.level;
-      Game.sub('total_gils', weapon.gils);
-      Game.refresh_weapons();
+  $rootScope.buy = function(ev, item) {
+    if (Game.can_buy(item)) {
+      if (item.data.ref in Game[item.data.type]) {
+        Game.items[item.data.ref].data.number++;
+      } else {
+        Game.items[item.data.ref] = item;
+      }
+
+      Game.sub('total_gils', item.gils);
       animate(ev, 'OK!');
+
     }
   };
 

@@ -12,6 +12,12 @@ function Item(Game, infos) {
   if (!this.data) {
     this.data = {};
   }
+  if (!('type' in this.data)) {
+    this.data.type = 'items';
+  }
+  if (!('number' in this.data)) {
+    this.data.number = 0;
+  }
 
   // INFOS from COOKIE
   if (infos) {

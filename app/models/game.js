@@ -22,7 +22,7 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
   // scopes INFOS
   this.enemy_hp_max = 0;
   this.enemy_hp = 0;
-  this.total_gils = 0;
+  this.total_gils = 100;
   this.boss_defeated = false;
 
   this.zone = {
@@ -305,8 +305,8 @@ Game.prototype.can_escape = function() {
  * Returns if it is possible to buy an item from the shop
  * @return {boolean}
  */
-Game.prototype.can_buy = function(weapon) {
-  return !this.fight && this.total_gils >= weapon.gils;
+Game.prototype.can_buy = function(item) {
+  return !this.fight && this.total_gils >= item.data.gils;
 };
 
 /**
