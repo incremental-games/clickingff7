@@ -139,7 +139,7 @@ Enemy.prototype.get_xp = function() {
  */
 Enemy.prototype.get_ap = function() {
   var zone_level = this.Game.zone.level;
-  var res = Math.ceil(this.data.level) + zone_level;
+  var res = Math.ceil(this.data.level + zone_level);
   if (this.data.boss) {
     res *= 2;
   }
@@ -152,7 +152,7 @@ Enemy.prototype.get_ap = function() {
  */
 Enemy.prototype.get_gils = function() {
   var zone_level = this.Game.zone.level;
-  var res = Math.ceil(this.data.level) * 10 + zone_level;
+  var res = Math.ceil(this.data.level * 10 + zone_level);
   if (this.data.boss) {
     res *= 2;
   }
