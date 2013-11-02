@@ -1,169 +1,95 @@
 {
   "1": {
     "1": {
-      "level": 1,
+      "level": 0.8,
       "name": "1st Ray",
-      "image": "1st-ray.png",
-      "hp": 20,
-      "pwr": 2,
-      "xp": 3,
-      "ap": 1,
-      "gils": 10
+      "image": "1st-ray.png"
     },
     "2": {
-      "level": 2,
+      "level": 1.4,
       "name": "Mono Drive",
-      "image": "mono-drive.png",
-      "hp": 40,
-      "pwr": 3,
-      "xp": 7,
-      "ap": 2,
-      "gils": 20
+      "image": "mono-drive.png"
     },
     "3": {
-      "level": 3,
+      "level": 1.9,
       "name": "MP",
-      "image": "mp.png",
-      "hp": 80,
-      "pwr": 5,
-      "xp": 10,
-      "ap": 3,
-      "gils": 30
+      "image": "mp.png"
     },
     "4": {
-      "level": 4,
+      "level": 2.5,
       "name": "Grunt",
-      "image": "grunt.png",
-      "hp": 140,
-      "pwr": 10,
-      "xp": 17,
-      "ap": 4,
-      "gils": 40
+      "image": "grunt.png"
     },
     "5": {
-      "level": 5,
+      "level": 3,
       "name": "Sweeper",
-      "image": "sweeper.png",
-      "hp": 220,
-      "pwr": 15,
-      "xp": 27,
-      "ap": 5,
-      "gils": 50
+      "image": "sweeper.png"
     },
     "6": {
-      "level": 6,
+      "level": 4,
       "name": "Guard Scorpion",
       "image": "guard-scorpion.png",
-      "hp": 480,
-      "pwr": 25,
-      "xp": 54,
-      "ap": 10,
-      "gils": 100,
       "boss": true
     }
   },
   "2": {
     "1": {
+      "level": 4,
       "name": "Smogger",
-      "image": "smogger.png",
-      "hp": 320,
-      "pwr": 20,
-      "xp": 44,
-      "ap": 6,
-      "gils": 60
+      "image": "smogger.png"
     },
     "2": {
+      "level": 5,
       "name": "Special Combatant",
-      "image": "special-combatant.png",
-      "hp": 440,
-      "pwr": 25,
-      "xp": 71,
-      "ap": 7,
-      "gils": 70
+      "image": "special-combatant.png"
     },
     "3": {
+      "level": 6,
       "name": "Proto Machinegun",
-      "image": "proto-machinegun.png",
-      "hp": 580,
-      "pwr": 30,
-      "xp": 115,
-      "ap": 8,
-      "gils": 80
+      "image": "proto-machinegun.png"
     },
     "4": {
+      "level": 7,
       "name": "Blood Taste",
-      "image": "blood-taste.png",
-      "hp": 740,
-      "pwr": 35,
-      "xp": 186,
-      "ap": 9,
-      "gils": 90
+      "image": "blood-taste.png"
     },
     "5": {
+      "level": 8,
       "name": "Air Buster",
       "image": "air-buster.png",
-      "hp": 1290,
-      "pwr": 70,
-      "xp": 372,
-      "ap": 18,
-      "gils": 180,
       "boss": true
     }
   },
   "3": {
     "1": {
+      "level": 8,
       "name": "Hell House",
-      "image": "hell-house.png",
-      "hp": 920,
-      "pwr": 40,
-      "xp": 301,
-      "ap": 10,
-      "gils": 100
+      "image": "hell-house.png"
     },
     "2": {
+      "level": 8.5,
       "name": "Whole Eater",
-      "image": "whole-eater.png",
-      "hp": 1120,
-      "pwr": 45,
-      "xp": 487,
-      "ap": 11,
-      "gils": 110
+      "image": "whole-eater.png"
     },
     "3": {
+      "level": 9,
       "name": "Hedgehog Pie",
-      "image": "hedgehog-pie.png",
-      "hp": 1340,
-      "pwr": 50,
-      "xp": 788,
-      "ap": 12,
-      "gils": 120
+      "image": "hedgehog-pie.png"
     },
     "4": {
+      "level": 10,
       "name": "Vice",
-      "image": "vice.png",
-      "hp": 1580,
-      "pwr": 50,
-      "xp": 1275,
-      "ap": 13,
-      "gils": 130
+      "image": "vice.png"
     },
     "5": {
+      "level": 11,
       "name": "Corneo's Lackey",
-      "image": "corneos-lackey.png",
-      "hp": 1840,
-      "pwr": 55,
-      "xp": 2063,
-      "ap": 14,
-      "gils": 140
+      "image": "corneos-lackey.png"
     },
     "6": {
+      "level": 12,
       "name": "Aps",
       "image": "aps.png",
-      "hp": 2160,
-      "pwr": 95,
-      "xp": 240,
-      "ap": 28,
-      "gils": 280,
       "boss": true
     }
   }

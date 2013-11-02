@@ -61,7 +61,7 @@ Enemy.prototype.run = function() {
     // Stop attacking if fight's over
     if (!self.Game.fight) return;
 
-    var hits = self.get_hits();
+    var hits = self.get_pwr();
     self.Game.attack_characters(hits);
 
     console.log("- " + self.data.name + " attacking with" + hits);
@@ -82,39 +82,98 @@ Enemy.prototype.wait = function() {
 };
 
 /**
- * returns enemy cost
- * based on ???
+ * Returns enemy HP
  * @return {int}
  */
-Enemy.prototype.get_cost = function() {
-  return (this.data.number + 1) * this.data.cost;
+Enemy.prototype.get_hp = function() {
+  var level = this.data.level;
+  var zone_level = Math.ceil(level / 4);
+  switch (zone_level) {
+    case 1:
+      characters_hits = 12.8;
+      break;
+    case 1:
+      characters_hits = 38.4;
+      break;
+    case 1:
+      characters_hits = 48;
+      break;
+  }
+
+  if (this.data.boss) {
+    res = characters_hits * 30;
+  } else {
+    res = Math.ceil((level / (zone_level * 4)) * characters_hits * 28);
+  }
+
+  return res;
 };
 
 /**
- * returns enemy hits
- * based on ???
+ * Returns enemy pwr
  * @return {int}
  */
-Enemy.prototype.get_hits = function() {
-  return this.data.pwr;
+Enemy.prototype.get_pwr = function() {
+  var level = this.data.level;
+  var zone_level = Math.ceil(level / 4);
+  switch (zone_level) {
+    case 1:
+      characters_hp = 120;
+      break;
+    case 2:
+      characters_hp = 344;
+      break;
+    case 3:
+      characters_hp = 392;
+      break;
+  }
+  var res;
+
+  if (this.data.boss) {
+    res = Math.ceil(characters_hp / 6);
+  } else {
+    res = Math.ceil((level / (zone_level * 4)) * characters_hp / 7);
+  }
+
+  return res;
 };
 
 /**
- * returns enemy total experience
- * based on ???
+ * returns enemy XP reward
  * @return {int}
  */
 Enemy.prototype.get_xp = function() {
-  return this.data.number * this.data.xp;
+  var res = this.data.level * 10;
+  if (this.data.boss) {
+    res *= 2;
+  }
+  return res;
 };
 
 /**
- * returns enemy total gils
- * based on ???
+ * returns enemy AP reward
+ * @return {int}
+ */
+Enemy.prototype.get_ap = function() {
+  var zone_level = this.Game.zone.level;
+  var res = Math.ceil(this.data.level * zone_level);
+  if (this.data.boss) {
+    res *= 2;
+  }
+  return res;
+};
+
+/**
+ * returns enemy gils reward
  * @return {int}
  */
 Enemy.prototype.get_gils = function() {
-  return this.data.gils;
+  var zone_level = this.Game.zone.level;
+  var res = this.data.level * zone_level * 10;
+  if (this.data.boss) {
+    res *= 2;
+  }
+  return res;
 };
 
 /**

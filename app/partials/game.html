@@ -73,19 +73,19 @@
         <img ng-src="img/enemy/{{e.data.image}}" alt="avatar" height="48" />
       </div>
       <div class="part infos w300">
-        {{e.data.name}} 
+        {{e.data.name}} <strong>(LVL{{e.data.level|ceil}})</strong> 
         <span ng-if="e.data.boss">
           <span class="boss" data-step="3" data-intro="This is the boss of the zone. Kill it to go to next zone." data-position="right">BOSS</span> 
         </span>
         <strong ng-show="e.data.number > 0">x{{e.data.number}}</strong>
         <div>
-          <span class="label">hp</span> {{e.data.hp}} 
-          <span class="label">pwr</span> {{e.data.pwr}}
+          <span class="label">hp</span> {{e.get_hp()}} 
+          <span class="label">pwr</span> {{e.get_pwr()}}
         </div>
         <div>
-          <span class="label">xp</span> {{e.data.xp}} 
-          <span class="label">ap</span> {{e.data.ap}} 
-          <span class="label">gils</span> {{e.data.gils}}
+          <span class="label">xp</span> {{e.get_xp()}} 
+          <span class="label">ap</span> {{e.get_ap()}} 
+          <span class="label">gils</span> {{e.get_gils()}}
         </div>
       </div>
     </div>

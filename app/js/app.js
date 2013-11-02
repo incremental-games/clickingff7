@@ -186,8 +186,8 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
     enemy.data.number += 1;
     animate(ev, '+1');
 
-    Game.add('enemy_hp_max', enemy.data.hp);
-    Game.add('enemy_hp', enemy.data.hp);
+    Game.add('enemy_hp_max', enemy.get_hp());
+    Game.add('enemy_hp', enemy.get_hp());
 
     enemy.run();
 
@@ -316,7 +316,7 @@ function ShopCtrl($rootScope, $location, Game) {
       if (item.data.ref in Game[item.data.type]) {
         Game[item.data.type][item.data.ref].data.number++;
       } else {
-        Game[item.data.type][item.data.ref] = item;
+        Game[item.data.type][item.data.ref] = _.clone(item);
       }
 
       Game.sub('total_gils', item.data.gils);

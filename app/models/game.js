@@ -426,7 +426,7 @@ Game.prototype.end_fight = function(victory) {
 
       // Rewards if victory
       if (victory) {
-        this.add("total_gils", enemy.data.gils * number);
+        this.add("total_gils", enemy.get_gils() * number);
 
         if (enemy.data.boss) {
           this.boss_defeated = true;
@@ -435,13 +435,13 @@ Game.prototype.end_fight = function(victory) {
         // XP for characters
 
         this.get_characters(function(j, character) {
-          var xp = enemy.data.xp * number;
+          var xp = enemy.get_xp() * number;
           character.set_xp(xp);
         });
 
         // AP for materias
         for (var j in this.materias) {
-          var ap = enemy.data.ap * number;
+          var ap = enemy.get_ap() * number;
           this.materias[j].set_ap(ap);
         }
       }
