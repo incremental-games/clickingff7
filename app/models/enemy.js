@@ -51,9 +51,19 @@ Enemy.prototype.extends = function(data) {
  * @return {boolean}
  */
 Enemy.prototype.can_fight = function() {
-  return (this.Game.characters_level_max + 1 >= this.data.level);
+  var res = (this.Game.characters_level_max + 1 >= this.data.level);
+
+  if (this.data.boss && this.Game.boss_defeated) {
+    res = false;
+  }
+
+  return res;
 };
 
+/**
+ * Returns color enemy difficulty
+ * @return {string}
+ */
 Enemy.prototype.get_difficulty = function() {
   var res;
   var characters_level_max = this.Game.characters_level_max;
@@ -112,7 +122,7 @@ Enemy.prototype.wait = function() {
 Enemy.prototype.get_hp = function() {
   var level = this.data.level;
   var zone_level = Math.ceil(level / 4);
-  var hits = [12.8, 38.4, 48, 84.8];
+  var hits = [12.8, 38.4, 62.4, 84.8];
   var characters_hits = hits[zone_level - 1];
   var res;
 
@@ -132,7 +142,7 @@ Enemy.prototype.get_hp = function() {
 Enemy.prototype.get_pwr = function() {
   var level = this.data.level;
   var zone_level = Math.ceil(level / 4);
-  var hp = [120, 344, 392, 688];
+  var hp = [120, 344, 468, 688];
   var characters_hp = hp[zone_level - 1];
   var res;
 
@@ -195,14 +205,6 @@ Enemy.prototype.get_attacked = function(hits) {
     this.Game.attribute_xp(this.data.xp);
     this.Game.attribute_gils(this.data.gils);
   }
-};
-
-/**
- * Returns true if enemy can be fought
- * @return {boolean}
- */
-Enemy.prototype.can_be_fought = function() {
-  return this.Game.$rootScope.total_enemy_pwr >= this.get_cost();
 };
 
 /**

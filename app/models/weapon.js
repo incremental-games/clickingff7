@@ -39,7 +39,7 @@ Weapon.prototype.extends = function(data) {
  * @return {int}
  */
 Weapon.prototype.get_gils = function() {
-  return this.data.gils * this.Game.zone.level;
+  return this.data.gils;
 };
 
 /**

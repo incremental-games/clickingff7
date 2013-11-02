@@ -2,15 +2,15 @@
   "health-potion": {
     "ref": "health-potion",
     "name": "Health potion",
-  "gils": 20,
+    "gils": 20,
     "bonus": 30,
     "zone": 1
   },
   "xp-potion": {
     "ref": "xp-potion",
     "name": "XP potion",
-    "gils": 50,
-    "bonus": 30,
+    "gils": 60,
+    "bonus": 20,
     "zone": 1
   }
 }
