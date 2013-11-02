@@ -5,7 +5,7 @@
 
 --><div class="part w300">
   <div ng-if="game.zone.img"><img ng-src="img/zones/{{game.zone.img}}" width="100" /></div>
-  <div ng-click="next_zone()" class="button" ng-class="{disabled: !game.can_next_zone()}" data-step="12" data-intro="Well, that's all. Now try your best to go to the next zone ;)">Go next zone</div>
+  <div ng-click="next_zone()" class="button" ng-class="{disabled: !game.can_next_zone()}" data-step="11" data-intro="Well, that's all. Now try your best to go to the next zone. Tip: you have to unlock the boss enemy and win the battle ;)">Go next zone</div>
 </div><!--
 
 --><div class="part w300">
@@ -16,24 +16,24 @@
 
 <div class="part w100">
   <div ng-click="attack($event)" class="button" ng-class="{disabled: !game.can_attack(), limit: game.can_limit()}">
-    <span ng-if="!game.can_limit()" data-step="7" data-intro="During fight, click here to attack manually the enemy, as often as you want. Their HP will decrease faster.">ATTACK</span>
+    <span ng-if="!game.can_limit()" data-step="6" data-intro="During fight, click here to attack manually the enemy, as often as you want. Their HP will decrease faster.">ATTACK</span>
     <span ng-if="game.can_limit()">LIMIT</span>
   </div>
 </div><!--
 
---><div class="part enemy_hp w300" data-step="5" data-intro="This is enemy HP. During fight, enemy HP starts full, then decreases. If it goes to 0, you win the battle. That means, you earn XP, AP and GILS.">
+--><div class="part enemy_hp w300" data-step="4" data-intro="This is enemy HP. During fight, enemy HP starts full, then decreases. If it goes to 0, you win the battle. That means, you earn XP, AP and GILS.">
   <div class="enemy_hp_progress" style="width:{{game.enemy_hp_progress(300)}}px;"></div>
   {{game.enemy_hp|round:2}} / {{game.enemy_hp_max}}
 </div><!--
 
---><div class="part characters_hp w300" data-step="6" data-intro="This is your characters HP. During fight, it also decreases. If it comes to 0, you fail the battle. That means, you'll have to cure before fighting again.">
+--><div class="part characters_hp w300" data-step="5" data-intro="This is your characters HP. During fight, it also decreases. If it comes to 0, you fail the battle. That means, you'll have to cure before fighting again.">
   <div class="characters_hp_progress" style="width:{{game.characters_hp_progress(300)}}px;"></div>
   {{game.characters_hp|round:2}} / {{game.characters_hp_max}}
 </div><!--
 
 --><div class="part w100">
-  <div ng-click="cure($event)" class="button" ng-class="{disabled: !game.can_cure()}" data-step="8" data-intro="Anytime, if you think your character HP is too low, click here to regain life, as often as you want.">CURE</div>
-  <div ng-click="escape($event)" class="button" ng-class="{disabled: !game.can_escape()}" data-step="9" data-intro="During fight, if you think the enemy is too strong, you can escape the battle by clicking here.">ESCAPE</div>
+  <div ng-click="cure($event)" class="button" ng-class="{disabled: !game.can_cure()}" data-step="7" data-intro="Anytime, if you think your character HP is too low, click here to regain life, as often as you want.">CURE</div>
+  <div ng-click="escape($event)" class="button" ng-class="{disabled: !game.can_escape()}" data-step="8" data-intro="During fight, if you think the enemy is too strong, you can escape the battle by clicking here.">ESCAPE</div>
 </div>
 
 <div></div>
@@ -42,7 +42,7 @@
 
 --><div class="part w300"></div><!--
 
---><div class="part characters_limit w300" data-step="10" data-intro="This is your characters LIMIT. During fight, when enemy deals you damages, this bar will grow up. When it becomes full, your next manual attack become critical !">
+--><div class="part characters_limit w300" data-step="9" data-intro="This is your characters LIMIT. During fight, when enemy deals you damages, this bar will grow up. When it becomes full, your next manual attack become critical !">
   <div class="characters_limit_progress" style="width:{{game.characters_limit_progress(300)}}px;"></div>
 </div><!--
 
@@ -58,7 +58,7 @@
 
 <div class="part w400">
 
-  <section class="enemies" data-step="2" data-intro="This is the enemy ! They are ordered by power. So, you should fight the first one to begin, then the second, etc." data-position="right">
+  <section class="enemies" data-step="2" data-intro="This is the enemy ! They are ordered by level. So, you should fight the first one to begin, then the second, etc." data-position="right">
     <div ng-repeat="(no, e) in game.enemy | clean" class="left div400 enemy" ng-class="{disabled: e.data.number == 0}" ng-show="e.can_fight()">
       <div class="actions">
         <div class="button fight_enemy" ng-click="fight($event, e)" ng-class="e.get_difficulty()">FIGHT</div>
@@ -69,7 +69,7 @@
       <div class="part infos w300">
         {{e.data.name}} <strong>(LVL{{e.data.level|ceil}})</strong> 
         <span ng-if="e.data.boss">
-          <span class="boss" data-step="3" data-intro="This is the boss of the zone. Kill it to go to next zone." data-position="right">BOSS</span> 
+          <span class="boss">BOSS</span> 
         </span>
         <strong ng-show="e.data.number > 0">x{{e.data.number}}</strong>
         <div>
@@ -120,7 +120,7 @@
 
 --><div class="part w400">
 
-  <section class="materias" data-step="4" data-intro="This is your first materia ! If your character win battles, your materias will grow up and get stronger." data-position="top">
+  <section class="materias" data-step="3" data-intro="This is your materias ! If your character win battles, they will grow up and get stronger." data-position="top">
     <div ng-repeat="(i, materia) in game.materias | clean" class="right div400 materia">
       <div class="ap_progress" style="width:{{materia.ap_progress(400)}}px;"></div>
       <div class="part infos w300">

@@ -311,7 +311,7 @@ function ShopCtrl($rootScope, $location, Game, Utils) {
  * /Save
  */
 
-function SaveCtrl($rootScope, $location, Game, Utils) {
+function SaveCtrl($scope, $rootScope, $location, Game, Utils) {
 
   /**
    * Checkin'
@@ -340,19 +340,28 @@ function SaveCtrl($rootScope, $location, Game, Utils) {
   };
 
   /**
-   * Reset the game
+   * Export the current save
    */
-  $rootScope.exportGame = function(ev) {
-    var save = Game.export();
-    $rootScope.area = JSON.stringify(save);
+  $rootScope.exportLastSave = function(ev) {
+    var save = Game.last_export;
+    $scope.area = JSON.stringify(save);
     Utils.animate(ev, 'OK!');
   };
 
   /**
-   * Reset the game
+   * Export the current game
    */
-  $rootScope.importGame = function(ev) {
-    if (confirm('Are you sure ? You\'ll lose your current save !')) {
+  $rootScope.exportCurrentGame = function(ev) {
+    var save = Game.export();
+    $scope.area = JSON.stringify(save);
+    Utils.animate(ev, 'OK!');
+  };
+
+  /**
+   * Import a save
+   */
+  $rootScope.importSave = function(ev) {
+    if (!Game.last_export || confirm('Are you sure ? You\'ll lose your current save !')) {
       var save = JSON.parse($scope.area);
       Game.import(save);
       location.reload();

@@ -269,6 +269,8 @@ Game.prototype.extends = function(save) {
   this.characters_limit = save.characters_limit;
   this.boss_defeated = save.boss_defeated;
   this.time = new Date(save.time).toLocaleString();
+
+  this.last_export = save;
 };
 
 /**
@@ -584,7 +586,7 @@ Game.prototype.export = function() {
   save.characters_hp = this.characters_hp;
   save.characters_limit = this.characters_limit;
   save.boss_defeated = this.boss_defeated;
-  save.time = this.time;
+  save.time = (new Date()).toLocaleString();
 
   return save;
 };
@@ -601,9 +603,9 @@ Game.prototype.import = function(save) {
  * Save the game
  */
 Game.prototype.save = function() {
-  this.time = (new Date()).toLocaleString();
   var save = this.export();
   this.$cookieStore.put('game', save);
+  this.last_export = save;
 };
 
 /**

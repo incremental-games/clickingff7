@@ -22,12 +22,12 @@
 
   <div class="left">
     <div class="button" ng-click="saveGame($event)">SAVE</div>
-    <span ng-show="game.time">Last save: {{game.time}}</span>
+    <span ng-show="game.last_export">Last save: {{game.time}}</span>
   </div>
   
   <br />
   
-  <div class="left" ng-show="game.time">
+  <div class="left" ng-show="game.last_export">
     <div class="button" ng-click="resetGame($event)">RESET</div>
     Delete your save to begin from scratch?
   </div>
@@ -37,8 +37,9 @@
 --><div class="part w400">
   
     <div class="right">
-      <div class="button" ng-click="exportGame($event)">EXPORT</div>
-      <div class="button" ng-click="importGame($event)">IMPORT</div>
+      <div class="button" ng-click="exportLastSave($event)" ng-show="game.last_export">EXPORT LAST SAVE</div>
+      <div class="button" ng-click="exportCurrentGame($event)">EXPORT CURRENT GAME</div>
+      <div class="button" ng-click="importSave($event)">IMPORT</div>
       
       <br />
 
