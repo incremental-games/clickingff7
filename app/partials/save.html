@@ -20,13 +20,29 @@
 
 <div class="part w400">
 
-  <div class="button" ng-click="saveGame($event)">SAVE</div><br />
-  <div class="button" ng-click="resetGame($event)">RESET</div>
+  <div class="left">
+    <div class="button" ng-click="saveGame($event)">SAVE</div>
+    <span ng-show="game.time">Last save: {{game.time}}</span>
+  </div>
+  
+  <br />
+  
+  <div class="left" ng-show="game.time">
+    <div class="button" ng-click="resetGame($event)">RESET</div>
+    Delete your save to begin from scratch?
+  </div>
 
 </div><!--
 
 --><div class="part w400">
   
-    Coming...
+    <div class="right">
+      <div class="button" ng-click="exportGame($event)">EXPORT</div>
+      <div class="button" ng-click="importGame($event)">IMPORT</div>
+      
+      <br />
+
+      <textarea ng-model="area" class="area"></textarea>
+    </div>
 
 </div>

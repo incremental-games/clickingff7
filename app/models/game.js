@@ -266,6 +266,7 @@ Game.prototype.extends = function(save) {
   this.characters_hp = save.characters_hp;
   this.characters_limit = save.characters_limit;
   this.boss_defeated = save.boss_defeated;
+  this.time = new Date(save.time).toLocaleString();
 };
 
 /**
@@ -536,10 +537,10 @@ Game.prototype.characters_limit_progress = function(pixels_max) {
 };
 
 /**
- * Save the game into COOKIE
- * TODO filter
+ * Export the game for saving
+ * @return {object}
  */
-Game.prototype.save = function() {
+Game.prototype.export = function() {
   var characters = {};
   for (var i in this.characters) {
     characters[i] = this.characters[i].save();
@@ -571,9 +572,25 @@ Game.prototype.save = function() {
   save.characters_hp = this.characters_hp;
   save.characters_limit = this.characters_limit;
   save.boss_defeated = this.boss_defeated;
+  save.time = this.time;
 
-  console.log(save);
+  return save;
+};
 
+/**
+ * Import a save
+ * @param  {object} save
+ */
+Game.prototype.import = function(save) {
+  this.$cookieStore.put('game', save);
+};
+
+/**
+ * Save the game
+ */
+Game.prototype.save = function() {
+  this.time = (new Date()).toLocaleString();
+  var save = this.export();
   this.$cookieStore.put('game', save);
 };
 
@@ -581,9 +598,7 @@ Game.prototype.save = function() {
  * Remove the COOKIE & reset the game
  */
 Game.prototype.reset = function() {
-  var $cookieStore = this.$cookieStore;
-
-  $cookieStore.remove('game');
+  this.$cookieStore.remove('game');
 };
 
 /**

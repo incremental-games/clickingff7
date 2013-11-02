@@ -230,6 +230,13 @@ footer {
   box-shadow: none;
 }
 
+.area {
+  width: 350px;
+  height: 200px;
+  margin-top: 10px;
+  white-space: pre;
+}
+
 /* ANIMATIONS */
 
 .xp_progress, .enemy_hp_progress, .characters_hp_progress, .characters_limit_progress {

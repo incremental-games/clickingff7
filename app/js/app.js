@@ -335,7 +335,26 @@ function SaveCtrl($scope, $location, Game, Utils) {
   $scope.resetGame = function(ev) {
     if (confirm('Are you sure ? You\'ll lose everything !')) {
       Game.reset();
-      Utils.animate(ev, 'OK!');
+      location.reload();
+    }
+  };
+
+  /**
+   * Reset the game
+   */
+  $scope.exportGame = function(ev) {
+    var save = Game.export();
+    $scope.area = JSON.stringify(save);
+    Utils.animate(ev, 'OK!');
+  };
+
+  /**
+   * Reset the game
+   */
+  $scope.importGame = function(ev) {
+    if (confirm('Are you sure ? You\'ll lose your current save !')) {
+      var save = JSON.parse($scope.area);
+      Game.import(save);
       location.reload();
     }
   };
