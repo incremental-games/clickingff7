@@ -343,8 +343,7 @@ function SaveCtrl($scope, $rootScope, $location, Game, Utils) {
    * Export the current save
    */
   $rootScope.exportLastSave = function(ev) {
-    var save = Game.last_export;
-    $scope.area = JSON.stringify(save);
+    $scope.area = Game.last_export;
     Utils.animate(ev, 'OK!');
   };
 

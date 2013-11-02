@@ -270,7 +270,7 @@ Game.prototype.extends = function(save) {
   this.boss_defeated = save.boss_defeated;
   this.time = new Date(save.time).toLocaleString();
 
-  this.last_export = save;
+  this.last_export = JSON.stringify(save);
 };
 
 /**
@@ -605,7 +605,8 @@ Game.prototype.import = function(save) {
 Game.prototype.save = function() {
   var save = this.export();
   this.$cookieStore.put('game', save);
-  this.last_export = save;
+  this.time = save.time;
+  this.last_export = JSON.stringify(save);
 };
 
 /**
