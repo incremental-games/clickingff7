@@ -38,13 +38,14 @@ Item.prototype.extends = function(data) {
  * Use an item
  */
 Item.prototype.use = function() {
+  var self = this;
   switch (this.data.ref) {
     case 'health-potion':
-      this.Game.add('characters_hp', 100);
+      this.Game.add('characters_hp', this.get_bonus());
       break;
     case 'xp-potion':
       this.Game.get_characters(function(i, character) {
-        character.set_xp(100);
+        character.set_xp(self.get_bonus());
       });
       break;
   }
@@ -62,15 +63,31 @@ Item.prototype.get_desc = function() {
 
   switch (this.data.ref) {
     case 'health-potion':
-      text = 'Your characters regain ' + this.data.bonus + ' HP';
+      text = 'Your characters regain ' + this.get_bonus() + ' HP';
       break;
     case 'xp-potion':
-      text = 'Your characters earn ' + this.data.bonus + ' XP';
+      text = 'Your characters earn ' + this.get_bonus() + ' XP';
       break;
 
   }
 
   return text;
+};
+
+/**
+ * Return the price of the item
+ * @return {int}
+ */
+Item.prototype.get_gils = function() {
+  return this.data.gils * this.Game.zone.level;
+};
+
+/**
+ * Return the total bonus of the item
+ * @return {int}
+ */
+Item.prototype.get_bonus = function() {
+  return this.data.bonus * this.Game.zone.level;
 };
 
 /**

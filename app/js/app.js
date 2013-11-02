@@ -138,7 +138,7 @@ function NavCtrl($scope, $location, Game) {
  * /Game
  */
 
-function GameCtrl($scope, $rootScope, $location, $cookieStore, $http, $timeout, Game, Utils) {
+function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game, Utils) {
 
   // STEP 1
   // Load saved game from COOKIE
@@ -162,7 +162,7 @@ function GameCtrl($scope, $rootScope, $location, $cookieStore, $http, $timeout, 
   /**
    * Attack manually enemy
    */
-  $scope.attack = function(ev) {
+  $rootScope.attack = function(ev) {
     if (Game.can_attack()) {
       var characters_hits = Game.characters_hits();
       var d = Math.pow(10, 2);
@@ -180,7 +180,7 @@ function GameCtrl($scope, $rootScope, $location, $cookieStore, $http, $timeout, 
   /**
    * Escape fight
    */
-  $scope.escape = function(ev) {
+  $rootScope.escape = function(ev) {
     if (Game.can_escape()) {
       Game.escape();
       Utils.animate(ev, 'Success!');
@@ -190,7 +190,7 @@ function GameCtrl($scope, $rootScope, $location, $cookieStore, $http, $timeout, 
   /**
    * Cure maually characters
    */
-  $scope.cure = function(ev) {
+  $rootScope.cure = function(ev) {
     if (Game.can_cure()) {
       var characters_hp = Game.characters_hp_max;
       var restore = Game.materias['restore'].data.level;
@@ -204,7 +204,7 @@ function GameCtrl($scope, $rootScope, $location, $cookieStore, $http, $timeout, 
    * Use ??? to search enemy
    * @param  {object} id Enemy in the zone
    */
-  $scope.fight = function(ev, enemy) {
+  $rootScope.fight = function(ev, enemy) {
     enemy.data.number += 1;
     Utils.animate(ev, '+1');
 
@@ -221,7 +221,7 @@ function GameCtrl($scope, $rootScope, $location, $cookieStore, $http, $timeout, 
   /**
    * Go next zone
    */
-  $scope.next_zone = function() {
+  $rootScope.next_zone = function() {
     if (Game.can_next_zone()) {
       if (Game.zone.level == 4) {
         alert("Congrates! You've cleared the game!\nThere should be more to come.. Stay tuned!");
@@ -234,7 +234,7 @@ function GameCtrl($scope, $rootScope, $location, $cookieStore, $http, $timeout, 
   /**
    * Show the help
    */
-  $scope.help = function(ev) {
+  $rootScope.help = function(ev) {
     if (!Game.fight) {
       introJs().start();
     }
@@ -246,7 +246,7 @@ function GameCtrl($scope, $rootScope, $location, $cookieStore, $http, $timeout, 
  * /Inventory
  */
 
-function InventoryCtrl($scope, $location, Game, Utils) {
+function InventoryCtrl($rootScope, $location, Game, Utils) {
 
   /**
    * Checkin'
@@ -259,7 +259,7 @@ function InventoryCtrl($scope, $location, Game, Utils) {
   /**
    * Use an item from the inventory
    */
-  $scope.use = function(ev, item) {
+  $rootScope.use = function(ev, item) {
     item.use();
     Utils.animate(ev, 'OK!');
   };
@@ -267,7 +267,7 @@ function InventoryCtrl($scope, $location, Game, Utils) {
   /**
    * Use an item from the inventory
    */
-  $scope.equip = function(ev, item) {
+  $rootScope.equip = function(ev, item) {
     item.equip();
     Utils.animate(ev, 'OK!');
   };
@@ -278,7 +278,7 @@ function InventoryCtrl($scope, $location, Game, Utils) {
  * /Shop
  */
 
-function ShopCtrl($scope, $location, Game, Utils) {
+function ShopCtrl($rootScope, $location, Game, Utils) {
 
   /**
    * Checkin'
@@ -291,7 +291,7 @@ function ShopCtrl($scope, $location, Game, Utils) {
   /**
    * Buy a weapon from the store
    */
-  $scope.buy = function(ev, item) {
+  $rootScope.buy = function(ev, item) {
     if (Game.can_buy(item)) {
       if (item.data.ref in Game[item.data.type]) {
         Game[item.data.type][item.data.ref].data.number++;
@@ -299,7 +299,7 @@ function ShopCtrl($scope, $location, Game, Utils) {
         Game[item.data.type][item.data.ref] = $.extend(true, {}, item);
       }
 
-      Game.sub('total_gils', item.data.gils);
+      Game.sub('total_gils', item.get_gils());
       Utils.animate(ev, 'OK!');
 
     }
@@ -311,7 +311,7 @@ function ShopCtrl($scope, $location, Game, Utils) {
  * /Save
  */
 
-function SaveCtrl($scope, $location, Game, Utils) {
+function SaveCtrl($rootScope, $location, Game, Utils) {
 
   /**
    * Checkin'
@@ -324,7 +324,7 @@ function SaveCtrl($scope, $location, Game, Utils) {
   /**
    * Save the game
    */
-  $scope.saveGame = function(ev) {
+  $rootScope.saveGame = function(ev) {
     Game.save();
     Utils.animate(ev, 'OK!');
   };
@@ -332,7 +332,7 @@ function SaveCtrl($scope, $location, Game, Utils) {
   /**
    * Reset the game
    */
-  $scope.resetGame = function(ev) {
+  $rootScope.resetGame = function(ev) {
     if (confirm('Are you sure ? You\'ll lose everything !')) {
       Game.reset();
       location.reload();
@@ -342,16 +342,16 @@ function SaveCtrl($scope, $location, Game, Utils) {
   /**
    * Reset the game
    */
-  $scope.exportGame = function(ev) {
+  $rootScope.exportGame = function(ev) {
     var save = Game.export();
-    $scope.area = JSON.stringify(save);
+    $rootScope.area = JSON.stringify(save);
     Utils.animate(ev, 'OK!');
   };
 
   /**
    * Reset the game
    */
-  $scope.importGame = function(ev) {
+  $rootScope.importGame = function(ev) {
     if (confirm('Are you sure ? You\'ll lose your current save !')) {
       var save = JSON.parse($scope.area);
       Game.import(save);

@@ -316,7 +316,7 @@ Game.prototype.can_escape = function() {
  * @return {boolean}
  */
 Game.prototype.can_buy = function(item) {
-  return this.total_gils >= item.data.gils;
+  return this.total_gils >= item.get_gils();
 };
 
 /**

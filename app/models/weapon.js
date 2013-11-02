@@ -35,6 +35,14 @@ Weapon.prototype.extends = function(data) {
 };
 
 /**
+ * Returns the price of the weapon
+ * @return {int}
+ */
+Weapon.prototype.get_gils = function() {
+  return this.data.gils * this.Game.zone.level;
+};
+
+/**
  * Returns true if the weapon is owned in the inventory
  * @return {boolean}
  */

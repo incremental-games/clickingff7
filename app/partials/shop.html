@@ -30,7 +30,7 @@
         {{item.data.name}}
         <div>
           <span class="label">stock</span> {{game.get_item_stock(no)}}
-          <span class="label">gils</span> {{item.data.gils}}
+          <span class="label">gils</span> {{item.get_gils()}}
         </div>
         <div class="line">{{item.get_desc()}}</div>
       </div>
