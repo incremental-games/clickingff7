@@ -4,37 +4,37 @@
     "name": "Cloud Strife",
     "image": "cloud.png",
     "hp_base": 14,
-    "xp_formula": "x*30",
+    "xp_formula": "Math.pow(x,2)*30",
     "weapon": "buster-sword",
     "level": 1,
-    "zones": [1, 2, 3]
+    "zones": [1, 2, 3, 4]
   },
   "barret": {
     "ref": "barret",
     "name": "Barret Wallace",
     "image": "barret.png",
     "hp_base": 16,
-    "xp_formula": "x*30-2",
+    "xp_formula": "Math.pow(x,2)*30-2",
     "weapon": "gatling-gun",
     "level": 1,
-    "zones": [1, 2]
+    "zones": [1, 2, 4]
   },
   "tifa": {
     "ref": "tifa",
     "name": "Tifa Lockhart",
     "image": "tifa.png",
     "hp_base": 13,
-    "xp_formula": "x*30-4",
+    "xp_formula": "Math.pow(x,2)*30-4",
     "weapon": "leather-glove",
     "level": 4,
-    "zones": [2, 3]
+    "zones": [2, 3, 4]
   },
   "aerith": {
     "ref": "aerith",
     "name": "Aerith Gainsborough",
     "image": "aerith.png",
     "hp_base": 12,
-    "xp_formula": "x*30+2",
+    "xp_formula": "Math.pow(x,2)*30+2",
     "weapon": "guard-stick",
     "level": 8,
     "zones": [3]

@@ -12,5 +12,10 @@
     "aerith": "Well, the worst is over...",
     "cloud": "You alright?",
     "tifa": "Man! This is terrible."
+  },
+  "4": {
+    "barret": "Tifa! Cloud! You came!",
+    "cloud": "Wait! You hear something.... above us?",
+    "tifa": "Here they come!"
   }
 }

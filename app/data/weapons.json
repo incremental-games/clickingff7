@@ -15,6 +15,14 @@
     "zone": 1,
     "number": 1
   },
+  "assault-gun": {
+    "name": "Assault Gun",
+    "image": "assault-gun.png",
+    "character": "barret",
+    "hits": 17,
+    "gils": 350,
+    "zone": 2
+  },
   "leather-glove": {
     "name": "Leather Glove",
     "image": "leather-glove.png",
@@ -32,14 +40,6 @@
     "gils": 320,
     "zone": 3
   },
-  "assault-gun": {
-    "name": "Assault Gun",
-    "image": "assault-gun.png",
-    "character": "barret",
-    "hits": 17,
-    "gils": 350,
-    "zone": 2
-  },
   "guard-stick": {
     "name": "Guard Stick",
     "image": "guard-stick.jpg",
@@ -48,5 +48,13 @@
     "gils": 140,
     "zone": 3,
     "number": 1
+  },
+  "mythril-rod": {
+    "name": "Mythril Rod",
+    "image": "mythril-rod.png",
+    "character": "aerith",
+    "hits": 16,
+    "gils": 370,
+    "zone": 3
   }
 }

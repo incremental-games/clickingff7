@@ -13,5 +13,10 @@
     "level": 3,
     "name": "Sector 6",
     "img": "Sector_6.png"
+  },
+  "4": {
+    "level": 4,
+    "name": "Sector 7",
+    "img": "Sector_7.png"
   }
 }

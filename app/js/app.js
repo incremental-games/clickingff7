@@ -201,7 +201,7 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
    */
   $rootScope.next_zone = function() {
     if (Game.can_next_zone()) {
-      if (Game.zone.level == 3) {
+      if (Game.zone.level == 4) {
         alert("Congrates! You've cleared the game!\nThere should be more to come.. Stay tuned!");
         return;
       }

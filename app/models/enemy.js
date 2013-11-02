@@ -88,17 +88,9 @@ Enemy.prototype.wait = function() {
 Enemy.prototype.get_hp = function() {
   var level = this.data.level;
   var zone_level = Math.ceil(level / 4);
-  switch (zone_level) {
-    case 1:
-      characters_hits = 12.8;
-      break;
-    case 1:
-      characters_hits = 38.4;
-      break;
-    case 1:
-      characters_hits = 48;
-      break;
-  }
+  var hits = [12.8, 38.4, 48, 84.8];
+  var characters_hits = hits[zone_level - 1];
+  var res;
 
   if (this.data.boss) {
     res = characters_hits * 30;
@@ -116,17 +108,8 @@ Enemy.prototype.get_hp = function() {
 Enemy.prototype.get_pwr = function() {
   var level = this.data.level;
   var zone_level = Math.ceil(level / 4);
-  switch (zone_level) {
-    case 1:
-      characters_hp = 120;
-      break;
-    case 2:
-      characters_hp = 344;
-      break;
-    case 3:
-      characters_hp = 392;
-      break;
-  }
+  var hp = [120, 344, 392, 688];
+  var characters_hp = hp[zone_level - 1];
   var res;
 
   if (this.data.boss) {

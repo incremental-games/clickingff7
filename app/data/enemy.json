@@ -92,5 +92,43 @@
       "image": "aps.png",
       "boss": true
     }
+  },
+  "4": {
+    "1": {
+      "level": 12,
+      "name": "Cripshay",
+      "image": "cripshay.png"
+    },
+    "2": {
+      "level": 12.5,
+      "name": "Deenglow",
+      "image": "deenglow.png"
+    },
+    "3": {
+      "level": 13,
+      "name": "Ghost",
+      "image": "ghost.png"
+    },
+    "4": {
+      "level": 13.5,
+      "name": "Guard Hound",
+      "image": "guard-hound.png"
+    },
+    "5": {
+      "level": 14,
+      "name": "Eligor",
+      "image": "eligor.png"
+    },
+    "6": {
+      "level": 15,
+      "name": "Aero Combatant",
+      "image": "aero-combatant.png"
+    },
+    "7": {
+      "level": 16,
+      "name": "Turks:Reno",
+      "image": "reno.png",
+      "boss": true
+    }
   }
 }
