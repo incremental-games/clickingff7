@@ -65,6 +65,7 @@ nav {
 
   nav ul li.current {
     font-weight: bold;
+    background-color: #eee;
   }
 
 footer {

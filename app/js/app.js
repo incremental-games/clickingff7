@@ -7,11 +7,14 @@
 var app = angular.module('clickingff7', ['ngRoute', 'ngCookies']);
 
 /**
+ * Utils Service
+ */
+app.service('Utils', Utils);
+
+/**
  * Game Service
  */
-app.factory('Game', function() {
-  return new Game();
-});
+app.service('Game', Game);
 
 /**
  * Used to get floor number
@@ -135,43 +138,12 @@ function NavCtrl($scope, $location, Game) {
  * /Game
  */
 
-function GameCtrl($scope, $rootScope, $location, $cookieStore, $http, $timeout, Game) {
+function GameCtrl($scope, $rootScope, $location, $cookieStore, $http, $timeout, Game, Utils) {
 
   // STEP 1
   // Load saved game from COOKIE
 
   var save = $cookieStore.get('game');
-
-  var last_float = 0;
-
-  var animate = function(ev, str) {
-    var elc = $('<div class="tmp">' + str + '</div>');
-    $('.tmps').append(elc);
-
-    elc.show();
-    elc.offset({
-      left: ev.pageX - 0,
-      top: ev.pageY - 30
-    });
-    var end_y = ev.clientY - 150;
-    elc.css('opacity', 100);
-
-    if (last_float == 1) {
-      var this_float = ev.pageX;
-      last_float = 0;
-    } else {
-      var this_float = ev.pageX - 60;
-      last_float = 1;
-    }
-
-    elc.animate({
-      'top': end_y.toString() + 'px',
-      'opacity': 0,
-      'left': this_float.toString() + 'px'
-    }, 750, function() {
-      elc.remove();
-    });
-  };
 
   // STEP 2
   // Extend COOKIE with background information
@@ -201,7 +173,7 @@ function GameCtrl($scope, $rootScope, $location, $cookieStore, $http, $timeout, 
         Game.set('characters_limit', 0);
       }
       Game.attack_enemy(characters_hits);
-      animate(ev, '+' + characters_hits);
+      Utils.animate(ev, '+' + characters_hits);
     }
   };
 
@@ -211,7 +183,7 @@ function GameCtrl($scope, $rootScope, $location, $cookieStore, $http, $timeout, 
   $scope.escape = function(ev) {
     if (Game.can_escape()) {
       Game.escape();
-      animate(ev, 'Success!');
+      Utils.animate(ev, 'Success!');
     }
   };
 
@@ -224,7 +196,7 @@ function GameCtrl($scope, $rootScope, $location, $cookieStore, $http, $timeout, 
       var restore = Game.materias['restore'].data.level;
       var res = Math.ceil(characters_hp * (restore * 2 / 100));
       Game.add('characters_hp', res);
-      animate(ev, '+' + res);
+      Utils.animate(ev, '+' + res);
     }
   };
 
@@ -234,7 +206,7 @@ function GameCtrl($scope, $rootScope, $location, $cookieStore, $http, $timeout, 
    */
   $scope.fight = function(ev, enemy) {
     enemy.data.number += 1;
-    animate(ev, '+1');
+    Utils.animate(ev, '+1');
 
     Game.add('enemy_hp_max', enemy.get_hp());
     Game.add('enemy_hp', enemy.get_hp());
@@ -274,39 +246,11 @@ function GameCtrl($scope, $rootScope, $location, $cookieStore, $http, $timeout, 
  * /Inventory
  */
 
-function InventoryCtrl($scope, $location, Game) {
+function InventoryCtrl($scope, $location, Game, Utils) {
 
-  var last_float = 0;
-
-  var animate = function(ev, str) {
-    var elc = $('<div class="tmp">' + str + '</div>');
-    $('.tmps').append(elc);
-
-    elc.show();
-    elc.offset({
-      left: ev.pageX - 0,
-      top: ev.pageY - 30
-    });
-    var end_y = ev.clientY - 150;
-    elc.css('opacity', 100);
-
-    if (last_float == 1) {
-      var this_float = ev.pageX;
-      last_float = 0;
-    } else {
-      var this_float = ev.pageX - 60;
-      last_float = 1;
-    }
-
-    elc.animate({
-      'top': end_y.toString() + 'px',
-      'opacity': 0,
-      'left': this_float.toString() + 'px'
-    }, 750, function() {
-      elc.remove();
-    });
-  };
-
+  /**
+   * Checkin'
+   */
   if (!Game.loaded) {
     $location.path("/game");
     return;
@@ -334,39 +278,11 @@ function InventoryCtrl($scope, $location, Game) {
  * /Shop
  */
 
-function ShopCtrl($scope, $location, Game) {
+function ShopCtrl($scope, $location, Game, Utils) {
 
-  var last_float = 0;
-
-  var animate = function(ev, str) {
-    var elc = $('<div class="tmp">' + str + '</div>');
-    $('.tmps').append(elc);
-
-    elc.show();
-    elc.offset({
-      left: ev.pageX - 0,
-      top: ev.pageY - 30
-    });
-    var end_y = ev.clientY - 150;
-    elc.css('opacity', 100);
-
-    if (last_float == 1) {
-      var this_float = ev.pageX;
-      last_float = 0;
-    } else {
-      var this_float = ev.pageX - 60;
-      last_float = 1;
-    }
-
-    elc.animate({
-      'top': end_y.toString() + 'px',
-      'opacity': 0,
-      'left': this_float.toString() + 'px'
-    }, 750, function() {
-      elc.remove();
-    });
-  };
-
+  /**
+   * Checkin'
+   */
   if (!Game.loaded) {
     $location.path("/game");
     return;
@@ -395,7 +311,15 @@ function ShopCtrl($scope, $location, Game) {
  * /Save
  */
 
-function SaveCtrl($scope, $location, Game) {
+function SaveCtrl($scope, $location, Game, Utils) {
+
+  /**
+   * Checkin'
+   */
+  if (!Game.loaded) {
+    $location.path("/game");
+    return;
+  }
 
   /**
    * Save the game
@@ -410,7 +334,7 @@ function SaveCtrl($scope, $location, Game) {
   /**
    * Reset the game
    */
-  $scope.resetReset = function(ev) {
+  $scope.resetGame = function(ev) {
     if (Game.can_reset() && confirm('Are you sure ? You\'ll lose everything !')) {
       Game.reset();
       animate(ev, 'OK!');
