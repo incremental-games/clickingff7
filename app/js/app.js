@@ -80,7 +80,7 @@ app.config(['$routeProvider',
     }).
     when('/save', {
       templateUrl: 'partials/save.html',
-      controller: InventoryCtrl
+      controller: SaveCtrl
     }).
     otherwise({
       redirectTo: '/game'
@@ -261,7 +261,7 @@ function InventoryCtrl($scope, $location, Game, Utils) {
    */
   $scope.use = function(ev, item) {
     item.use();
-    animate(ev, 'OK!');
+    Utils.animate(ev, 'OK!');
   };
 
   /**
@@ -269,7 +269,7 @@ function InventoryCtrl($scope, $location, Game, Utils) {
    */
   $scope.equip = function(ev, item) {
     item.equip();
-    animate(ev, 'OK!');
+    Utils.animate(ev, 'OK!');
   };
 
 }
@@ -300,7 +300,7 @@ function ShopCtrl($scope, $location, Game, Utils) {
       }
 
       Game.sub('total_gils', item.data.gils);
-      animate(ev, 'OK!');
+      Utils.animate(ev, 'OK!');
 
     }
   };
@@ -325,19 +325,17 @@ function SaveCtrl($scope, $location, Game, Utils) {
    * Save the game
    */
   $scope.saveGame = function(ev) {
-    if (Game.can_save()) {
-      Game.save();
-      animate(ev, 'OK!');
-    }
+    Game.save();
+    Utils.animate(ev, 'OK!');
   };
 
   /**
    * Reset the game
    */
   $scope.resetGame = function(ev) {
-    if (Game.can_reset() && confirm('Are you sure ? You\'ll lose everything !')) {
+    if (confirm('Are you sure ? You\'ll lose everything !')) {
       Game.reset();
-      animate(ev, 'OK!');
+      Utils.animate(ev, 'OK!');
       location.reload();
     }
   };

@@ -269,22 +269,6 @@ Game.prototype.extends = function(save) {
 };
 
 /**
- * Returns if it is possible to save the game
- * @return {boolean}
- */
-Game.prototype.can_save = function() {
-  return !this.fight;
-};
-
-/**
- * Returns if it is possible to reset the game (= clear cookie)
- * @return {boolean}
- */
-Game.prototype.can_reset = function() {
-  return !this.fight;
-};
-
-/**
  * Returns if it is possible to go next zone
  * @return {boolean}
  */
@@ -329,7 +313,7 @@ Game.prototype.can_escape = function() {
  * @return {boolean}
  */
 Game.prototype.can_buy = function(item) {
-  return !this.fight && this.total_gils >= item.data.gils;
+  return this.total_gils >= item.data.gils;
 };
 
 /**
