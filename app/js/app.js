@@ -316,7 +316,7 @@ function ShopCtrl($rootScope, $location, Game) {
       if (item.data.ref in Game[item.data.type]) {
         Game[item.data.type][item.data.ref].data.number++;
       } else {
-        Game[item.data.type][item.data.ref] = _.clone(item);
+        Game[item.data.type][item.data.ref] = $.extend(true, {}, item);
       }
 
       Game.sub('total_gils', item.data.gils);
