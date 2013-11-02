@@ -61,7 +61,7 @@
   <section class="enemies" data-step="2" data-intro="This is the enemy ! They are ordered by power. So, you should fight the first one to begin, then the second, etc." data-position="right">
     <div ng-repeat="(no, e) in game.enemy | clean" class="left div400 enemy" ng-class="{disabled: e.data.number == 0}" ng-show="e.can_fight()">
       <div class="actions">
-        <div class="button fight_enemy" ng-click="fight($event, e)">FIGHT</div>
+        <div class="button fight_enemy" ng-click="fight($event, e)" ng-class="e.get_difficulty()">FIGHT</div>
       </div>
       <div class="part avatar w50">
         <img ng-src="img/enemy/{{e.data.image}}" alt="avatar" height="48" />

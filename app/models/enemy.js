@@ -46,8 +46,28 @@ Enemy.prototype.extends = function(data) {
   }
 };
 
+/**
+ * Returns true if difficulty is acceptable
+ * @return {boolean}
+ */
 Enemy.prototype.can_fight = function() {
   return (this.Game.characters_level_max + 1 >= this.data.level);
+};
+
+Enemy.prototype.get_difficulty = function() {
+  var res;
+  var characters_level_max = this.Game.characters_level_max;
+  var level = Math.ceil(this.data.level);
+  if (characters_level_max > level) {
+    res = "grey";
+  }
+  if (characters_level_max == level) {
+    res = "green";
+  }
+  if (characters_level_max < level) {
+    res = "red";
+  }
+  return res;
 };
 
 /**

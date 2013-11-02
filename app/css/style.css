@@ -230,6 +230,10 @@ footer {
   box-shadow: none;
 }
 
+.button.grey {background-color: #999;}
+.button.green {background-color: #090;}
+.button.red {background-color: #900;}
+
 .area {
   width: 350px;
   height: 200px;
