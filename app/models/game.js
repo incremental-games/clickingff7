@@ -342,7 +342,7 @@ Game.prototype.refresh_characters_hp = function() {
     characters_hp += character.get_hp();
   });
   this.set('characters_hp_max', characters_hp);
-  if (!this.characters_hp) {
+  if (!this.characters_hp || this.characters_hp > characters_hp) {
     this.set('characters_hp', characters_hp);
   }
 };
@@ -357,7 +357,7 @@ Game.prototype.refresh_characters_limit = function() {
     characters_limit += character.get_hp();
   });
   this.set('characters_limit_max', characters_limit);
-  if (!this.characters_limit) {
+  if (!this.characters_limit || this.characters_limit > characters_limit) {
     this.set('characters_limit', 0);
   }
 };
