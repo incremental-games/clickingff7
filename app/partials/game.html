@@ -5,17 +5,11 @@
 
 --><div class="part w300">
   <div ng-if="game.zone.img"><img ng-src="img/zones/{{game.zone.img}}" width="100" /></div>
-  <div ng-click="next_zone()" class="button" ng-class="{disabled: !game.can_next_zone()}" data-step="13" data-intro="Well, that's all. Now try your best to go to the next zone ;)">Go next zone</div>
+  <div ng-click="next_zone()" class="button" ng-class="{disabled: !game.can_next_zone()}" data-step="14" data-intro="Well, that's all. Now try your best to go to the next zone ;)">Go next zone</div>
 </div><!--
 
 --><div class="part w300">
   <div class="button" ng-click="help()" ng-class="{disabled: game.fight}">HOW TO PLAY</div>
-  <div class="button" ng-click="inventory()" ng-class="{disabled: game.fight}">INVENTORY</div>
-  <div class="button" ng-click="shop()" ng-class="{disabled: game.fight}" data-step="11" data-intro="If you have GILS, you should go to the shop and buy items to get your characters stronger.">SHOP</div>
-  <div style="display:inline-block;" data-step="12" data-intro="Oh yes, you should think about saving your progress. So, next time you will come, you will be able to continue where you were.">
-    <div class="button" ng-click="save($event)" ng-class="{disabled: !game.can_save()}">SAVE</div>
-    <div class="button" ng-click="reset($event)" ng-class="{disabled: !game.can_reset()}">RESET</div>
-  </div>
 </div>
 
 <div class="space"></div>
@@ -126,7 +120,7 @@
 
 --><div class="part w400">
 
-  <section class="materias" data-step="4" data-intro="This is your first materia ! If your character win battles, your materias will grow up and get stronger." data-position="right">
+  <section class="materias" data-step="4" data-intro="This is your first materia ! If your character win battles, your materias will grow up and get stronger." data-position="top">
     <div ng-repeat="(i, materia) in game.materias | clean" class="right div400 materia">
       <div class="ap_progress" style="width:{{materia.ap_progress(400)}}px;"></div>
       <div class="part infos w300">

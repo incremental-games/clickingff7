@@ -51,6 +51,15 @@
       </div>
     </header>
 
+    <nav ng-controller="NavCtrl">
+        <ul>
+            <li ng-click="game()" ng-class="{ current: isActive('/game')}">Game</li><!--
+            --><li ng-click="inventory()" ng-class="{ current: isActive('/inventory')}" data-step="12" data-intro="This is your inventory. Remember, you can find items you bought from the store here.">Inventory</li><!--
+            --><li ng-click="shop()" ng-class="{ current: isActive('/shop')}" data-step="11" data-intro="If you have GILS, you should go to the shop and buy items to get your characters stronger.">Shop</li><!--
+            --><li ng-click="save()" class="last" ng-class="{ current: isActive('/save')}" data-step="13" data-intro="Oh yes, you should think about saving your progress. So, next time you will come, you will be able to continue where you were.">Save</li>
+        </ul>
+    </nav>
+
     <div class="wrapper" ng-view></div>
 
     <div class="tmps"></div>

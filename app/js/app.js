@@ -75,6 +75,10 @@ app.config(['$routeProvider',
       templateUrl: 'partials/inventory.html',
       controller: InventoryCtrl
     }).
+    when('/save', {
+      templateUrl: 'partials/save.html',
+      controller: InventoryCtrl
+    }).
     otherwise({
       redirectTo: '/game'
     });
@@ -82,10 +86,56 @@ app.config(['$routeProvider',
 ]);
 
 /**
+ * NAV
+ */
+
+function NavCtrl($scope, $location, Game) {
+
+  $scope.isActive = function(route) {
+    return route === $location.path();
+  }
+
+  /**
+   * Go to the game
+   */
+  $scope.game = function() {
+    $location.path("/game");
+  };
+
+  /**
+   * Go to the inventory
+   */
+  $scope.inventory = function() {
+    if (!Game.fight) {
+      $location.path("/inventory");
+    }
+  };
+
+  /**
+   * Go to the shop
+   */
+  $scope.shop = function() {
+    if (!Game.fight) {
+      $location.path("/shop");
+    }
+  };
+
+  /**
+   * Save the game
+   */
+  $scope.save = function(ev) {
+    if (!Game.fight) {
+      $location.path("/save");
+    }
+  };
+
+}
+
+/**
  * /Game
  */
 
-function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
+function GameCtrl($scope, $rootScope, $location, $cookieStore, $http, $timeout, Game) {
 
   // STEP 1
   // Load saved game from COOKIE
@@ -140,7 +190,7 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
   /**
    * Attack manually enemy
    */
-  $rootScope.attack = function(ev) {
+  $scope.attack = function(ev) {
     if (Game.can_attack()) {
       var characters_hits = Game.characters_hits();
       var d = Math.pow(10, 2);
@@ -158,7 +208,7 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
   /**
    * Escape fight
    */
-  $rootScope.escape = function(ev) {
+  $scope.escape = function(ev) {
     if (Game.can_escape()) {
       Game.escape();
       animate(ev, 'Success!');
@@ -168,7 +218,7 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
   /**
    * Cure maually characters
    */
-  $rootScope.cure = function(ev) {
+  $scope.cure = function(ev) {
     if (Game.can_cure()) {
       var characters_hp = Game.characters_hp_max;
       var restore = Game.materias['restore'].data.level;
@@ -182,7 +232,7 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
    * Use ??? to search enemy
    * @param  {object} id Enemy in the zone
    */
-  $rootScope.fight = function(ev, enemy) {
+  $scope.fight = function(ev, enemy) {
     enemy.data.number += 1;
     animate(ev, '+1');
 
@@ -199,7 +249,7 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
   /**
    * Go next zone
    */
-  $rootScope.next_zone = function() {
+  $scope.next_zone = function() {
     if (Game.can_next_zone()) {
       if (Game.zone.level == 4) {
         alert("Congrates! You've cleared the game!\nThere should be more to come.. Stay tuned!");
@@ -210,48 +260,9 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
   };
 
   /**
-   * Go to the inventory
-   */
-  $rootScope.inventory = function() {
-    if (!Game.fight) {
-      $location.path("/inventory");
-    }
-  };
-
-  /**
-   * Go to the shop
-   */
-  $rootScope.shop = function() {
-    if (!Game.fight) {
-      $location.path("/shop");
-    }
-  };
-
-  /**
-   * Save the game
-   */
-  $rootScope.save = function(ev) {
-    if (Game.can_save()) {
-      Game.save();
-      animate(ev, 'OK!');
-    }
-  };
-
-  /**
-   * Reset the game
-   */
-  $rootScope.reset = function(ev) {
-    if (Game.can_reset() && confirm('Are you sure ? You\'ll lose everything !')) {
-      Game.reset();
-      animate(ev, 'OK!');
-      location.reload();
-    }
-  };
-
-  /**
    * Show the help
    */
-  $rootScope.help = function(ev) {
+  $scope.help = function(ev) {
     if (!Game.fight) {
       introJs().start();
     }
@@ -260,10 +271,10 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game) {
 };
 
 /**
- * /Shop
+ * /Inventory
  */
 
-function ShopCtrl($rootScope, $location, Game) {
+function InventoryCtrl($scope, $location, Game) {
 
   var last_float = 0;
 
@@ -302,16 +313,69 @@ function ShopCtrl($rootScope, $location, Game) {
   }
 
   /**
-   * Back to the game
+   * Use an item from the inventory
    */
-  $rootScope.back_game = function() {
-    $location.path("/game");
+  $scope.use = function(ev, item) {
+    item.use();
+    animate(ev, 'OK!');
   };
+
+  /**
+   * Use an item from the inventory
+   */
+  $scope.equip = function(ev, item) {
+    item.equip();
+    animate(ev, 'OK!');
+  };
+
+}
+
+/**
+ * /Shop
+ */
+
+function ShopCtrl($scope, $location, Game) {
+
+  var last_float = 0;
+
+  var animate = function(ev, str) {
+    var elc = $('<div class="tmp">' + str + '</div>');
+    $('.tmps').append(elc);
+
+    elc.show();
+    elc.offset({
+      left: ev.pageX - 0,
+      top: ev.pageY - 30
+    });
+    var end_y = ev.clientY - 150;
+    elc.css('opacity', 100);
+
+    if (last_float == 1) {
+      var this_float = ev.pageX;
+      last_float = 0;
+    } else {
+      var this_float = ev.pageX - 60;
+      last_float = 1;
+    }
+
+    elc.animate({
+      'top': end_y.toString() + 'px',
+      'opacity': 0,
+      'left': this_float.toString() + 'px'
+    }, 750, function() {
+      elc.remove();
+    });
+  };
+
+  if (!Game.loaded) {
+    $location.path("/game");
+    return;
+  }
 
   /**
    * Buy a weapon from the store
    */
-  $rootScope.buy = function(ev, item) {
+  $scope.buy = function(ev, item) {
     if (Game.can_buy(item)) {
       if (item.data.ref in Game[item.data.type]) {
         Game[item.data.type][item.data.ref].data.number++;
@@ -325,88 +389,32 @@ function ShopCtrl($rootScope, $location, Game) {
     }
   };
 
-  /**
-   * Go to the inventory
-   */
-  $rootScope.inventory = function() {
-    if (!Game.fight) {
-      $location.path("/inventory");
-    }
-  };
-
 }
 
 /**
- * /Inventory
+ * /Save
  */
 
-function InventoryCtrl($rootScope, $location, Game) {
+function SaveCtrl($scope, $location, Game) {
 
-  var last_float = 0;
-
-  var animate = function(ev, str) {
-    var elc = $('<div class="tmp">' + str + '</div>');
-    $('.tmps').append(elc);
-
-    elc.show();
-    elc.offset({
-      left: ev.pageX - 0,
-      top: ev.pageY - 30
-    });
-    var end_y = ev.clientY - 150;
-    elc.css('opacity', 100);
-
-    if (last_float == 1) {
-      var this_float = ev.pageX;
-      last_float = 0;
-    } else {
-      var this_float = ev.pageX - 60;
-      last_float = 1;
+  /**
+   * Save the game
+   */
+  $scope.saveGame = function(ev) {
+    if (Game.can_save()) {
+      Game.save();
+      animate(ev, 'OK!');
     }
-
-    elc.animate({
-      'top': end_y.toString() + 'px',
-      'opacity': 0,
-      'left': this_float.toString() + 'px'
-    }, 750, function() {
-      elc.remove();
-    });
-  };
-
-  if (!Game.loaded) {
-    $location.path("/game");
-    return;
-  }
-
-  /**
-   * Back to the game
-   */
-  $rootScope.back_game = function() {
-    $location.path("/game");
   };
 
   /**
-   * Use an item from the inventory
+   * Reset the game
    */
-  $rootScope.use = function(ev, item) {
-    item.use();
-    animate(ev, 'OK!');
-  };
-
-  /**
-   * Use an item from the inventory
-   */
-  $rootScope.equip = function(ev, item) {
-    item.equip();
-    animate(ev, 'OK!');
-  };
-
-  /**
-   * Go to the shop
-   */
-  $rootScope.shop = function() {
-    if (!Game.fight) {
-      $location.path("/shop");
+  $scope.resetReset = function(ev) {
+    if (Game.can_reset() && confirm('Are you sure ? You\'ll lose everything !')) {
+      Game.reset();
+      animate(ev, 'OK!');
+      location.reload();
     }
   };
 
