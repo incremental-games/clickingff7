@@ -46,6 +46,10 @@ Enemy.prototype.extends = function(data) {
   }
 };
 
+Enemy.prototype.can_fight = function() {
+  return (this.Game.characters_level_max + 1 >= this.data.level);
+};
+
 /**
  * Enemy auto-attack process
  */

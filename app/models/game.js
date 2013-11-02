@@ -22,6 +22,7 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
   // scopes INFOS
   this.enemy_hp_max = 0;
   this.enemy_hp = 0;
+  this.characters_level_max = 1;
   this.total_gils = 0;
   this.boss_defeated = false;
 
@@ -218,6 +219,7 @@ Game.prototype.begin = function() {
 
   this.refresh_characters_hp();
   this.refresh_characters_limit();
+  this.refresh_level_max();
 
   this.refresh();
 };
@@ -345,6 +347,16 @@ Game.prototype.refresh_characters_limit = function() {
   if (!this.characters_limit || this.characters_limit > characters_limit) {
     this.set('characters_limit', 0);
   }
+};
+
+/**
+ * Refresh the characters level max
+ */
+Game.prototype.refresh_level_max = function() {
+  var self = this;
+  this.get_characters(function(i, character) {
+    self.characters_level_max = Math.max(self.characters_level_max, character.data.level);
+  });
 };
 
 /**
