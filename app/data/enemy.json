@@ -130,5 +130,42 @@
       "image": "reno.png",
       "boss": true
     }
+  },
+  "5": {
+    "1": {
+      "level": 16,
+      "name": "Grenade Combatant",
+      "image": "grenade-combatant.png"
+    },
+    "2": {
+      "level": 16.5,
+      "name": "Mighty Grunt",
+      "image": "mighty-grunt.png"
+    },
+    "3": {
+      "level": 17,
+      "name": "Sword Dance",
+      "image": "sword-dance.png"
+    },
+    "4": {
+      "level": 17.5,
+      "name": "Moth Slasher",
+      "image": "moth-slasher.png"
+    },
+    "5": {
+      "level": 18,
+      "name": "Vargid Police",
+      "image": "vargid-police.png"
+    },
+    "6": {
+      "level": 19,
+      "name": "SOLDIER:3rd",
+      "image": "soldier-3rd.png"
+    },
+    "7": {
+      "level": 20,
+      "name": "Sample:H0512",
+      "image": "sample:h0512.png"
+    }
   }
 }

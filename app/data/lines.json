@@ -17,5 +17,11 @@
     "barret": "Tifa! Cloud! You came!",
     "cloud": "Wait! You hear something.... above us?",
     "tifa": "Here they come!"
+  },
+  "5": {
+    "barret": "",
+    "cloud": "",
+    "redxiii": "",
+    "tifa": ""
   }
 }

@@ -18,5 +18,10 @@
     "level": 4,
     "name": "Sector 7",
     "img": "Sector_7.png"
+  },
+  "5": {
+    "level": 5,
+    "name": "Shinra Headquarters (part 1)",
+    "img": "Shinra_headquarters.png"
   }
 }

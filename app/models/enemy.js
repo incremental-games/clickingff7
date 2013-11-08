@@ -122,7 +122,7 @@ Enemy.prototype.wait = function() {
 Enemy.prototype.get_hp = function() {
   var level = this.data.level;
   var zone_level = Math.ceil(level / 4);
-  var hits = [12.8, 38.4, 62.4, 84.8];
+  var hits = [12.8, 38.4, 62.4, 84.8, 154];
   var characters_hits = hits[zone_level - 1];
   var res;
 
@@ -142,7 +142,7 @@ Enemy.prototype.get_hp = function() {
 Enemy.prototype.get_pwr = function() {
   var level = this.data.level;
   var zone_level = Math.ceil(level / 4);
-  var hp = [120, 344, 468, 688];
+  var hp = [120, 344, 468, 688, 1200];
   var characters_hp = hp[zone_level - 1];
   var res;
 
