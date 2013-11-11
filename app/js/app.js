@@ -160,20 +160,32 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game, Ut
   // Scope actions
 
   /**
+   * Explore rooms
+   */
+  $rootScope.explore = function() {
+    var nbr = _.random(1, 3);
+    var enemy = _.sample(Game.data.enemy, nbr);
+    for (var i in enemy) {
+      Game.enemy[i] = new Enemy(Game, enemy[i]);
+    }
+    Game.start_fight();
+  };
+
+  /**
    * Attack manually enemy
    */
   $rootScope.attack = function(ev) {
     if (Game.can_attack()) {
-      var characters_hits = Game.characters_hits();
+      var characters_pwr = Game.characters_pwr();
       var d = Math.pow(10, 2);
-      characters_hits = Math.round(characters_hits * d) / d;
+      characters_pwr = Math.round(characters_pwr * d) / d;
       // checks limit
       if (Game.can_limit()) {
-        characters_hits *= 2;
+        characters_pwr *= 2;
         Game.set('characters_limit', 0);
       }
-      Game.attack_enemy(characters_hits);
-      Utils.animate(ev, '+' + characters_hits);
+      Game.attack_enemy(characters_pwr);
+      Utils.animate(ev, '+' + characters_pwr);
     }
   };
 
@@ -197,24 +209,6 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game, Ut
       var res = Math.ceil(characters_hp * (restore * 2 / 100));
       Game.add('characters_hp', res);
       Utils.animate(ev, '+' + res);
-    }
-  };
-
-  /**
-   * Use ??? to search enemy
-   * @param  {object} id Enemy in the zone
-   */
-  $rootScope.fight = function(ev, enemy) {
-    enemy.data.number += 1;
-    Utils.animate(ev, '+1');
-
-    Game.add('enemy_hp_max', enemy.get_hp());
-    Game.add('enemy_hp', enemy.get_hp());
-
-    enemy.run();
-
-    if (Game.enemy_hp > 0) {
-      Game.start_fight();
     }
   };
 

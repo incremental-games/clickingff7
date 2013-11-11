@@ -1,34 +1,46 @@
 {
   "1": {
     "1": {
-      "level": 0.8,
+      "level": 4,
       "name": "1st Ray",
-      "image": "1st-ray.png"
+      "image": "1st-ray.png",
+      "hp_max": 18,
+      "def": 2
     },
     "2": {
-      "level": 1.4,
+      "level": 2,
       "name": "Mono Drive",
-      "image": "mono-drive.png"
+      "image": "mono-drive.png",
+      "hp_max": 28,
+      "def": 6
     },
     "3": {
-      "level": 1.9,
+      "level": 2,
       "name": "MP",
-      "image": "mp.png"
+      "image": "mp.png",
+      "hp_max": 30,
+      "def": 4
     },
     "4": {
-      "level": 2.5,
+      "level": 7,
       "name": "Grunt",
-      "image": "grunt.png"
+      "image": "grunt.png",
+      "hp_max": 40,
+      "def": 10
     },
     "5": {
-      "level": 3,
+      "level": 8,
       "name": "Sweeper",
-      "image": "sweeper.png"
+      "image": "sweeper.png",
+      "hp_max": 140,
+      "def": 20
     },
     "6": {
-      "level": 4,
+      "level": 12,
       "name": "Guard Scorpion",
       "image": "guard-scorpion.png",
+      "hp_max": 800,
+      "def": 40,
       "boss": true
     }
   },

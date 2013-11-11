@@ -12,9 +12,6 @@ function Enemy(Game, infos) {
   if (!this.data) {
     this.data = {};
   }
-  if (!('number_cost' in this.data)) {
-    this.data.number_cost = 10;
-  }
 
   // INFOS from COOKIE
   if (infos) {
@@ -24,25 +21,18 @@ function Enemy(Game, infos) {
 };
 
 /**
- * Init the character if does not exist in COOKIE
- */
-Enemy.prototype.init = function() {
-  if (!this.data.number) {
-    this.data.number = 0;
-  }
-  if (!this.data.current_hp) {
-    this.data.current_hp = this.data.hp;
-  }
-};
-
-/**
  * Extends the properties with new ones
  * @param  {object} infos
  */
 Enemy.prototype.extends = function(data) {
-  self = this;
   for (var i in data) {
-    self.data[i] = data[i];
+    this.data[i] = data[i];
+  }
+  if (!('atb' in this.data)) {
+    this.data.atb = 0;
+  }
+  if (!('hp' in this.data)) {
+    this.data.hp = this.data.hp_max;
   }
 };
 
@@ -95,10 +85,17 @@ Enemy.prototype.run = function() {
     // Stop attacking if fight's over
     if (!self.Game.fight) return;
 
-    var hits = self.get_pwr();
-    self.Game.attack_characters(hits);
+    self.data.atb += 10;
 
-    console.log("- " + self.data.name + " attacking with" + hits);
+    if (self.data.atb >= 100) {
+      self.data.atb = 0;
+
+      var pwr = self.get_pwr();
+      var character = self.target_low_hp();
+      character.get_attacked(pwr);
+
+      console.log(self.data.name + " attacking " + character.data.name);
+    }
 
     self.run();
   }, 1000);
@@ -116,20 +113,44 @@ Enemy.prototype.wait = function() {
 };
 
 /**
+ * Target enemy with low HP
+ * @return {Enemy|null}
+ */
+Enemy.prototype.target_low_hp = function() {
+  return _.min(this.Game.characters, function(o) {
+    if (o.data.hp > 0) {
+      return o.get_hp();
+    }
+  });
+};
+
+/**
+ * Target enemy with high PWR
+ * @return {Enemy|null}
+ */
+Enemy.prototype.target_high_pwr = function() {
+  return _.max(this.Game.characters, function(o) {
+    if (o.data.hp > 0) {
+      return o.get_pwr();
+    }
+  });
+};
+
+/**
  * Returns enemy HP
  * @return {int}
  */
 Enemy.prototype.get_hp = function() {
   var level = this.data.level;
   var zone_level = Math.ceil(level / 4);
-  var hits = [12.8, 38.4, 62.4, 84.8, 154];
-  var characters_hits = hits[zone_level - 1];
+  var pwr = [12.8, 38.4, 62.4, 84.8, 154];
+  var characters_pwr = pwr[zone_level - 1];
   var res;
 
   if (this.data.boss) {
-    res = characters_hits * 30;
+    res = characters_pwr * 30;
   } else {
-    res = Math.ceil((level / (zone_level * 4)) * characters_hits * 28);
+    res = Math.ceil((level / (zone_level * 4)) * characters_pwr * 28);
   }
 
   return res;
@@ -194,16 +215,40 @@ Enemy.prototype.get_gils = function() {
 };
 
 /**
- * Current enemy is under attack
- * @param  {int} hits
+ * Returns in pixels XP bar width
+ * @param  {int} pixel_max
+ * @return {int}
  */
-Enemy.prototype.get_attacked = function(hits) {
-  this.data.current_hp -= hits;
-  if (this.data.current_hp <= 0) {
-    this.data.number -= 1;
-    this.data.current_hp = this.data.hp;
-    this.Game.attribute_xp(this.data.xp);
-    this.Game.attribute_gils(this.data.gils);
+Enemy.prototype.atb_progress = function(pixels_max) {
+  return (this.data.atb == 0 ? 0 : this.data.atb / 100 * pixels_max);
+};
+
+/**
+ * Returns in pixels XP bar width
+ * @param  {int} pixel_max
+ * @return {int}
+ */
+Enemy.prototype.hp_progress = function(pixels_max) {
+  return (this.data.hp == 0 ? 0 : this.data.hp / this.data.hp_max * pixels_max);
+};
+
+/**
+ * Enemy is under attack
+ * @param  {int} pwr
+ */
+Enemy.prototype.get_attacked = function(pwr) {
+  this.data.hp -= pwr;
+  this.data.hp = Math.max(this.data.hp - pwr, 0);
+  if (this.data.hp == 0) {
+    this.wait();
+    var team = _.countBy(this.Game.enemy, function(num) {
+      if (num.data.hp > 0) {
+        return 'alive';
+      }
+    });
+    if (!team.alive) {
+      this.Game.end_fight();
+    }
   }
 };
 

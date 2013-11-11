@@ -1,69 +1,50 @@
 {
-  "buster-sword": {
-    "name": "Buster Sword",
-    "image": "buster-sword.png",
-    "character": "cloud",
-    "hits": 18,
-    "zone": 1,
-    "number": 1
+  "cloud": {
+    "1": {
+      "name": "Buster Sword",
+      "pwr": 18
+    }
   },
-  "gatling-gun": {
-    "name": "Gatling Gun",
-    "image": "gatling-gun.png",
-    "character": "barret",
-    "hits": 14,
-    "zone": 1,
-    "number": 1
+  "barret": {
+    "1": {
+      "name": "Gatling Gun",
+      "pwr": 14
+    },
+    "2": {
+      "name": "Assault Gun",
+      "pwr": 17,
+      "gils": 350,
+      "zone": 2
+    }
   },
-  "assault-gun": {
-    "name": "Assault Gun",
-    "image": "assault-gun.png",
-    "character": "barret",
-    "hits": 17,
-    "gils": 350,
-    "zone": 2
+  "tifa": {
+    "1": {
+      "name": "Leather Glove",
+      "pwr": 13
+    },
+    "2": {
+      "name": "Metal Knuckle",
+      "pwr": 18,
+      "gils": 320,
+      "zone": 3
+    }
   },
-  "leather-glove": {
-    "name": "Leather Glove",
-    "image": "leather-glove.png",
-    "character": "tifa",
-    "hits": 13,
-    "gils": 120,
-    "zone": 2,
-    "number": 1
+  "aerith": {
+    "1": {
+      "name": "Guard Stick",
+      "pwr": 12
+    },
+    "2": {
+      "name": "Mythril Rod",
+      "pwr": 16,
+      "gils": 370,
+      "zone": 3
+    }
   },
-  "metal-knuckle": {
-    "name": "Metal Knuckle",
-    "image": "metal-knuckle.png",
-    "character": "tifa",
-    "hits": 18,
-    "gils": 320,
-    "zone": 3
-  },
-  "guard-stick": {
-    "name": "Guard Stick",
-    "image": "guard-stick.jpg",
-    "character": "aerith",
-    "hits": 12,
-    "gils": 140,
-    "zone": 3,
-    "number": 1
-  },
-  "mythril-rod": {
-    "name": "Mythril Rod",
-    "image": "mythril-rod.png",
-    "character": "aerith",
-    "hits": 16,
-    "gils": 370,
-    "zone": 3
-  },
-  "mythril-clip": {
-    "name": "Mythril Clip",
-    "image": "mythril-clip.jpg",
-    "character": "redxiii",
-    "hits": 24,
-    "gils": 800,
-    "zone": 5,
-    "number": 1
+  "redxiii": {
+    "1": {
+      "name": "Mythril Clip",
+      "pwr": 24
+    }
   }
 }

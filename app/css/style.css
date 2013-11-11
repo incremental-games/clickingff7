@@ -143,41 +143,14 @@ footer {
   opacity: 0.1;
 }
 
-.enemy_hp {border-top: 1px solid #ecc; position: relative;}
-.enemy_hp_progress {
-  background-color: #900;
-  position: absolute;
-  height: 18px;
-  top: 0;
-  right: 0;
-  opacity: 0.3;
-}
+.atb_progress {background-color: #BEECBE; top: 0;}
+.hp_progress {background-color: #009; top: 5;}
+.limit_progress {background-color: rgb(249,188,187); top: 10;}
+.xp_progress, .ap_progress {background-color: #009; top: 15;}
 
-.characters_hp {border-top: 1px solid #cce; position: relative;}
-.characters_hp_progress {
-  background-color: #009;
+.atb_progress, .hp_progress, .limit_progress, .xp_progress, .ap_progress {
   position: absolute;
-  height: 18px;
-  top: 0;
-  left: 0;
-  opacity: 0.3;
-}
-
-.characters_limit {border-top: 1px solid #FDAD87; position: relative;}
-.characters_limit_progress {
-  background-color: #FDAD87;
-  position: absolute;
-  height: 9px;
-  top: 0;
-  left: 0;
-  opacity: 0.3;
-}
-
-.xp_progress, .ap_progress {
-  background-color: #BEECBE;
-  position: absolute;
-  height: 9px;
-  top: 0;
+  height: 3px;
   left: 0;
 }
 
@@ -245,7 +218,7 @@ footer {
 
 /* ANIMATIONS */
 
-.xp_progress, .enemy_hp_progress, .characters_hp_progress, .characters_limit_progress {
+.atb_progress, .xp_progress, .limit_hp_progress {
   -webkit-transition:0.5s linear all;
   -moz-transition:0.5s linear all;
   -o-transition:0.5s linear all;

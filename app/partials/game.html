@@ -14,42 +14,6 @@
 
 <div class="space"></div>
 
-<div class="part w100">
-  <div ng-click="attack($event)" class="button" ng-class="{disabled: !game.can_attack(), limit: game.can_limit()}">
-    <span ng-if="!game.can_limit()" data-step="6" data-intro="During fight, click here to attack manually the enemy, as often as you want. Their HP will decrease faster.">ATTACK</span>
-    <span ng-if="game.can_limit()">LIMIT</span>
-  </div>
-</div><!--
-
---><div class="part enemy_hp w300" data-step="4" data-intro="This is enemy HP. During fight, enemy HP starts full, then decreases. If it goes to 0, you win the battle. That means, you earn XP, AP and GILS.">
-  <div class="enemy_hp_progress" style="width:{{game.enemy_hp_progress(300)}}px;"></div>
-  {{game.enemy_hp|round:2}} / {{game.enemy_hp_max}}
-</div><!--
-
---><div class="part characters_hp w300" data-step="5" data-intro="This is your characters HP. During fight, it also decreases. If it comes to 0, you fail the battle. That means, you'll have to cure before fighting again.">
-  <div class="characters_hp_progress" style="width:{{game.characters_hp_progress(300)}}px;"></div>
-  {{game.characters_hp|round:2}} / {{game.characters_hp_max}}
-</div><!--
-
---><div class="part w100">
-  <div ng-click="cure($event)" class="button" ng-class="{disabled: !game.can_cure()}" data-step="7" data-intro="Anytime, if you think your character HP is too low, click here to regain life, as often as you want.">CURE</div>
-  <div ng-click="escape($event)" class="button" ng-class="{disabled: !game.can_escape()}" data-step="8" data-intro="During fight, if you think the enemy is too strong, you can escape the battle by clicking here.">ESCAPE</div>
-</div>
-
-<div></div>
-
-<div class="part w100"></div><!--
-
---><div class="part w300"></div><!--
-
---><div class="part characters_limit w300" data-step="9" data-intro="This is your characters LIMIT. During fight, when enemy deals you damages, this bar will grow up. When it becomes full, your next manual attack become critical !">
-  <div class="characters_limit_progress" style="width:{{game.characters_limit_progress(300)}}px;"></div>
-</div><!--
-
---><div class="part w100"></div>
-
-<div class="space"></div>
-
 <div class="part title w400">Enemy</div>
 <div class="part title w50">VS</div>
 <div class="part title w400">Characters</div>
@@ -59,10 +23,8 @@
 <div class="part w400">
 
   <section class="enemies" data-step="2" data-intro="This is the enemy ! They are ordered by level. So, you should fight the first one to begin, then the second, etc." data-position="right">
-    <div ng-repeat="(no, e) in game.enemy | clean" class="left div400 enemy" ng-class="{disabled: e.data.number == 0}" ng-show="e.can_fight()">
-      <div class="actions">
-        <div class="button fight_enemy" ng-click="fight($event, e)" ng-class="e.get_difficulty()">FIGHT</div>
-      </div>
+    <div ng-repeat="(no, e) in game.enemy | clean" class="left div400 enemy" ng-class="{disabled: e.data.hp == 0}">
+      <div class="atb_progress" style="width:{{e.atb_progress(400)}}px;"></div>
       <div class="part avatar w50">
         <img ng-src="img/enemy/{{e.data.image}}" alt="avatar" height="48" />
       </div>
@@ -73,16 +35,13 @@
         </span>
         <strong ng-show="e.data.number > 0">x{{e.data.number}}</strong>
         <div>
-          <span class="label">hp</span> {{e.get_hp()}} 
-          <span class="label">pwr</span> {{e.get_pwr()}}
-        </div>
-        <div>
-          <span class="label">xp</span> {{e.get_xp()}} 
-          <span class="label">ap</span> {{e.get_ap()}} 
-          <span class="label">gils</span> {{e.get_gils()}}
+          <span class="label">hp</span> {{e.data.hp}} / {{e.data.hp_max}} 
+          <span class="label">att</span> {{e.get_pwr()|round:2}}
         </div>
       </div>
     </div>
+
+    <div class="button" ng-click="explore()" ng-show="!game.fight">EXPLORE</div>
   </sections>
 
 </div><!--
@@ -90,15 +49,17 @@
 --><div class="part w400">
 
   <section class="characters" data-step="1" data-intro="This is your team ! You begin with 2 characters. If they win battles, characters will level up and get stronger." data-position="left">
-    <div ng-repeat="(i, character) in game.characters | clean" class="right div400 character" ng-if="character.data.available">
+    <div ng-repeat="(i, character) in game.characters | clean" class="right div400 character" ng-class="{disabled: character.data.hp <= 0}">
+      <div class="atb_progress" style="width:{{character.atb_progress(400)}}px;"></div>
+      <div class="limit_progress" style="width:{{character.limit_progress(400)}}px;"></div>
       <div class="xp_progress" style="width:{{character.xp_progress(400)}}px;"></div>
       <div class="part infos w300">
         <div>{{character.data.name}} <strong>(LVL{{character.data.level}})</strong></div>
-        <div ng-if="character.data.level > 0">
-          <span class="label">hp</span> {{character.get_hp()}} 
-          <span class="label">pwr</span> {{character.get_hits()|round:2}}
+        <div>
+          <span class="label">hp</span> {{character.data.hp}} / {{character.get_hp()}} 
+          <span class="label">xp</span> {{character.data.xp}} / {{character.data.xp_max}} 
+          <span class="label">att</span> {{character.get_pwr()|round:2}}
         </div>
-        <div class="line">"{{character.get_line()}}"</div>
       </div><!--
       --><div class="part avatar w50">
         <img ng-src="img/characters/{{character.data.image}}" alt="avatar" />
@@ -107,29 +68,3 @@
   </sections>
 
 </div>
-
-<div class="space"></div>
-
-<div class="part title w400"></div>
-<div class="part title w50"></div>
-<div class="part title w400">Materias</div>
-
-<div class="space"></div>
-
-<div class="part w400"></div><!--
-
---><div class="part w400">
-
-  <section class="materias" data-step="3" data-intro="This is your materias ! If your character win battles, they will grow up and get stronger." data-position="top">
-    <div ng-repeat="(i, materia) in game.materias | clean" class="right div400 materia">
-      <div class="ap_progress" style="width:{{materia.ap_progress(400)}}px;"></div>
-      <div class="part infos w300">
-        <div>{{materia.data.name}} <strong>(LVL{{materia.data.level}})</strong></div>
-        <div class="line">"{{materia.get_desc()}}"</div>
-      </div><!--
-      --><div class="part avatar w50"></div>
-    </div>
-  </sections>
-
-</div>
-

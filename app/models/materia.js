@@ -4,19 +4,20 @@
  * @param {string} ref
  */
 
-function Materia(Game, ref) {
+function Materia(Game, infos) {
 
   this.Game = Game;
 
-  // scopes INFOS
   if (!this.data) {
     this.data = {};
   }
-  if (!('ref' in this.data)) {
-    this.data.ref = ref;
-  }
-  if (!('number_cost' in this.data)) {
+
+  if (!('ap' in this.data)) {
     this.data.ap = 0;
+  }
+
+  if (infos) {
+    this.extends(infos);
   }
 };
 
