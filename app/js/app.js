@@ -172,21 +172,22 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game, Ut
   };
 
   /**
-   * Attack manually enemy
+   * Open targets list
    */
-  $rootScope.attack = function(ev) {
-    if (Game.can_attack()) {
-      var characters_pwr = Game.characters_pwr();
-      var d = Math.pow(10, 2);
-      characters_pwr = Math.round(characters_pwr * d) / d;
-      // checks limit
-      if (Game.can_limit()) {
-        characters_pwr *= 2;
-        Game.set('characters_limit', 0);
-      }
-      Game.attack_enemy(characters_pwr);
-      Utils.animate(ev, '+' + characters_pwr);
-    }
+  $rootScope.open_targets = function(ev) {
+    console.log(ev);
+    $(ev.target).next()
+      .toggle()
+      .css('left', ev.offsetX);
+  };
+
+  /**
+   * Choose target
+   */
+  $rootScope.choose_target = function(ev, character, target) {
+    console.log(character, target);
+    $(ev.target).closest('.list').hide();
+    Game.characters[character.data.ref].data.target = target;
   };
 
   /**

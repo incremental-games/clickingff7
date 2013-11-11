@@ -53,16 +53,34 @@
       <div class="atb_progress" style="width:{{character.atb_progress(400)}}px;"></div>
       <div class="limit_progress" style="width:{{character.limit_progress(400)}}px;"></div>
       <div class="xp_progress" style="width:{{character.xp_progress(400)}}px;"></div>
-      <div class="part infos w300">
+      <div class="part avatar w50">
+        <img ng-src="img/characters/{{character.data.image}}" alt="avatar" />
+      </div><!--
+      --><div class="part infos w300">
         <div>{{character.data.name}} <strong>(LVL{{character.data.level}})</strong></div>
         <div>
           <span class="label">hp</span> {{character.data.hp}} / {{character.get_hp()}} 
+          <span class="label">mp</span> {{character.data.mp}} / {{character.get_mp()}} 
           <span class="label">xp</span> {{character.data.xp}} / {{character.data.xp_max}} 
           <span class="label">att</span> {{character.get_pwr()|round:2}}
         </div>
-      </div><!--
-      --><div class="part avatar w50">
-        <img ng-src="img/characters/{{character.data.image}}" alt="avatar" />
+        <div class="actions">
+           
+            <div class="button">{{character.get_ability()}}</div> 
+            <span ng-click="open_abilities($event)">v</span> 
+            <div class="list">
+              <div ng-repeat="(code, name) in character.listAbilities()">
+                <a ng-click="choose_ability($event, character, code)">{{name}}</a>
+              </div>
+            </div>
+
+            {{character.get_target()}} <span ng-click="open_targets($event)">v</span> 
+            <div class="list">
+              <div ng-repeat="(code, name) in character.listTargets()">
+                <a ng-click="choose_target($event, character, code)">{{name}}</a>
+              </div>
+            </div>
+        </div>
       </div>
     </div>
   </sections>

@@ -13,7 +13,6 @@ body {
 .wrapper {
   margin: auto;
   width: 1000px;
-  text-align: center;
 }
 
 .space {
@@ -116,21 +115,6 @@ footer {
   position: relative;
 }
 
-.left {text-align: left;}
-.right {text-align: right;}
-
-.left .actions {
-  position: absolute;
-  left: -60px;
-  top: 20px;
-}
-
-.right .actions {
-  position: absolute;
-  right: -60px;
-  top: 20px;
-}
-
 .character, .materia {
   border-top: 1px solid #77B477;
 }
@@ -141,6 +125,11 @@ footer {
 }
 .disabled .avatar {
   opacity: 0.1;
+}
+
+.actions span {
+  color: #900;
+  cursor: pointer;
 }
 
 .atb_progress {background-color: #BEECBE; top: 0;}
@@ -172,6 +161,21 @@ footer {
 .line {
   font-style: italic;
   color: #999;
+}
+
+.list {
+  display: none;
+  position: absolute;
+  border: 1px solid #000;
+  z-index: 1;
+  background-color: #FFF;
+  padding: 3px;
+}
+
+.list > div:hover {
+  background-color: #009;
+  color: #fff;
+  cursor: pointer;
 }
 
 .button {
