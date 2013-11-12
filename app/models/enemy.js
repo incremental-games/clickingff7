@@ -85,7 +85,7 @@ Enemy.prototype.run = function() {
     // Stop attacking if fight's over
     if (!self.Game.fight) return;
 
-    self.data.atb += 10;
+    self.data.atb += 5;
 
     if (self.data.atb >= 100) {
       self.data.atb = 0;

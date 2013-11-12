@@ -56,6 +56,11 @@ Character.prototype.extends = function(data) {
   if (!('target' in this.data)) {
     this.data.target = 'custom:lowest-hp';
   }
+
+  this.abilities = [
+    new Ability(this, 'attack')
+  ];
+  this.ability = this.abilities[0];
 };
 
 /**
@@ -74,7 +79,7 @@ Character.prototype.run = function() {
     if (self.data.atb == 100) {
       self.data.atb = 0;
 
-      self.useAbility();
+      self.ability.use();
     }
 
     self.run();
@@ -87,30 +92,6 @@ Character.prototype.run = function() {
 Character.prototype.wait = function() {
   var $timeout = this.Game.$timeout;
   $timeout.cancel(this.timer);
-};
-
-/**
- * Target enemy with low HP
- * @return {Enemy|null}
- */
-Character.prototype.target_low_hp = function() {
-  return _.min(this.Game.enemy, function(o) {
-    if (o.data.hp > 0) {
-      return o.get_hp();
-    }
-  });
-};
-
-/**
- * Target enemy with high PWR
- * @return {Enemy|null}
- */
-Character.prototype.target_high_pwr = function() {
-  return _.max(this.Game.enemy, function(o) {
-    if (o.data.hp > 0) {
-      return o.get_pwr();
-    }
-  });
 };
 
 /**
@@ -169,77 +150,6 @@ Character.prototype.get_hits = function() {
   var Damage = this.data.level * this.get_weapon().pwr;
   Damage = Math.ceil(Damage * (3841 + _.random(0, 255)) / 4096);
   return Damage;
-};
-
-/**
- * Returns character ability
- * @return {int}
- */
-Character.prototype.get_ability = function() {
-  var text = "";
-  switch (this.data.ability) {
-    case 'attack':
-      text = 'Attack';
-      break;
-    case 'bolt':
-      text = 'Bolt (-2 MP)';
-      break;
-  }
-  return text;
-};
-
-Character.prototype.listAbilities = function() {
-  var list = {};
-  list['attack'] = "Attack";
-  return list;
-};
-
-Character.prototype.useAbility = function() {
-  switch (this.data.ability) {
-    case 'attack':
-      {
-        var hits = this.get_hits();
-        var target = this.target();
-        target.get_attacked(hits);
-      }
-  }
-};
-
-Character.prototype.listTargets = function() {
-  var list = {};
-  list['custom:lowest-hp'] = "Enemy with lowest HP";
-  list['custom:highest-pwr'] = "Enemy with highest PWR";
-  return list;
-};
-
-/**
- * Returns character target
- * @return {int}
- */
-Character.prototype.get_target = function() {
-  var text = "";
-  switch (this.data.target) {
-    case 'custom:lowest-hp':
-      text = 'Enemy with lowest HP';
-      break;
-    case 'custom:highest-pwr':
-      text = 'Enemy with highest PWR';
-      break;
-  }
-  return text;
-};
-
-Character.prototype.target = function() {
-  var target;
-  switch (this.data.target) {
-    case 'custom:lowest-hp':
-      target = this.target_low_hp();
-      break;
-    case 'custom:highest-pwr':
-      target = this.target_high_pwr();
-      break;
-  }
-  return target;
 };
 
 /**

@@ -172,10 +172,27 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game, Ut
   };
 
   /**
+   * Open abilities list
+   */
+  $rootScope.open_abilities = function(ev) {
+    $(ev.target).next()
+      .toggle()
+      .css('left', ev.offsetX);
+  };
+
+  /**
+   * Choose ability
+   */
+  $rootScope.choose_ability = function(ev, character, ability) {
+    $(ev.target).closest('.list').hide();
+    character.ability_ref = ability.ref;
+    character.ability = ability;
+  };
+
+  /**
    * Open targets list
    */
   $rootScope.open_targets = function(ev) {
-    console.log(ev);
     $(ev.target).next()
       .toggle()
       .css('left', ev.offsetX);
@@ -185,9 +202,9 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game, Ut
    * Choose target
    */
   $rootScope.choose_target = function(ev, character, target) {
-    console.log(character, target);
     $(ev.target).closest('.list').hide();
-    Game.characters[character.data.ref].data.target = target;
+    character.target_ref = target.ref;
+    character.ability.target = target;
   };
 
   /**
