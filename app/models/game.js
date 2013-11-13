@@ -36,6 +36,8 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
   this.materias = {};
   this.items = {};
 
+  this.message = "";
+
   this.data = {};
 };
 
@@ -316,7 +318,8 @@ Game.prototype.start_fight = function() {
   if (!this.fight) {
     this.fight = true;
 
-    for (var i in this.characters) {
+    for (var i in this.getCharacters()) {
+      this.characters[i].atb = _.random(35, 85);
       this.characters[i].run();
     }
 

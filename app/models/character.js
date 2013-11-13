@@ -82,16 +82,25 @@ Character.prototype.run = function() {
     // Stop attacking if fight's over
     if (!self.Game.fight) return;
 
-    self.atb += 5;
+    if (!self.Game.fightPause) {
 
-    if (self.atb == 100) {
-      self.atb = 0;
+      self.atb += 3;
 
-      self.ability.use();
+      if (self.atb > 100) {
+        self.atb = 100;
+
+        self.Game.fightPause = true;
+        self.ability.use(function() {
+          self.atb = 0;
+          self.Game.fightPause = false;
+        });
+
+      }
+
     }
 
     self.run();
-  }, 1000);
+  }, 300);
 };
 
 /**

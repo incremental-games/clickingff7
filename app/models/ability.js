@@ -23,12 +23,17 @@ function Ability(Owner, ref, target_ref) {
 /**
  * Use an ability
  */
-Ability.prototype.use = function() {
-  switch (this.ref) {
+Ability.prototype.use = function(finish) {
+  var type = 'attack';
+
+  switch (type) {
     case 'attack':
       var hits = this.Owner.get_hits();
-      var target = this.target.get();
-      target[0].get_attacked(hits);
+      var targets = this.target.get();
+      new Animation(this.Owner.Game, this, this.Owner, targets, hits, function() {
+        targets[0].get_attacked(hits);
+        finish();
+      });
       break;
   };
 };
