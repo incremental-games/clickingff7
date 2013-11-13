@@ -5,12 +5,21 @@
  */
 
 function Character(Game, data) {
-  var self = this;
-
   this.Game = Game;
 
   this.extends(data);
+};
 
+/**
+ * Override data
+ * @param  {[type]} first_argument [description]
+ * @return {[type]}                [description]
+ */
+Character.prototype.extends = function(data) {
+  var self = this;
+  for (var i in data) {
+    self[i] = data[i];
+  }
   if (!('level' in self)) {
     this.level = 1;
   }
@@ -42,26 +51,16 @@ function Character(Game, data) {
   if (!('target_ref' in self)) {
     this.target_ref = 'enemy:1';
   }
-};
 
-/**
- * Override data
- * @param  {[type]} first_argument [description]
- * @return {[type]}                [description]
- */
-Character.prototype.extends = function(data) {
-  var self = this;
-  for (var i in data) {
-    self[i] = data[i];
+  if (this.ability_ref) {
+    this.updateAbilities();
+    this.ability = _.findWhere(this.abilities, {
+      ref: this.ability_ref
+    });
+    this.ability.target = _.findWhere(this.ability.targets, {
+      ref: this.target_ref
+    });
   }
-
-  this.updateAbilities();
-  this.ability = _.findWhere(this.abilities, {
-    ref: this.ability_ref
-  });
-  this.ability.target = _.findWhere(this.ability.targets, {
-    ref: this.target_ref
-  });
 };
 
 /**
