@@ -192,9 +192,6 @@ Game.prototype.begin = function() {
     }
   }
 
-  // Complete characters : materias/items
-  this.build_characters();
-
   this.loaded = true;
 
   this.refresh();
@@ -205,6 +202,8 @@ Game.prototype.begin = function() {
  * @param  {object} infos
  */
 Game.prototype.extends = function(save) {
+  this.last_export = JSON.stringify(save);
+
   for (var i in save.characters) {
     this.characters[i].extends(save.characters[i]);
   }
@@ -213,29 +212,13 @@ Game.prototype.extends = function(save) {
   this.total_gils = save.total_gils;
   this.boss_defeated = save.boss_defeated;
   this.time = new Date(save.time).toLocaleString();
-
-  this.last_export = JSON.stringify(save);
 };
 
 /**
- * Build characters materias
+ * Get "in team" characters
+ * @param  {[type]} filter [description]
+ * @return {[type]}        [description]
  */
-Game.prototype.build_characters = function() {
-  for (var i in this.characters) {
-
-    // LEVEL
-    this.characters[i].setBeginningLvl();
-
-    // MATERIAS
-    for (var j in this.characters[i].materias) {
-      var ref = this.characters[i].materias[j];
-      var data = this.materias[ref];
-      this.characters[i].materias[j] = new Materia(this, data);
-    }
-
-  }
-};
-
 Game.prototype.getCharacters = function(filter) {
   return _.where(this.characters, {
     inTeam: true

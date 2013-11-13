@@ -1,7 +1,7 @@
 {
   "bolt": {
-    "ref": "thunder",
-    "name": "Thunder",
+    "ref": "bolt",
+    "name": "Bolt",
     "color": "green",
     "ap_formula": "Math.pow(x+1,4)*30",
     "level": 1,

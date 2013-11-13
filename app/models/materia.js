@@ -4,20 +4,13 @@
  * @param {string} ref
  */
 
-function Materia(Game, infos) {
+function Materia(Game, data) {
+  var self = this;
 
   this.Game = Game;
 
-  if (!this.data) {
-    this.data = {};
-  }
-
-  if (!('ap' in this.data)) {
-    this.data.ap = 0;
-  }
-
-  if (infos) {
-    this.extends(infos);
+  if (data) {
+    this.extends(data);
   }
 };
 
@@ -28,7 +21,10 @@ function Materia(Game, infos) {
 Materia.prototype.extends = function(data) {
   self = this;
   for (var i in data) {
-    self.data[i] = data[i];
+    self[i] = data[i];
+  }
+  if (!('ap' in self)) {
+    this.ap = 0;
   }
 };
 
@@ -38,9 +34,9 @@ Materia.prototype.extends = function(data) {
 Materia.prototype.get_desc = function() {
   var text = '';
 
-  switch (this.data.ref) {
+  switch (this.ref) {
     case 'restore':
-      text = 'You can cure your characters HP by ' + (this.data.level * 2) + '%';
+      text = 'You can cure your characters HP by ' + (this.level * 2) + '%';
       break;
 
   };
@@ -53,7 +49,7 @@ Materia.prototype.get_desc = function() {
  * @return {int}
  */
 Materia.prototype.get_ap_max = function() {
-  return eval(this.data.ap_formula.replace('x', this.data.level));
+  return eval(this.ap_formula.replace('x', this.level));
 };
 
 /**
@@ -62,7 +58,7 @@ Materia.prototype.get_ap_max = function() {
  * @return {int}
  */
 Materia.prototype.ap_progress = function(pixels_max) {
-  return (this.data.ap == 0 ? 0 : this.data.ap / this.get_ap_max() * pixels_max);
+  return (this.ap == 0 ? 0 : this.ap / this.get_ap_max() * pixels_max);
 };
 
 /**
@@ -70,10 +66,10 @@ Materia.prototype.ap_progress = function(pixels_max) {
  * @param {int} ap
  */
 Materia.prototype.set_ap = function(ap) {
-  this.data.ap += ap;
-  while (this.data.ap >= this.get_ap_max()) {
-    this.data.ap -= this.get_ap_max();
-    this.data.level += 1;
+  this.ap += ap;
+  while (this.ap >= this.get_ap_max()) {
+    this.ap -= this.get_ap_max();
+    this.level += 1;
   }
 };
 
@@ -81,5 +77,5 @@ Materia.prototype.set_ap = function(ap) {
  * Save materia data
  */
 Materia.prototype.save = function() {
-  return _.pick(this.data, 'ap', 'level');
+  return _.pick(this, 'ap', 'level');
 };

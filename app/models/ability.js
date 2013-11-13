@@ -9,7 +9,11 @@ function Ability(Owner, ref, target_ref) {
 
   this.ref = ref ? ref : 'attack';
 
-  this.updateTargets();
+  if (this.Owner instanceof Character) {
+    this.updateTargetsForCharacters();
+  } else {
+    this.updateTargetsForEnemies();
+  }
   this.target = _.findWhere(this.targets, {
     ref: target_ref
   });
@@ -39,25 +43,55 @@ Ability.prototype.name = function() {
     case 'attack':
       text = 'Attack';
       break;
+    case 'bolt':
+      text = 'Bolt';
+      break;
+    case 'ice':
+      text = 'Ice';
+      break;
   }
   return text;
 };
 
 /**
- * Update targets
+ * Update targets (for characters)
  */
-Ability.prototype.updateTargets = function() {
+Ability.prototype.updateTargetsForCharacters = function() {
   var targets = [];
   switch (this.ref) {
     case 'attack':
       targets.push(new Target(this, 'enemy:1'));
       targets.push(new Target(this, 'enemy:low-hp'));
       targets.push(new Target(this, 'enemy:high-pwr'));
-      targets.push(new Target(this, 'character:1'));
-      targets.push(new Target(this, 'character:low-hp'));
-      targets.push(new Target(this, 'character:high-pwr'));
+      break;
+    case 'bolt':
+      targets.push(new Target(this, 'enemy:1'));
+      targets.push(new Target(this, 'enemy:low-hp'));
+      targets.push(new Target(this, 'enemy:high-pwr'));
+      targets.push(new Target(this, 'enemy:all'));
+      break;
+    case 'ice':
+      targets.push(new Target(this, 'enemy:1'));
+      targets.push(new Target(this, 'enemy:low-hp'));
+      targets.push(new Target(this, 'enemy:high-pwr'));
+      targets.push(new Target(this, 'enemy:all'));
       break;
   }
+
+  this.targets = targets;
+};
+
+/**
+ * Update targets (for enemy)
+ */
+Ability.prototype.updateTargetsForEnemies = function() {
+  var targets = [];
+  switch (this.ref) {
+    case 'attack':
+      targets.push(new Target(this, 'character:1'));
+      break;
+  }
+
   this.targets = targets;
 };
 

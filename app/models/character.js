@@ -52,6 +52,14 @@ Character.prototype.extends = function(data) {
     this.target_ref = 'enemy:1';
   }
 
+  // MATERIAS
+  for (var i in this.materias) {
+    var ref = this.materias[i];
+    var data2 = this.Game.data.materias[ref];
+    this.materias[i] = new Materia(this, data2);
+  }
+
+  // ABILITIES & TARGETS
   if (this.ability_ref) {
     this.updateAbilities();
     this.ability = _.findWhere(this.abilities, {
@@ -234,6 +242,10 @@ Character.prototype.get_attacked = function(pwr) {
 Character.prototype.updateAbilities = function() {
   var abilities = [];
   abilities.push(new Ability(this, 'attack', 'enemy:1'));
+  for (var i in this.materias) {
+    var materia = this.materias[i];
+    abilities.push(new Ability(this, materia.ref, 'enemy:1'));
+  }
   this.abilities = abilities;
 };
 
@@ -242,6 +254,8 @@ Character.prototype.updateAbilities = function() {
  */
 Character.prototype.save = function() {
   var json = _.pick(this, 'available', 'level', 'weapon_level', 'armor_level', 'xp', 'ability_ref', 'target_ref');
+
+  json.materias = _.pluck(this.materias, 'ref');
 
   return json;
 };
