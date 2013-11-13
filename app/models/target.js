@@ -25,18 +25,20 @@ Target.prototype.get = function() {
         res = this.Ability.Owner.Game.enemy;
         break;
       case 'enemy:low-hp':
-        res = _.min(this.Game.enemy, function(o) {
-          if (o.data.hp > 0) {
-            return o.get_hp();
+        res = _.min(this.Ability.Owner.Game.enemy, function(o) {
+          if (o.hp > 0) {
+            return o.get_hp_max();
           }
         });
+        res = [res];
         break;
       case 'enemy:high-pwr':
-        res = _.max(this.Game.enemy, function(o) {
-          if (o.data.hp > 0) {
+        res = _.max(this.Ability.Owner.Game.enemy, function(o) {
+          if (o.hp > 0) {
             return o.get_pwr();
           }
         });
+        res = [res];
         break;
       case 'character:1':
         var list = this.Ability.Owner.Game.getCharacters();

@@ -135,6 +135,11 @@ footer {
   opacity: 0.1;
 }
 
+.actions span {
+  color: #900;
+  cursor: pointer;
+}
+
 .character.active .atb_progress, .enemy.active .atb_progress {
   background-color: #090;
 }

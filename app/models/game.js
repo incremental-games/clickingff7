@@ -339,32 +339,27 @@ Game.prototype.start_fight = function() {
 Game.prototype.end_fight = function(victory) {
   this.mode = "normal";
 
+  var gils = xp = 0;
+
   for (var i in this.enemy) {
     var enemy = this.enemy[i];
 
     // Rewards if victory
     if (victory) {
-      //this.add("total_gils", enemy.GILSreward());
+      gils += enemy.get_gils();
 
-      if (enemy.data.boss) {
-        this.boss_defeated = true;
-      }
-
-      // XP for characters
-      for (var j in this.characters) {
-        var xp = enemy.XPreward();
-        this.characters[j].set_xp(xp);
-      }
-
-      // AP for materias
-      for (var j in this.materias) {
-        //var ap = enemy.APreward();
-        //this.materias[j].set_ap(ap);
-      }
+      xp += enemy.get_xp();
     }
   }
 
-  this.rewards = true;
+  this.rewards = {
+    gils: gils,
+    xp: xp
+  };
+
+  this.mode = "rewards";
+
+  this.enemy = [];
 };
 
 /**

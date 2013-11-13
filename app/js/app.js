@@ -172,6 +172,13 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game, Ut
   };
 
   /**
+   * Explore rooms
+   */
+  $rootScope.getRewards = function() {
+    Game.mode = "normal";
+  };
+
+  /**
    * Open abilities list
    */
   $rootScope.open_abilities = function(ev) {

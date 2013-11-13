@@ -199,7 +199,7 @@ Enemy.prototype.get_attacked = function(pwr) {
       }
     });
     if (!team.alive) {
-      this.Game.end_fight();
+      this.Game.end_fight(true);
     }
   }
 };
