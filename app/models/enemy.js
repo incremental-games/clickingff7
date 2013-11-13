@@ -11,8 +11,14 @@ function Enemy(Game, data) {
   for (var i in data) {
     this[i] = data[i];
   }
+  if (!('active' in self)) {
+    this.active = false;
+  }
   if (!('atb' in this)) {
     this.atb = 0;
+  }
+  if (!('atb_active' in self)) {
+    this.atb_active = false;
   }
   if (!('hp' in this)) {
     this.hp = this.hp_max;
@@ -35,19 +41,22 @@ Enemy.prototype.run = function() {
 
   this.timer[this.number] = $timeout(function() {
     // Stop attacking if fight's over
-    if (!self.Game.fight) return;
+    if (self.Game.mode != "fight") return;
 
-    if (!self.Game.fightPause) {
-
+    if (!self.Game.pause) {
+      self.atb_active = true;
       self.atb += 3;
 
       if (self.atb > 100) {
+        self.active = true;
         self.atb = 100;
 
-        self.Game.fightPause = true;
+        self.Game.pause = true;
         self.ability.use(function() {
+          self.active = false;
+          self.atb_active = false;
           self.atb = 0;
-          self.Game.fightPause = false;
+          self.Game.pause = false;
         });
 
       }

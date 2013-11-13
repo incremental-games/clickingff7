@@ -17,7 +17,9 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
   this.loaded = false;
 
   // Fight mode
-  this.fight = false;
+  this.mode = "normal";
+  this.manualPause = false;
+  this.pause = false;
 
   // scopes INFOS
   this.enemy_hp_max = 0;
@@ -315,18 +317,19 @@ Game.prototype.no_weapons = function() {
  * Characters start auto-attacking
  */
 Game.prototype.start_fight = function() {
-  if (!this.fight) {
-    this.fight = true;
+  this.mode = "fight";
+  this.pause = true;
 
-    for (var i in this.getCharacters()) {
-      this.characters[i].atb = _.random(35, 85);
-      this.characters[i].run();
-    }
-
-    for (var i in this.enemy) {
-      this.enemy[i].run();
-    }
+  for (var i in this.getCharacters()) {
+    this.characters[i].atb = _.random(35, 85);
+    this.characters[i].run();
   }
+
+  for (var i in this.enemy) {
+    this.enemy[i].run();
+  }
+
+  this.pause = false;
 };
 
 /**
@@ -334,7 +337,7 @@ Game.prototype.start_fight = function() {
  * @param  {boolean} victory
  */
 Game.prototype.end_fight = function(victory) {
-  this.fight = false;
+  this.mode = "normal";
 
   for (var i in this.enemy) {
     var enemy = this.enemy[i];
@@ -361,7 +364,7 @@ Game.prototype.end_fight = function(victory) {
     }
   }
 
-  this.enemy = [];
+  this.rewards = true;
 };
 
 /**

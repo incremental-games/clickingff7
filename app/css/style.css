@@ -110,6 +110,12 @@ footer {
   text-transform: uppercase;
 }
 
+.message {
+  text-transform: uppercase;
+  background-color: #6C7DB3;
+  color: #fff;
+}
+
 .div400 {
   border-top: 1px solid #ccc;
   padding: 10px 0;
@@ -129,9 +135,8 @@ footer {
   opacity: 0.1;
 }
 
-.actions span {
-  color: #900;
-  cursor: pointer;
+.character.active .atb_progress, .enemy.active .atb_progress {
+  background-color: #090;
 }
 
 .atb_progress {background-color: #BEECBE; top: 0;}
@@ -224,7 +229,7 @@ footer {
 
 /* ANIMATIONS */
 
-.atb_progress, .xp_progress, .limit_hp_progress {
+.atb_progress.active {
   -webkit-transition:0.5s linear all;
   -moz-transition:0.5s linear all;
   -o-transition:0.5s linear all;

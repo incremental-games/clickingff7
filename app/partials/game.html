@@ -21,7 +21,7 @@
 <div class="space"></div>
 
 <div class="part title w50"></div>
-<div class="part title w400">{{game.message}}</div>
+<div class="part message w400">{{game.message}}</div>
 <div class="part title w50"></div>
 
 <div class="space"></div>
@@ -29,8 +29,8 @@
 <div class="part w400">
 
   <section class="enemies" data-step="2" data-intro="This is the enemy ! They are ordered by level. So, you should fight the first one to begin, then the second, etc." data-position="right">
-    <div ng-repeat="(no, e) in game.enemy | clean" class="left div400 enemy" ng-class="{disabled: e.hp == 0}">
-      <div class="atb_progress" style="width:{{e.atb_progress(400)}}px;"></div>
+    <div ng-repeat="(no, e) in game.enemy | clean" class="left div400 enemy" ng-class="{disabled: e.hp <= 0, active: e.active}">
+      <div class="atb_progress" style="width:{{e.atb_progress(400)}}px;" ng-class="{active: e.atb_active}" ng-hide="e.hp==0"></div>
       <div class="part avatar w50">
         <img ng-src="img/enemy/{{e.image}}" alt="avatar" height="48" />
       </div>
@@ -47,7 +47,8 @@
       </div>
     </div>
 
-    <div class="button" ng-click="explore()" ng-show="!game.fight">EXPLORE</div>
+    <div class="button" ng-click="explore()" ng-show="game.mode=='normal'">EXPLORE</div>
+    <div class="button" ng-click="getRewards()" ng-show="game.mode=='rewards'">GET REWARDS</div>
   </sections>
 
 </div><!--
@@ -57,8 +58,8 @@
 --><div class="part w400">
 
   <section class="characters" data-step="1" data-intro="This is your team ! You begin with 2 characters. If they win battles, characters will level up and get stronger." data-position="left">
-    <div ng-repeat="(i, character) in game.getCharacters()" class="right div400 character" ng-class="{disabled: character.hp <= 0}">
-      <div class="atb_progress" style="width:{{character.atb_progress(400)}}px;"></div>
+    <div ng-repeat="(i, character) in game.getCharacters()" class="right div400 character" ng-class="{disabled: character.hp <= 0, active: character.active}">
+      <div class="atb_progress" style="width:{{character.atb_progress(400)}}px;" ng-class="{active: character.atb_active}" ng-hide="character.hp==0"></div>
       <div class="limit_progress" style="width:{{character.limit_progress(400)}}px;"></div>
       <div class="xp_progress" style="width:{{character.xp_progress(400)}}px;"></div>
       <div class="part avatar w50">
@@ -74,8 +75,7 @@
         </div>
         <div class="actions">
            
-            <div class="button">{{character.ability.name()}}</div> 
-            <span ng-click="open_abilities($event)">v</span> 
+            {{character.ability.name()}} <span ng-click="open_abilities($event)">v</span> 
             <div class="list">
               <div ng-repeat="ability in character.abilities">
                 <a ng-click="choose_ability($event, character, ability)">{{ability.name()}}</a>
