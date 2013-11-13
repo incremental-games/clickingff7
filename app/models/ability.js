@@ -9,16 +9,10 @@ function Ability(Owner, ref, target_ref) {
 
   this.ref = ref ? ref : 'attack';
 
-  switch (this.ref) {
-    case 'attack':
-      this.targets = [
-        new Target(this, 'random:1'),
-        new Target(this, 'random:low-hp'),
-        new Target(this, 'random:high-pwr')
-      ];
-      this.target = this.targets[0];
-      break;
-  }
+  this.updateTargets();
+  this.target = _.findWhere(this.targets, {
+    ref: target_ref
+  });
 
 };
 
@@ -47,4 +41,30 @@ Ability.prototype.name = function() {
       break;
   }
   return text;
+};
+
+/**
+ * Update targets
+ */
+Ability.prototype.updateTargets = function() {
+  var targets = [];
+  switch (this.ref) {
+    case 'attack':
+      targets.push(new Target(this, 'enemy:1'));
+      targets.push(new Target(this, 'enemy:low-hp'));
+      targets.push(new Target(this, 'enemy:high-pwr'));
+      targets.push(new Target(this, 'character:1'));
+      targets.push(new Target(this, 'character:low-hp'));
+      targets.push(new Target(this, 'character:high-pwr'));
+      break;
+  }
+  this.targets = targets;
+};
+
+Ability.prototype.save = function() {
+  if (typeof this.ref == "string") {
+    return this.ref;
+  } else {
+    return "enemy:" + this.ref.name
+  }
 };

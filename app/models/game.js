@@ -167,11 +167,11 @@ Game.prototype._load_characters = function(finish) {
   this.$http.get('data/characters.json?v=' + new Date().getTime()).success(function(data) {
     self.data.characters = data;
 
+    self.characters = [];
     for (var i in data) {
-      var in_zone = ($.inArray(self.zone.level, data[i].zones) != -1);
-      if (in_zone) {
-        self.characters[i] = new Character(self, data[i]);
-      }
+      var character = new Character(self, data[i]);
+      character.available = ($.inArray(self.zone.level, data[i].zones) != -1);
+      self.characters.push(character);
     }
 
     finish();
@@ -209,30 +209,8 @@ Game.prototype.extends = function(save) {
     this.characters[i].extends(save.characters[i]);
   }
 
-  for (var i in save.materias) {
-    if (i in this.materias) {
-      this.materias[i].extends(save.materias[i]);
-    } else {
-      this.materias[i] = new Materia(this, i);
-      this.materias[i].extends(this.data.materias[i].data);
-      this.materias[i].extends(save.materias[i]);
-    }
-  }
-
-  for (var i in save.items) {
-    if (i in this.items) {
-      this.items[i].extends(save.items[i]);
-    } else {
-      this.items[i] = new Item(this, i);
-      this.items[i].extends(this.data.items[i].data);
-      this.items[i].extends(save.items[i]);
-    }
-  }
-
   this.zone = save.zone;
   this.total_gils = save.total_gils;
-  this.characters_hp = save.characters_hp;
-  this.characters_limit = save.characters_limit;
   this.boss_defeated = save.boss_defeated;
   this.time = new Date(save.time).toLocaleString();
 
@@ -249,13 +227,19 @@ Game.prototype.build_characters = function() {
     this.characters[i].setBeginningLvl();
 
     // MATERIAS
-    for (var j in this.characters[i].data.materias) {
-      var ref = this.characters[i].data.materias[j];
-      var data = this.data.materias[ref];
-      this.characters[i].data.materias[j] = new Materia(this, data);
+    for (var j in this.characters[i].materias) {
+      var ref = this.characters[i].materias[j];
+      var data = this.materias[ref];
+      this.characters[i].materias[j] = new Materia(this, data);
     }
 
   }
+};
+
+Game.prototype.getCharacters = function(filter) {
+  return _.where(this.characters, {
+    inTeam: true
+  });
 };
 
 /**
@@ -453,16 +437,6 @@ Game.prototype.export = function() {
     characters[i] = this.characters[i].save();
   }
 
-  var weapons = {};
-  for (var i in this.weapons) {
-    weapons[i] = this.weapons[i].save();
-  }
-
-  var materias = {};
-  for (var i in this.materias) {
-    materias[i] = this.materias[i].save();
-  }
-
   var items = {};
   for (var i in this.items) {
     items[i] = this.items[i].save();
@@ -471,13 +445,8 @@ Game.prototype.export = function() {
   var save = {};
 
   save.characters = characters;
-  save.weapons = weapons;
-  save.materias = materias;
-  save.items = items;
   save.zone = this.zone,
   save.total_gils = this.total_gils;
-  save.characters_hp = this.characters_hp;
-  save.characters_limit = this.characters_limit;
   save.boss_defeated = this.boss_defeated;
   save.time = (new Date()).toLocaleString();
 

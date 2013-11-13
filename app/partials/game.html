@@ -23,19 +23,19 @@
 <div class="part w400">
 
   <section class="enemies" data-step="2" data-intro="This is the enemy ! They are ordered by level. So, you should fight the first one to begin, then the second, etc." data-position="right">
-    <div ng-repeat="(no, e) in game.enemy | clean" class="left div400 enemy" ng-class="{disabled: e.data.hp == 0}">
+    <div ng-repeat="(no, e) in game.enemy | clean" class="left div400 enemy" ng-class="{disabled: e.hp == 0}">
       <div class="atb_progress" style="width:{{e.atb_progress(400)}}px;"></div>
       <div class="part avatar w50">
-        <img ng-src="img/enemy/{{e.data.image}}" alt="avatar" height="48" />
+        <img ng-src="img/enemy/{{e.image}}" alt="avatar" height="48" />
       </div>
       <div class="part infos w300">
-        {{e.data.name}} <strong>(LVL{{e.data.level|ceil}})</strong> 
-        <span ng-if="e.data.boss">
+        {{e.name}} <strong>(LVL{{e.level|ceil}})</strong> 
+        <span ng-if="e.boss">
           <span class="boss">BOSS</span> 
         </span>
-        <strong ng-show="e.data.number > 0">x{{e.data.number}}</strong>
+        <strong ng-show="e.number > 0">x{{e.number}}</strong>
         <div>
-          <span class="label">hp</span> {{e.data.hp}} / {{e.data.hp_max}} 
+          <span class="label">hp</span> {{e.hp}} / {{e.hp_max}} 
           <span class="label">att</span> {{e.get_pwr()|round:2}}
         </div>
       </div>
@@ -49,19 +49,19 @@
 --><div class="part w400">
 
   <section class="characters" data-step="1" data-intro="This is your team ! You begin with 2 characters. If they win battles, characters will level up and get stronger." data-position="left">
-    <div ng-repeat="(i, character) in game.characters | clean" class="right div400 character" ng-class="{disabled: character.data.hp <= 0}">
+    <div ng-repeat="(i, character) in game.getCharacters()" class="right div400 character" ng-class="{disabled: character.hp <= 0}">
       <div class="atb_progress" style="width:{{character.atb_progress(400)}}px;"></div>
       <div class="limit_progress" style="width:{{character.limit_progress(400)}}px;"></div>
       <div class="xp_progress" style="width:{{character.xp_progress(400)}}px;"></div>
       <div class="part avatar w50">
-        <img ng-src="img/characters/{{character.data.image}}" alt="avatar" />
+        <img ng-src="img/characters/{{character.image}}" alt="avatar" />
       </div><!--
       --><div class="part infos w300">
-        <div>{{character.data.name}} <strong>(LVL{{character.data.level}})</strong></div>
+        <div>{{character.name}} <strong>(LVL{{character.level}})</strong></div>
         <div>
-          <span class="label">hp</span> {{character.data.hp}} / {{character.get_hp()}} 
-          <span class="label">mp</span> {{character.data.mp}} / {{character.get_mp()}} 
-          <span class="label">xp</span> {{character.data.xp}} / {{character.data.xp_max}} 
+          <span class="label">hp</span> {{character.hp}} / {{character.get_hp_max()}} 
+          <span class="label">mp</span> {{character.mp}} / {{character.get_mp_max()}} 
+          <span class="label">xp</span> {{character.xp}} / {{character.xp_max}} 
           <span class="label">att</span> {{character.get_pwr()|round:2}}
         </div>
         <div class="actions">

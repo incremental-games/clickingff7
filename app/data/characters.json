@@ -8,7 +8,8 @@
     "xp_base": 5,
     "weapon_type": "broadsword",
     "materias": ["bolt", "ice"],
-    "zones": [1, 2, 3, 4, 5]
+    "zones": [1, 2, 3, 4, 5],
+    "inTeam": true
   },
   "barret": {
     "ref": "barret",
@@ -18,7 +19,8 @@
     "mp_base": 4,
     "xp_base": 3,
     "weapon_type": "gun-arm",
-    "zones": [1, 2, 4, 5]
+    "zones": [1, 2, 4, 5],
+    "inTeam": true
   },
   "tifa": {
     "ref": "tifa",

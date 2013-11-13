@@ -4,63 +4,64 @@
  * @param {string} ref
  */
 
-function Character(Game, infos) {
+function Character(Game, data) {
+  var self = this;
 
   this.Game = Game;
 
-  // scopes INFOS
-  if (!this.data) {
-    this.data = {};
+  this.extends(data);
+
+  if (!('level' in self)) {
+    this.level = 1;
   }
-  if (!('level' in this.data)) {
-    this.data.level = 1;
+  if (!('weapon_level' in self)) {
+    this.weapon_level = 1;
   }
-  if (!('weapon_level' in this.data)) {
-    this.data.weapon_level = 1;
+  if (!('armor_level' in self)) {
+    this.armor_level = 1;
   }
-  if (!('armor_level' in this.data)) {
-    this.data.armor_level = 1;
+  if (!('hp' in self)) {
+    this.hp = this.get_hp_max();
   }
-  if (!('xp' in this.data)) {
-    this.data.xp = 0;
+  if (!('mp' in self)) {
+    this.mp = this.get_mp_max();
   }
-  if (!('atb' in this.data)) {
-    this.data.atb = 0;
+  if (!('xp' in self)) {
+    this.xp = 0;
   }
-  if (infos) {
-    this.extends(infos);
+  if (!('xp_max' in self)) {
+    var next_Lvl = this.level + 1;
+    this.xp_max = this.get_xp_max();
+  }
+  if (!('atb' in self)) {
+    this.atb = 0;
+  }
+  if (!('ability_ref' in self)) {
+    this.ability_ref = 'attack';
+  }
+  if (!('target_ref' in self)) {
+    this.target_ref = 'enemy:1';
   }
 };
 
 /**
- * Extends the data properties with saved data
- * @param  {object} infos
+ * Override data
+ * @param  {[type]} first_argument [description]
+ * @return {[type]}                [description]
  */
 Character.prototype.extends = function(data) {
+  var self = this;
   for (var i in data) {
-    this.data[i] = data[i];
-  }
-  if (!('hp' in this.data)) {
-    this.data.hp = this.get_hp();
-  }
-  if (!('mp' in this.data)) {
-    this.data.mp = this.get_mp();
-  }
-  if (!('xp_max' in this.data)) {
-    var next_Lvl = this.data.level + 1;
-    this.data.xp_max = this.get_xp_max();
-  }
-  if (!('ability' in this.data)) {
-    this.data.ability = 'attack';
-  }
-  if (!('target' in this.data)) {
-    this.data.target = 'custom:lowest-hp';
+    self[i] = data[i];
   }
 
-  this.abilities = [
-    new Ability(this, 'attack')
-  ];
-  this.ability = this.abilities[0];
+  this.updateAbilities();
+  this.ability = _.findWhere(this.abilities, {
+    ref: this.ability_ref
+  });
+  this.ability.target = _.findWhere(this.ability.targets, {
+    ref: this.target_ref
+  });
 };
 
 /**
@@ -74,10 +75,10 @@ Character.prototype.run = function() {
     // Stop attacking if fight's over
     if (!self.Game.fight) return;
 
-    self.data.atb += 10;
+    self.atb += 5;
 
-    if (self.data.atb == 100) {
-      self.data.atb = 0;
+    if (self.atb == 100) {
+      self.atb = 0;
 
       self.ability.use();
     }
@@ -99,7 +100,7 @@ Character.prototype.wait = function() {
  * @return {Weapon}
  */
 Character.prototype.get_weapon = function() {
-  return this.Game.data.weapons[this.data.ref][this.data.weapon_level];
+  return this.Game.data.weapons[this.ref][this.weapon_level];
 };
 
 /**
@@ -107,23 +108,23 @@ Character.prototype.get_weapon = function() {
  * @return {Weapon}
  */
 Character.prototype.get_armor = function() {
-  return this.Game.data.armors[this.data.armor_level];
+  return this.Game.data.armors[this.armor_level];
 };
 
 /**
  * Returns total HP
  * @return {int}
  */
-Character.prototype.get_hp = function() {
-  return this.data.level * this.get_armor().def + this.data.hp_base;
+Character.prototype.get_hp_max = function() {
+  return this.level * this.get_armor().def + this.hp_base;
 };
 
 /**
  * Returns total MP
  * @return {int}
  */
-Character.prototype.get_mp = function() {
-  return this.data.mp_base;
+Character.prototype.get_mp_max = function() {
+  return this.mp_base;
 };
 
 /**
@@ -131,7 +132,7 @@ Character.prototype.get_mp = function() {
  * @return {int}
  */
 Character.prototype.get_xp_max = function() {
-  return Math.pow(this.data.level, 2) * (30 + this.data.xp_base);
+  return Math.pow(this.level, 2) * (30 + this.xp_base);
 };
 
 /**
@@ -139,7 +140,7 @@ Character.prototype.get_xp_max = function() {
  * @return {int}
  */
 Character.prototype.get_pwr = function() {
-  return Damage = this.data.level * this.get_weapon().pwr;
+  return Damage = this.level * this.get_weapon().pwr;
 };
 
 /**
@@ -147,7 +148,7 @@ Character.prototype.get_pwr = function() {
  * @return {int}
  */
 Character.prototype.get_hits = function() {
-  var Damage = this.data.level * this.get_weapon().pwr;
+  var Damage = this.get_pwr();
   Damage = Math.ceil(Damage * (3841 + _.random(0, 255)) / 4096);
   return Damage;
 };
@@ -158,7 +159,7 @@ Character.prototype.get_hits = function() {
  * @return {int}
  */
 Character.prototype.atb_progress = function(pixels_max) {
-  return (this.data.atb == 0 ? 0 : this.data.atb / 100 * pixels_max);
+  return (this.atb == 0 ? 0 : this.atb / 100 * pixels_max);
 };
 
 /**
@@ -167,7 +168,7 @@ Character.prototype.atb_progress = function(pixels_max) {
  * @return {int}
  */
 Character.prototype.hp_progress = function(pixels_max) {
-  return (this.data.hp == 0 ? 0 : this.data.hp / this.get_hp() * pixels_max);
+  return (this.hp == 0 ? 0 : this.hp / this.get_hp() * pixels_max);
 };
 
 /**
@@ -176,11 +177,11 @@ Character.prototype.hp_progress = function(pixels_max) {
  * @return {int}
  */
 Character.prototype.xp_progress = function(pixels_max) {
-  return (this.data.xp == 0 ? 0 : this.data.xp / this.get_xp_max() * pixels_max);
+  return (this.xp == 0 ? 0 : this.xp / this.get_xp_max() * pixels_max);
 };
 
 Character.prototype.setBeginningLvl = function() {
-  if (this.data.level == 1) {
+  if (this.level == 1) {
 
   }
 };
@@ -190,10 +191,10 @@ Character.prototype.setBeginningLvl = function() {
  * @param {int} xp
  */
 Character.prototype.set_xp = function(xp) {
-  this.data.xp += xp;
-  while (this.data.xp >= this.get_xp_max()) {
-    this.data.xp -= this.get_xp_max();
-    this.data.level += 1;
+  this.xp += xp;
+  while (this.xp >= this.get_xp_max()) {
+    this.xp -= this.get_xp_max();
+    this.level += 1;
 
     this.Game.refresh_characters_hp();
     this.Game.refresh_characters_limit();
@@ -206,7 +207,7 @@ Character.prototype.set_xp = function(xp) {
  * @return {string}
  */
 Character.prototype.get_line = function() {
-  return this.Game.lines[this.data.ref];
+  return this.Game.lines[this.ref];
 };
 
 /**
@@ -214,11 +215,11 @@ Character.prototype.get_line = function() {
  * @param  {int} pwr
  */
 Character.prototype.get_attacked = function(pwr) {
-  this.data.hp = Math.max(this.data.hp - pwr, 0);
-  if (this.data.hp == 0) {
+  this.hp = Math.max(this.hp - pwr, 0);
+  if (this.hp == 0) {
     this.wait();
-    var team = _.countBy(this.Game.characters, function(num) {
-      if (num.data.hp > 0) {
+    var team = _.countBy(this.Game.getCharacters(), function(num) {
+      if (num.hp > 0) {
         return 'alive';
       }
     });
@@ -229,10 +230,19 @@ Character.prototype.get_attacked = function(pwr) {
 };
 
 /**
+ * Update character abilities
+ */
+Character.prototype.updateAbilities = function() {
+  var abilities = [];
+  abilities.push(new Ability(this, 'attack', 'enemy:1'));
+  this.abilities = abilities;
+};
+
+/**
  * Save character data
  */
 Character.prototype.save = function() {
-  var json = _.pick(this.data, 'available', 'level', 'weapon_level', 'armor_level', 'xp');
+  var json = _.pick(this, 'available', 'level', 'weapon_level', 'armor_level', 'xp', 'ability_ref', 'target_ref');
 
   return json;
 };
