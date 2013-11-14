@@ -135,7 +135,7 @@ footer {
   }
 
   .infos .powerUp {
-    border-top: 1px dashed #edd;
+    border-top: 1px dashed #806E94;
     padding: 3px 10px 3px 0;
   }
 
@@ -159,7 +159,7 @@ img.gils {width: 14px; margin-bottom: -3px;}
   color: #fff;
   height: 18px;
   margin-top: 5px;
-  border-top: 1px solid #444;
+  border-top: 1px solid #999;
 }
 
 .enemy_hp_progress {
@@ -179,7 +179,7 @@ img.gils {width: 14px; margin-bottom: -3px;}
 }
 
 .characters_mp_progress {
-  background-color: #666;
+  background-color: #ACC9E9;
   position: absolute;
   height: 18px;
   top: 0;

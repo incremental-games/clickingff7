@@ -34,12 +34,21 @@ Character.prototype.extends = function(data) {
 };
 
 /**
- * returns character total hits
+ * returns character total HP
  * based on level and weapon level
  * @return {int}
  */
 Character.prototype.getHpMax = function() {
-  return this.hp_base * this.level;
+  return this.hpBase * this.level;
+};
+
+/**
+ * returns character total MP
+ * based on level and weapon level
+ * @return {int}
+ */
+Character.prototype.getMpMax = function() {
+  return this.mpBase * this.level;
 };
 
 /**

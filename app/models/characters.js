@@ -10,8 +10,9 @@ function Characters(Game) {
   this.characters = [];
 
   this.hpMax = 0;
-  this.hits = 0;
+  this.mpMax = 0;
   this.limitMax = 0;
+  this.hits = 0;
   this.gils = 0;
 };
 
@@ -68,6 +69,7 @@ Characters.prototype.refresh = function() {
   for (var i in characters) {
     // HP
     this.hpMax += characters[i].getHpMax();
+    this.mpMax += characters[i].getMpMax();
     this.hits += characters[i].getHits();
   }
 
@@ -75,6 +77,9 @@ Characters.prototype.refresh = function() {
 
   if (!_.has(this, 'hp')) {
     this.hp = this.hpMax;
+  }
+  if (!_.has(this, 'mp')) {
+    this.mp = this.mpMax;
   }
   if (!_.has(this, 'limit')) {
     this.limit = 0;
@@ -88,6 +93,15 @@ Characters.prototype.refresh = function() {
  */
 Characters.prototype.hpProgress = function(pixels_max) {
   return this.hp / this.hpMax * pixels_max;
+};
+
+/**
+ * Returns in pixels characters hp bar width
+ * @param  {int} pixel_max
+ * @return {int}
+ */
+Characters.prototype.mpProgress = function(pixels_max) {
+  return this.mp / this.mpMax * pixels_max;
 };
 
 /**
@@ -207,11 +221,17 @@ Characters.prototype.canEscape = function() {
  * @return {Object}
  */
 Characters.prototype.save = function() {
-  var res = {};
+  var res = {
+    "hp": this.hp,
+    "mp": this.mp,
+    "limit": this.limit,
+    "gils": this.gils,
+    "data": {}
+  };
 
   for (var i in this.characters) {
     var character = this.characters[i];
-    res[character.ref] = character.save();
+    res.data[character.ref] = character.save();
   }
 
   return res;

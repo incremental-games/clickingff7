@@ -179,8 +179,13 @@ Game.prototype.begin = function() {
  */
 Game.prototype.extends = function(save) {
   for (var i in save.characters) {
-    _.extend(this.data.characters[i], save.characters[i]);
+    _.extend(this.data.characters[i], save.characters.data[i]);
   }
+
+  this.characters.hp = save.characters.hp;
+  this.characters.mp = save.characters.mp;
+  this.characters.limit = save.characters.limit;
+  this.characters.gils = save.characters.gils;
 
   for (var i in save.weapons) {
     if (i in this.weapons) {
