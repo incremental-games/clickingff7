@@ -2,8 +2,19 @@
   "restore": {
     "ref": "restore",
     "name": "Restore",
-    "ap_formula": "Math.pow(x+1,4)*30",
-    "level": 1,
-    "zone": 1
+    "color": "green",
+    "ap_formula": "Math.pow(x+1,4)*30"
+  },
+  "bolt": {
+    "ref": "bolt",
+    "name": "Bolt",
+    "color": "green",
+    "ap_formula": "Math.pow(x+1,4)*30"
+  },
+  "ice": {
+    "ref": "ice",
+    "name": "Ice",
+    "color": "green",
+    "ap_formula": "Math.pow(x+1,4)*30"
   }
 }

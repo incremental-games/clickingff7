@@ -33,8 +33,8 @@
 </div><!--
 
 --><div class="part w100">
-  <div ng-click="cure($event)" class="button" ng-class="{disabled: !game.can_cure()}" data-step="7" data-intro="Anytime, if you think your character HP is too low, click here to regain life, as often as you want.">CURE</div>
-  <div ng-click="escape($event)" class="button" ng-class="{disabled: !game.can_escape()}" data-step="8" data-intro="During fight, if you think the enemy is too strong, you can escape the battle by clicking here.">ESCAPE</div>
+  <div ng-click="cure($event)" class="button" ng-class="{disabled: !game.characters.canCure()}" data-step="7" data-intro="Anytime, if you think your character HP is too low, click here to regain life, as often as you want.">RESTORE</div>
+  <div ng-click="escape($event)" class="button" ng-class="{disabled: !game.characters.canEscape()}" data-step="8" data-intro="During fight, if you think the enemy is too strong, you can escape the battle by clicking here.">ESCAPE</div>
 </div>
 
 <div></div>
@@ -61,77 +61,71 @@
 
   <section class="enemies" data-step="2" data-intro="This is the enemy ! They are ordered by level. So, you should fight the first one to begin, then the second, etc." data-position="right">
     <div ng-repeat="enemy in game.enemies.getTeam() | clean" class="left div400 enemy">
-      <div class="part avatar w50">
-        <img ng-src="img/enemy/{{enemy.image}}" alt="avatar" height="48" />
-      </div>
-      <div class="part infos w300">
-        {{enemy.name}} <strong>(LVL{{enemy.level|ceil}})</strong> 
-        <span ng-if="enemy.boss">
-          <span class="boss">BOSS</span> 
-        </span>
-        <div>
-          <span class="label">hp</span> {{enemy.getHpMax()}} 
-          <span class="label">pwr</span> {{enemy.getHits()}}
+      <div class="main">
+        <div class="part avatar w50">
+          <img ng-src="img/enemy/{{enemy.image}}" alt="avatar" height="48" />
         </div>
-        <div>
-          <span class="label">xp</span> {{enemy.xpReward()}} 
-          <span class="label">ap</span> {{enemy.apReward()}} 
-          <span class="label">gils</span> {{enemy.gilsReward()}}
+        <div class="part w300">
+          {{enemy.name}} <strong>(LVL{{enemy.level|ceil}})</strong> 
+          <span ng-if="enemy.boss">
+            <span class="boss">BOSS</span> 
+          </span>
+          <div>
+            <span class="label">hp</span> {{enemy.getHpMax()}} 
+            <span class="label">pwr</span> {{enemy.getHits()}}
+          </div>
+          <div>
+            <span class="label">xp</span> {{enemy.xpReward()}} 
+            <span class="label">ap</span> {{enemy.apReward()}} 
+            <span class="label">gils</span> {{enemy.gilsReward()}}
+          </div>
         </div>
       </div>
+      <div class="infos"></div>
     </div>
   </sections>
 
 </div><!--
+
+--><div class="part title w50"></div><!--
 
 --><div class="part w400">
 
   <section class="characters" data-step="1" data-intro="This is your team ! You begin with 2 characters. If they win battles, characters will level up and get stronger." data-position="left">
     <div ng-repeat="(i, character) in game.characters.getTeam() | clean" class="right div400 character">
       <div class="xp_progress" style="width:{{character.xpProgress(400)}}px;"></div>
-      <div class="part infos w300">
-        <div>{{character.name}} <strong>(LVL{{character.level}})</strong></div>
-        <div ng-if="character.level > 0">
-          <span class="label">hp</span> {{character.getHpMax()}} 
-          <span class="label">pwr</span> {{character.getHits()|round:2}}
+      <div class="main">  
+        <div class="part avatar w50">
+          <img ng-src="img/characters/{{character.image}}" alt="avatar" class="icon" />
+        </div><!--
+        --><div class="part w350">
+          <div>{{character.name}} <strong>(LVL{{character.level}})</strong></div>
+          <div ng-if="character.level > 0">
+            <span class="label">hp</span> {{character.getHpMax()}} 
+            <span class="label">pwr</span> {{character.getHits()|round:2}}
+          </div>
+          <div class="line">"{{character.getLine()}}"</div>
         </div>
-        <div class="line">"{{character.getLine()}}"</div>
-      </div><!--
-      --><div class="part avatar w50">
-        <img ng-src="img/characters/{{character.image}}" alt="avatar" />
       </div>
-    </div>
-    <div>
-      <div>{{character.weapon.name()}}</div>
-      <div>{{character.armor.name()}}</div>
-      <div>{{character.materia.name()}}</div>
-      <div>{{character.item.name()}}</div>
-      <div>{{character.limit.name()}}</div>
-    </div>
-  </sections>
-
-</div>
-
-<div class="space"></div>
-
-<div class="part title w400"></div>
-<div class="part title w50"></div>
-<div class="part title w400">Materias</div>
-
-<div class="space"></div>
-
-<div class="part w400"></div><!--
-
---><div class="part w400">
-
-  <section class="materias" data-step="3" data-intro="This is your materias ! If your character win battles, they will grow up and get stronger." data-position="top">
-    <div ng-repeat="(i, materia) in game.materias | clean" class="right div400 materia">
-      <div class="ap_progress" style="width:{{materia.ap_progress(400)}}px;"></div>
-      <div class="part infos w300">
-        <div>{{materia.data.name}} <strong>(LVL{{materia.data.level}})</strong></div>
-        <div class="line">"{{materia.get_desc()}}"</div>
-      </div><!--
-      --><div class="part avatar w50"></div>
+      <div class="infos">
+        <div class="powerUp" ng-if="character.weapon">
+          <img ng-src="img/icons/{{character.weapon.type}}.png" class="icon" />
+          {{character.weapon.name}} (+{{character.weapon.hits}})
+        </div>
+        <div class="powerUp" ng-if="character.armor">
+          {{character.armor.name}}
+        </div>
+        <div class="powerUp" ng-if="character.materia">
+          <img ng-src="img/icons/{{character.materia.color}}-materia.png" class="materia icon" />
+          {{character.materia.name}}
+        </div>
+        <div class="powerUp" ng-if="character.item">
+          {{character.item.name}}
+        </div>
+        <div class="powerUp" ng-if="character.limit">
+          {{character.limit.name}}
+        </div>
+      </div>
     </div>
   </sections>
 

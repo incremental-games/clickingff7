@@ -8,6 +8,8 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  background-color: #AFAFE0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .wrapper {
@@ -39,6 +41,7 @@ nav {
   text-align: center;
   border-top: 1px solid #999;
   border-bottom: 1px solid #999;
+  background-color: #fff;
 }
 
   nav ul {
@@ -102,6 +105,7 @@ footer {
 .w50 {width: 50px;}
 .w100 {width: 100px;}
 .w300 {width: 300px;}
+.w350 {width: 350px;}
 .w400 {width: 400px;}
 
 .title {
@@ -111,29 +115,30 @@ footer {
 }
 
 .div400 {
-  border-top: 1px solid #ccc;
   padding: 10px 0;
   position: relative;
+  text-align: left;
 }
 
-.left {text-align: left;}
-.right {text-align: right;}
+  .avatar, .main {
+    background-color: #fff;
+  }
 
-.left .actions {
-  position: absolute;
-  left: -60px;
-  top: 20px;
-}
+  .infos {
+    margin: 0 10px;
+    background-color: #eee;
+    padding: 0 5px;
+    font-size: 12px;
+    color: #666;
+  }
 
-.right .actions {
-  position: absolute;
-  right: -60px;
-  top: 20px;
-}
+  .infos .powerUp {
+    border-top: 1px dashed #edd;
+    padding: 3px 10px 3px 0;
+  }
 
-.character, .materia {
-  border-top: 1px solid #77B477;
-}
+img.icon {margin-bottom: -1px;}
+img.materia {width: 14px; margin-bottom: -3px;}
 
 .disabled {
   border-top: 1px solid #ccc;

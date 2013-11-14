@@ -41,10 +41,15 @@ Characters.prototype.build = function() {
   for (var i in this.characters) {
     var character = this.characters[i];
 
-    // Weapons
+    // Weapon
     var ref = character.weapon;
     var data = this.Game.data.weapons[ref];
     character.weapon = new Weapon(character, data);
+
+    // Materia
+    var ref = character.materia;
+    var data = this.Game.data.materias[ref];
+    character.materia = new Materia(character, data);
 
   }
 };
@@ -111,6 +116,26 @@ Characters.prototype.get_attacked = function(hits) {
 };
 
 /**
+ * Do a manual cure - based on materia
+ * @return {[type]} [description]
+ */
+Characters.prototype.manualCure = function() {
+  var hpMax = this.hpMax;
+  var characters = this.getTeam();
+
+  var Lvl = 0;
+  for (var i in characters) {
+    var character = characters[i];
+    if (character.materia.ref == 'restore') {
+      Lvl += character.materia.level;
+    }
+  }
+
+  var res = Math.ceil(hpMax * (Lvl * 2 / 100));
+  return res;
+};
+
+/**
  * Returns if it is possible to attack
  * @return {boolean}
  */
@@ -124,4 +149,20 @@ Characters.prototype.canAttack = function() {
  */
 Characters.prototype.canLimit = function() {
   return (this.Game.fight && this.limit == this.limitMax);
+};
+
+/**
+ * Returns if it is possible to cure characters hp
+ * @return {boolean}
+ */
+Characters.prototype.canCure = function() {
+  return (this.hp < this.hpMax);
+};
+
+/**
+ * Returns if it is possible to escape from enemy
+ * @return {boolean}
+ */
+Characters.prototype.canEscape = function() {
+  return this.Game.fight;
 };

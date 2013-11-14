@@ -1,45 +1,61 @@
 /**
  * Materia class
- * @param {object} Game
- * @param {string} ref
+ * @param {Character} Character
+ * @param {Object} data
  */
 
-function Materia(Game, ref) {
+function Materia(Character, data) {
 
-  this.Game = Game;
+  this.Character = Character;
 
-  // scopes INFOS
-  if (!this.data) {
-    this.data = {};
-  }
-  if (!('ref' in this.data)) {
-    this.data.ref = ref;
-  }
-  if (!('number_cost' in this.data)) {
-    this.data.ap = 0;
+  if (data) {
+    this.extends(data);
   }
 };
 
 /**
  * Extends the data properties with saved data
- * @param  {object} infos
+ * @param  {object} data
  */
 Materia.prototype.extends = function(data) {
   self = this;
   for (var i in data) {
-    self.data[i] = data[i];
+    self[i] = data[i];
   }
 };
 
 /**
- * Return description of the materia
+ * Returns materia name
+ * @return {String}
  */
-Materia.prototype.get_desc = function() {
+Materia.prototype.getName = function() {
+  var Txt;
+  switch (this.ref) {
+    case 'restore':
+      Txt = 'Restore';
+      break;
+    case 'bolt':
+      Txt = 'Bolt';
+      break;
+    case 'ice':
+      Txt = 'Ice';
+      break;
+    default:
+      Txt = "Unknown"
+      break;
+  }
+  return Txt;
+};
+
+/**
+ * Returns description of the materia
+ */
+Materia.prototype.getDesc = function() {
   var text = '';
 
-  switch (this.data.ref) {
+  switch (this.ref) {
     case 'restore':
-      text = 'You can cure your characters HP by ' + (this.data.level * 2) + '%';
+      text = 'You can cure your characters HP by ' + (this.level * 2) + '%';
       break;
 
   };
@@ -51,8 +67,8 @@ Materia.prototype.get_desc = function() {
  * Get the total ap to level up
  * @return {int}
  */
-Materia.prototype.get_ap_max = function() {
-  return eval(this.data.ap_formula.replace('x', this.data.level));
+Materia.prototype.getApMax = function() {
+  return eval(this.ap_formula.replace('x', this.level));
 };
 
 /**
@@ -60,19 +76,19 @@ Materia.prototype.get_ap_max = function() {
  * @param  {int} pixel_max
  * @return {int}
  */
-Materia.prototype.ap_progress = function(pixels_max) {
-  return (this.data.ap == 0 ? 0 : this.data.ap / this.get_ap_max() * pixels_max);
+Materia.prototype.apProgress = function(pixels_max) {
+  return (this.ap == 0 ? 0 : this.ap / this.getApMax() * pixels_max);
 };
 
 /**
  * Add ap to the materia
  * @param {int} ap
  */
-Materia.prototype.set_ap = function(ap) {
-  this.data.ap += ap;
-  while (this.data.ap >= this.get_ap_max()) {
-    this.data.ap -= this.get_ap_max();
-    this.data.level += 1;
+Materia.prototype.setAp = function(ap) {
+  this.ap += ap;
+  while (this.ap >= this.getApMax()) {
+    this.ap -= this.getApMax();
+    this.level += 1;
   }
 };
 
@@ -80,5 +96,5 @@ Materia.prototype.set_ap = function(ap) {
  * Save materia data
  */
 Materia.prototype.save = function() {
-  return _.pick(this.data, 'ap', 'level');
+  return _.pick(this, 'ap', 'level');
 };

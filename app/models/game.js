@@ -51,7 +51,7 @@ Game.prototype.load = function() {
   }
 
   this._loadJSON([
-    ['lines', 'zone', 'enemy', 'weapons', 'materias', 'items'],
+    ['lines', 'zones', 'enemies', 'weapons', 'materias', 'items'],
     ['characters']
   ]);
 };
@@ -86,6 +86,15 @@ Game.prototype._load_lines = function(finish) {
   this.$http.get('data/lines.json').success(function(data) {
     self.data.lines = data;
 
+    finish();
+  });
+};
+
+Game.prototype._load_zones = function(finish) {
+  var self = this;
+  this.$http.get('data/zones.json').success(function(data) {
+    self.data.zones = data;
+
     // Setting current zone
     self.zone = data[self.zoneLvl];
 
@@ -93,18 +102,9 @@ Game.prototype._load_lines = function(finish) {
   });
 };
 
-Game.prototype._load_zone = function(finish) {
+Game.prototype._load_enemies = function(finish) {
   var self = this;
-  this.$http.get('data/zone.json').success(function(data) {
-    self.data.zones = data;
-
-    finish();
-  });
-};
-
-Game.prototype._load_enemy = function(finish) {
-  var self = this;
-  this.$http.get('data/enemy.json?v=' + new Date().getTime()).success(function(data) {
+  this.$http.get('data/enemies.json?v=' + new Date().getTime()).success(function(data) {
     self.data.enemies = data;
 
     finish();
@@ -231,22 +231,6 @@ Game.prototype.extends = function(save) {
  */
 Game.prototype.can_next_zone = function() {
   return !this.fight && this.boss_defeated;
-};
-
-/**
- * Returns if it is possible to cure characters hp
- * @return {boolean}
- */
-Game.prototype.can_cure = function() {
-  return (this.characters_hp < this.characters_hp_max);
-};
-
-/**
- * Returns if it is possible to escape from enemy
- * @return {boolean}
- */
-Game.prototype.can_escape = function() {
-  return this.fight;
 };
 
 /**
@@ -382,6 +366,7 @@ Game.prototype.end_fight = function(victory) {
   }
 
   this.enemies.remove();
+  this.enemies.refresh();
 };
 
 /**

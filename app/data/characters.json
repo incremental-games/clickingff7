@@ -6,6 +6,7 @@
     "hp_base": 14,
     "xp_formula": "x*30",
     "weapon": "buster-sword",
+    "materia": "bolt",
     "inTeam": true
   },
   "barret": {
@@ -15,6 +16,7 @@
     "hp_base": 16,
     "xp_formula": "x*30-2",
     "weapon": "gatling-gun",
+    "materia": "restore",
     "inTeam": true
   },
   "tifa": {
@@ -24,6 +26,7 @@
     "hp_base": 13,
     "xp_formula": "x*30-4",
     "weapon": "leather-glove",
+    "materia": "ice",
     "inTeam": true
   },
   "aerith": {

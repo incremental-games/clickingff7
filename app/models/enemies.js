@@ -8,9 +8,6 @@ function Enemies(Game) {
   this.Game = Game;
 
   this.enemies = [];
-
-  this.hpMax = 0;
-  this.hits = 0;
 };
 
 /**
@@ -38,6 +35,9 @@ Enemies.prototype.random = function() {
  * Refresh all the enemy
  */
 Enemies.prototype.refresh = function() {
+  this.hpMax = 0;
+  this.hits = 0;
+
   var enemies = this.getTeam();
   for (var i in enemies) {
     // HP

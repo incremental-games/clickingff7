@@ -90,7 +90,8 @@ Character.prototype.setXp = function(xp) {
  * @return {string}
  */
 Character.prototype.getLine = function() {
-  return "";
+  var zoneLvl = this.Characters.Game.zoneLvl;
+  return this.Characters.Game.data.lines[zoneLvl][this.ref];
 };
 
 /**

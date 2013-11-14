@@ -203,11 +203,8 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game, Ut
    * Cure maually characters
    */
   $rootScope.cure = function(ev) {
-    if (Game.can_cure()) {
-      var characters_hp = Game.characters_hp_max;
-      var restore = Game.materias['restore'].data.level;
-      var res = Math.ceil(characters_hp * (restore * 2 / 100));
-      Game.add('characters_hp', res);
+    if (Game.characters.canCure()) {
+      var res = Game.characters.manualCure();
       Utils.animate(ev, '+' + res);
     }
   };

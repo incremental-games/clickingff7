@@ -3,6 +3,7 @@
     "name": "Buster Sword",
     "image": "buster-sword.png",
     "character": "cloud",
+    "type": "broadsword",
     "hits": 18,
     "zone": 1,
     "number": 1
@@ -11,6 +12,7 @@
     "name": "Gatling Gun",
     "image": "gatling-gun.png",
     "character": "barret",
+    "type": "gun-arm",
     "hits": 14,
     "zone": 1,
     "number": 1
@@ -19,6 +21,7 @@
     "name": "Assault Gun",
     "image": "assault-gun.png",
     "character": "barret",
+    "type": "gun-arm",
     "hits": 17,
     "gils": 350,
     "zone": 2
@@ -27,6 +30,7 @@
     "name": "Leather Glove",
     "image": "leather-glove.png",
     "character": "tifa",
+    "type": "knuckle",
     "hits": 13,
     "gils": 120,
     "zone": 2,
@@ -36,6 +40,7 @@
     "name": "Metal Knuckle",
     "image": "metal-knuckle.png",
     "character": "tifa",
+    "type": "knuckle",
     "hits": 18,
     "gils": 320,
     "zone": 3
@@ -44,6 +49,7 @@
     "name": "Guard Stick",
     "image": "guard-stick.jpg",
     "character": "aerith",
+    "type": "stave",
     "hits": 12,
     "gils": 140,
     "zone": 3,
@@ -53,6 +59,7 @@
     "name": "Mythril Rod",
     "image": "mythril-rod.png",
     "character": "aerith",
+    "type": "stave",
     "hits": 16,
     "gils": 370,
     "zone": 3
@@ -61,6 +68,7 @@
     "name": "Mythril Clip",
     "image": "mythril-clip.jpg",
     "character": "redxiii",
+    "type": "headdresse",
     "hits": 24,
     "gils": 800,
     "zone": 5,
