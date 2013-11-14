@@ -12,16 +12,19 @@ function Characters(Game) {
   this.hpMax = 0;
   this.hits = 0;
   this.limitMax = 0;
+  this.gils = 0;
 };
 
 /**
+ *
  * Add a character to the party
- * @param {String} ref  [description]
  * @param {Object} data [description]
+ * @return {Character}
  */
 Characters.prototype.add = function(data) {
   var character = new Character(this, data);
   this.characters.push(character);
+  return character;
 };
 
 /**
@@ -38,8 +41,11 @@ Characters.prototype.getTeam = function() {
  * Build elements linked to characters
  */
 Characters.prototype.build = function() {
-  for (var i in this.characters) {
-    var character = this.characters[i];
+  for (var i in this.Game.data.characters) {
+    var data = this.Game.data.characters[i];
+
+    // Character
+    var character = this.add(data);
 
     // Weapon
     var ref = character.weapon;
@@ -165,4 +171,19 @@ Characters.prototype.canCure = function() {
  */
 Characters.prototype.canEscape = function() {
   return this.Game.fight;
+};
+
+/**
+ * Returns data for export
+ * @return {Object}
+ */
+Characters.prototype.save = function() {
+  var res = {};
+
+  for (var i in this.characters) {
+    var character = this.characters[i];
+    res[character.ref] = character.save();
+  }
+
+  return res;
 };

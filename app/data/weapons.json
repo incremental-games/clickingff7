@@ -1,5 +1,6 @@
 {
   "buster-sword": {
+    "ref": "buster-sword",
     "name": "Buster Sword",
     "image": "buster-sword.png",
     "character": "cloud",
@@ -9,6 +10,7 @@
     "number": 1
   },
   "gatling-gun": {
+    "ref": "gatling-gun",
     "name": "Gatling Gun",
     "image": "gatling-gun.png",
     "character": "barret",
@@ -18,6 +20,7 @@
     "number": 1
   },
   "assault-gun": {
+    "ref": "assault-gun",
     "name": "Assault Gun",
     "image": "assault-gun.png",
     "character": "barret",
@@ -27,6 +30,7 @@
     "zone": 2
   },
   "leather-glove": {
+    "ref": "leather-glove",
     "name": "Leather Glove",
     "image": "leather-glove.png",
     "character": "tifa",
@@ -37,6 +41,7 @@
     "number": 1
   },
   "metal-knuckle": {
+    "ref": "metal-knuckle",
     "name": "Metal Knuckle",
     "image": "metal-knuckle.png",
     "character": "tifa",
@@ -46,6 +51,7 @@
     "zone": 3
   },
   "guard-stick": {
+    "ref": "guard-stick",
     "name": "Guard Stick",
     "image": "guard-stick.jpg",
     "character": "aerith",
@@ -56,6 +62,7 @@
     "number": 1
   },
   "mythril-rod": {
+    "ref": "mythril-rod",
     "name": "Mythril Rod",
     "image": "mythril-rod.png",
     "character": "aerith",
@@ -65,7 +72,8 @@
     "zone": 3
   },
   "mythril-clip": {
-    "name": "Mythril Clip",
+    "ref": "Mythril Clip",
+    "name": "mythril-clip",
     "image": "mythril-clip.jpg",
     "character": "redxiii",
     "type": "headdresse",

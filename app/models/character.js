@@ -21,9 +21,6 @@ function Character(Characters, data) {
   if (!('xp' in this)) {
     this.xp = 0;
   }
-  if (!('avalaible' in this)) {
-    this.available = true;
-  }
 };
 
 /**
@@ -98,9 +95,10 @@ Character.prototype.getLine = function() {
  * Save character data
  */
 Character.prototype.save = function() {
-  var json = _.pick(this, 'available', 'level', 'weapon_level', 'xp');
+  var json = _.pick(this, 'level', 'xp');
 
-  json.weapon = (typeof this.weapon == 'string') ? this.weapon : this.weapon.data.ref;
+  json.weapon = this.weapon.ref;
+  json.materia = this.materia.ref;
 
   return json;
 };

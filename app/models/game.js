@@ -46,7 +46,7 @@ Game.prototype.load = function() {
   if (!this.loaded) {
     var save = this.$cookieStore.get('game');
     if (save) {
-      this.zoneLvl = save.zone.level;
+      this.zoneLvl = save.zoneLvl;
     }
   }
 
@@ -145,9 +145,6 @@ Game.prototype._load_characters = function(finish) {
   var self = this;
   this.$http.get('data/characters.json?v=' + new Date().getTime()).success(function(data) {
     self.data.characters = data;
-    for (var i in data) {
-      self.characters.add(data[i]);
-    }
 
     finish();
   });
@@ -163,7 +160,7 @@ Game.prototype.begin = function() {
   if (!this.loaded) {
     var save = this.$cookieStore.get('game');
     if (save) {
-      //this.extends(save);
+      this.extends(save);
     }
   }
 
@@ -182,7 +179,7 @@ Game.prototype.begin = function() {
  */
 Game.prototype.extends = function(save) {
   for (var i in save.characters) {
-    this.characters[i].extends(save.characters[i]);
+    _.extend(this.data.characters[i], save.characters[i]);
   }
 
   for (var i in save.weapons) {
@@ -215,11 +212,16 @@ Game.prototype.extends = function(save) {
     }
   }
 
-  this.zone = save.zone;
-  this.total_gils = save.total_gils;
-  this.characters_hp = save.characters_hp;
-  this.characters_limit = save.characters_limit;
-  this.boss_defeated = save.boss_defeated;
+  for (var i in save.zone) {
+    if (i in this.zone) {
+      this.zone[i].extends(save.zone[i]);
+    } else {
+      this.zone[i] = new Zone(this, i);
+      this.zone[i].extends(this.data.itzoneems[i].data);
+      this.zone[i].extends(save.zone[i]);
+    }
+  }
+
   this.time = new Date(save.time).toLocaleString();
 
   this.last_export = JSON.stringify(save);
@@ -407,10 +409,7 @@ Game.prototype.characters_limit_progress = function(pixels_max) {
  * @return {object}
  */
 Game.prototype.export = function() {
-  var characters = {};
-  for (var i in this.characters) {
-    characters[i] = this.characters[i].save();
-  }
+  var characters = this.characters.save();
 
   var weapons = {};
   for (var i in this.weapons) {
@@ -427,17 +426,22 @@ Game.prototype.export = function() {
     items[i] = this.items[i].save();
   }
 
+  var zones = {};
+  for (var i in this.zones) {
+    zones[i] = this.zones[i].save();
+  }
+
   var save = {};
 
   save.characters = characters;
   save.weapons = weapons;
   save.materias = materias;
   save.items = items;
-  save.zone = this.zone,
-  save.total_gils = this.total_gils;
-  save.characters_hp = this.characters_hp;
-  save.characters_limit = this.characters_limit;
+  save.zones = zones;
+  save.zoneLvl = this.zoneLvl;
+
   save.boss_defeated = this.boss_defeated;
+
   save.time = (new Date()).toLocaleString();
 
   return save;
