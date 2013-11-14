@@ -71,7 +71,7 @@ Characters.prototype.refresh = function() {
     this.hits += characters[i].getHits();
   }
 
-  this.limitMax = this.hpMax / 2;
+  this.limitMax = this.hpMax * 2;
 
   if (!_.has(this, 'hp')) {
     this.hp = this.hpMax;
@@ -88,6 +88,15 @@ Characters.prototype.refresh = function() {
  */
 Characters.prototype.hpProgress = function(pixels_max) {
   return this.hp / this.hpMax * pixels_max;
+};
+
+/**
+ * Returns in pixels characters hp bar width
+ * @param  {int} pixel_max
+ * @return {int}
+ */
+Characters.prototype.limitProgress = function(pixels_max) {
+  return this.limit / this.limitMax * pixels_max;
 };
 
 /**
@@ -114,7 +123,14 @@ Characters.prototype.run = function() {
  */
 Characters.prototype.get_attacked = function(hits) {
   this.hp -= hits;
+
+  this.limit += hits;
+  if (this.limit > this.limitMax) {
+    this.limit = this.limitMax;
+  }
+
   if (this.hp <= 0) {
+    this.limit = 0;
     this.hp = 0;
 
     this.Game.end_fight(false);
