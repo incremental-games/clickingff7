@@ -1,57 +1,85 @@
-<div class="part w300">
-  <div>{{game.zone.name}} (<em>#{{game.zone.level}}</em>)</div>
-  <div><span class="label">gils</span> <strong>{{game.total_gils|floor}}</strong></span></div>
-</div><!--
-
---><div class="part w300">
-  <div ng-if="game.zone.img"><img ng-src="img/zones/{{game.zone.img}}" width="100" /></div>
-  <div ng-click="next_zone()" class="button" ng-class="{disabled: !game.can_next_zone()}">Go next zone</div>
-</div><!--
-
---><div class="part w300"></div>
-
-<div class="space"></div>
-
-<div class="part w100">
-  <div ng-click="explore($event)" class="button" ng-class="{disabled: game.fight}">EXPLORE</div>
-  <div ng-click="attack($event)" class="button" ng-class="{disabled: !game.characters.canAttack(), limit: game.characters.canLimit()}">
-    <span ng-if="!game.characters.canLimit()">ATTACK</span>
-    <span ng-if="game.characters.canLimit()">LIMIT</span>
+<div class="zone part w400 aleft">
+  <div class="main">
+    <div class="part avatar w100">
+      <img ng-src="img/zones/{{game.zone.img}}" width="100" />
+    </div><!--
+    --><div class="part w300">
+      <div>{{game.zone.name}} <strong>(#{{game.zone.level}})</strong></div>
+      <div class="line">"{{game.zone.desc}}"</div>
+    </div>
+  </div>
+  <div class="infos">
+    <div class="powerUp">
+      <img ng-src="img/icons/gils.png" class="icon gils" />
+      {{game.total_gils|floor}} Gils
+    </div>
   </div>
 </div><!--
 
---><div class="part enemy_hp w300">
-  <div class="enemy_hp_progress" style="width:{{game.enemies.hpProgress(300)}}px;"></div>
-  {{game.enemies.hp|round:2}} / {{game.enemies.hpMax}}
-</div><!--
-
---><div class="part characters_hp w300">
-  <div class="characters_hp_progress" style="width:{{game.characters.hpProgress(300)}}px;"></div>
-  {{game.characters.hp|round:2}} / {{game.characters.hpMax}}
-</div><!--
-
---><div class="part w100">
-  <div ng-click="cure($event)" class="button" ng-class="{disabled: !game.characters.canCure()}">RESTORE</div>
-  <div ng-click="escape($event)" class="button" ng-class="{disabled: !game.characters.canEscape()}">ESCAPE</div>
+--><div class="items part w400">
+  <div class="main">
+    
+  </div>
 </div>
-
-<div></div>
-
-<div class="part w100"></div><!--
-
---><div class="part w300"></div><!--
-
---><div class="part characters_limit w300">
-  <div class="characters_limit_progress" style="width:{{game.characters_limit_progress(300)}}px;"></div>
-</div><!--
-
---><div class="part w100"></div>
 
 <div class="space"></div>
 
-<div class="part title w400">Enemy</div>
-<div class="part title w50">VS</div>
-<div class="part title w400">Characters</div>
+<div class="part title w400">Enemy</div><!--
+--><div class="part title w50">VS</div><!--
+--><div class="part title w400">Characters</div>
+
+<div class="bars">
+
+  <div class="part w400 aright">
+
+    <div class="part w100">
+      <div ng-click="explore($event)" class="button" ng-class="{disabled: game.fight}">EXPLORE</div>
+      <div ng-click="escape($event)" class="button" ng-class="{disabled: !game.characters.canEscape()}">ESCAPE</div>
+    </div>
+
+    <div>
+      <span class="label2">{{game.enemies.hp|round:2}} / {{game.enemies.hpMax}} HP</span>
+      <div class="part progress enemy_hp w300">
+        <div class="enemy_hp_progress" style="width:{{game.enemies.hpProgress(300)}}px;"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="part w400 aleft">
+
+    <div class="part w100">
+      <div ng-click="attack($event)" class="button" ng-class="{disabled: !game.characters.canAttack(), limit: game.characters.canLimit()}">
+        <span ng-if="!game.characters.canLimit()">ATTACK</span>
+        <span ng-if="game.characters.canLimit()">LIMIT</span>
+      </div>
+      <div ng-click="cure($event)" class="button" ng-class="{disabled: !game.characters.canCure()}">RESTORE</div>
+    </div>
+
+    <div>
+      <div class="part progress characters_hp w300">
+        <div class="characters_hp_progress" style="width:{{game.characters.hpProgress(300)}}px;"></div>
+      </div>
+      <span class="label2">{{game.characters.hp|round:2}} / {{game.characters.hpMax}} HP</span>
+    </div>
+
+    <div>
+      <div class="part progress characters_mp w300">
+        <div class="characters_mp_progress" style="width:{{game.characters.mpProgress(300)}}px;"></div>
+      </div>
+      <span class="label2">MP</span>
+    </div>
+
+    <div>
+      <div class="part progress characters_limit w300">
+        <div class="characters_limit_progress" style="width:{{game.characters.limitProgress(300)}}px;"></div>
+      </div>
+      <span class="label2">LIMIT</span>
+    </div>
+
+  </div>
+
+</div>
 
 <div class="space"></div>
 

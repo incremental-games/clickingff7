@@ -93,25 +93,27 @@ footer {
     text-decoration: underline;
   }
 
-.explore, .fight, .zone {
-  text-align: center;
-  border: 1px solid #ccc;
-  margin: 10px 3px;
-}
-
 /** PARTS **/
 
-.part {display: inline-block; vertical-align: top;}
+.part {display: inline-block; vertical-align: top; box-sizing: border-box;}
 .w50 {width: 50px;}
 .w100 {width: 100px;}
 .w300 {width: 300px;}
 .w350 {width: 350px;}
 .w400 {width: 400px;}
+.w600 {width: 600px;}
+.aleft {text-align: left;}
+.aright {text-align: right;}
 
 .title {
-  background-color: #eee;
-  color: #999;
+  background-color: #555;
+  color: #eee;
   text-transform: uppercase;
+}
+
+.bars {
+  background-color: #fff;
+  padding: 5px 0;
 }
 
 .div400 {
@@ -139,6 +141,7 @@ footer {
 
 img.icon {margin-bottom: -1px;}
 img.materia {width: 14px; margin-bottom: -3px;}
+img.gils {width: 14px; margin-bottom: -3px;}
 
 .disabled {
   border-top: 1px solid #ccc;
@@ -148,34 +151,47 @@ img.materia {width: 14px; margin-bottom: -3px;}
   opacity: 0.1;
 }
 
-.enemy_hp {border-top: 1px solid #ecc; position: relative;}
+.progress {
+  position: relative; 
+  margin-top: 2px;
+  text-align: center;
+  font-size: 11px;
+  color: #fff;
+  height: 18px;
+  margin-top: 5px;
+  border-top: 1px solid #444;
+}
+
 .enemy_hp_progress {
-  background-color: #900;
+  background-color: #D49B9B;
   position: absolute;
   height: 18px;
   top: 0;
   right: 0;
-  opacity: 0.3;
 }
 
-.characters_hp {border-top: 1px solid #cce; position: relative;}
 .characters_hp_progress {
-  background-color: #009;
+  background-color: #BEECBE;
   position: absolute;
   height: 18px;
   top: 0;
   left: 0;
-  opacity: 0.3;
 }
 
-.characters_limit {border-top: 1px solid #FDAD87; position: relative;}
+.characters_mp_progress {
+  background-color: #666;
+  position: absolute;
+  height: 18px;
+  top: 0;
+  left: 0;
+}
+
 .characters_limit_progress {
-  background-color: #FDAD87;
+  background-color: #F0BE98;
   position: absolute;
   height: 9px;
   top: 0;
   left: 0;
-  opacity: 0.3;
 }
 
 .xp_progress, .ap_progress {
@@ -193,6 +209,11 @@ img.materia {width: 14px; margin-bottom: -3px;}
   font-size: 10px;
   vertical-align: top;
   margin-left: 10px;
+}
+
+.label2 {
+  color: #999;
+  font-size: 11px;
 }
 
 .boss {
