@@ -4,28 +4,25 @@
  * @param {string} ref
  */
 
-function Character(Game, ref) {
+function Character(Characters, data) {
 
-  this.Game = Game;
+  this.Characters = Characters;
 
   // scopes INFOS
-  if (!this.data) {
-    this.data = {};
+  if (data) {
+    this.extends(data);
   }
-  if (!('ref' in this.data)) {
-    this.data.ref = ref;
+  if (!('level' in this)) {
+    this.level = 1;
   }
-  if (!('level' in this.data)) {
-    this.data.level = 1;
+  if (!('weapon_level' in this)) {
+    this.weapon_level = 1;
   }
-  if (!('weapon_level' in this.data)) {
-    this.data.weapon_level = 1;
+  if (!('xp' in this)) {
+    this.xp = 0;
   }
-  if (!('xp' in this.data)) {
-    this.data.xp = 0;
-  }
-  if (!('avalaible' in this.data)) {
-    this.data.available = true;
+  if (!('avalaible' in this)) {
+    this.available = true;
   }
 };
 
@@ -35,44 +32,17 @@ function Character(Game, ref) {
  */
 Character.prototype.extends = function(data) {
   for (var i in data) {
-    this.data[i] = data[i];
+    this[i] = data[i];
   }
 };
 
 /**
- * Character auto-attack process
+ * returns character total hits
+ * based on level and weapon level
+ * @return {int}
  */
-Character.prototype.run = function() {
-  var self = this;
-  var $timeout = this.Game.$timeout;
-
-  this.timer = $timeout(function() {
-    // Stop attacking if fight's over
-    if (!self.Game.fight) return;
-
-    var hits = self.get_hits();
-    self.Game.attack_enemy(hits);
-
-    console.log("+ " + self.data.name + " attacking");
-
-    self.run();
-  }, 1000);
-};
-
-/**
- * Character waiting process
- */
-Character.prototype.wait = function() {
-  var $timeout = this.Game.$timeout;
-  $timeout.cancel(this.timer);
-};
-
-/**
- * Return the current weapon of the character
- * @return {Weapon}
- */
-Character.prototype.get_weapon = function() {
-  return this.Game.data.weapons[this.data.weapon];
+Character.prototype.getHpMax = function() {
+  return this.hp_base * this.level;
 };
 
 /**
@@ -80,25 +50,16 @@ Character.prototype.get_weapon = function() {
  * based on level and weapon level
  * @return {int}
  */
-Character.prototype.get_hp = function() {
-  return this.data.hp_base * this.data.level;
-};
-
-/**
- * returns character total hits
- * based on level and weapon level
- * @return {int}
- */
-Character.prototype.get_hits = function() {
-  return this.data.level * this.get_weapon().data.hits * 0.1;
+Character.prototype.getHits = function() {
+  return this.level * this.weapon.hits * 0.1;
 };
 
 /**
  * Get the total xp to level up
  * @return {int}
  */
-Character.prototype.get_xp_max = function() {
-  return eval(this.data.xp_formula.replace('x', this.data.level));
+Character.prototype.getXpMax = function() {
+  return eval(this.xp_formula.replace('x', this.level));
 };
 
 /**
@@ -106,23 +67,21 @@ Character.prototype.get_xp_max = function() {
  * @param  {int} pixel_max
  * @return {int}
  */
-Character.prototype.xp_progress = function(pixels_max) {
-  return (this.data.xp == 0 ? 0 : this.data.xp / this.get_xp_max() * pixels_max);
+Character.prototype.xpProgress = function(pixels_max) {
+  return (this.xp == 0 ? 0 : this.xp / this.getXpMax() * pixels_max);
 };
 
 /**
  * Add xp to the character
  * @param {int} xp
  */
-Character.prototype.set_xp = function(xp) {
-  this.data.xp += xp;
-  while (this.data.xp >= this.get_xp_max()) {
-    this.data.xp -= this.get_xp_max();
-    this.data.level += 1;
+Character.prototype.setXp = function(xp) {
+  this.xp += xp;
+  while (this.xp >= this.getXpMax()) {
+    this.xp -= this.getXpMax();
+    this.level += 1;
 
-    this.Game.refresh_characters_hp();
-    this.Game.refresh_characters_limit();
-    this.Game.refresh_level_max();
+    this.Characters.refresh();
   }
 };
 
@@ -130,17 +89,17 @@ Character.prototype.set_xp = function(xp) {
  * Returns current line
  * @return {string}
  */
-Character.prototype.get_line = function() {
-  return this.Game.lines[this.data.ref];
+Character.prototype.getLine = function() {
+  return "";
 };
 
 /**
  * Save character data
  */
 Character.prototype.save = function() {
-  var json = _.pick(this.data, 'available', 'level', 'weapon_level', 'xp');
+  var json = _.pick(this, 'available', 'level', 'weapon_level', 'xp');
 
-  json.weapon = (typeof this.data.weapon == 'string') ? this.data.weapon : this.data.weapon.data.ref;
+  json.weapon = (typeof this.weapon == 'string') ? this.weapon : this.weapon.data.ref;
 
   return json;
 };

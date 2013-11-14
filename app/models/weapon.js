@@ -4,22 +4,12 @@
  * @param {string} ref
  */
 
-function Weapon(Game, ref) {
+function Weapon(Character, data) {
 
-  this.Game = Game;
+  this.Character = Character;
 
-  // scopes INFOS
-  if (!this.data) {
-    this.data = {};
-  }
-  if (!('ref' in this.data)) {
-    this.data.ref = ref;
-  }
-  if (!('type' in this.data)) {
-    this.data.type = 'weapons';
-  }
-  if (!('number' in this.data)) {
-    this.data.number = 1;
+  if (data) {
+    this.extends(data);
   }
 };
 
@@ -30,7 +20,7 @@ function Weapon(Game, ref) {
 Weapon.prototype.extends = function(data) {
   self = this;
   for (var i in data) {
-    self.data[i] = data[i];
+    self[i] = data[i];
   }
 };
 
@@ -38,7 +28,7 @@ Weapon.prototype.extends = function(data) {
  * Returns the price of the weapon
  * @return {int}
  */
-Weapon.prototype.get_gils = function() {
+Weapon.prototype.getPrice = function() {
   return this.data.gils;
 };
 

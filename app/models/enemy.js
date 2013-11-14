@@ -1,37 +1,15 @@
 /**
  * Enemy class
- * @param {object} Game
- * @param {object} infos
+ * @param {Enemies} Enemies
+ * @param {object} data
  */
 
-function Enemy(Game, infos) {
+function Enemy(Enemies, data) {
 
-  this.Game = Game;
+  this.Enemies = Enemies;
 
-  // scopes INFOS
-  if (!this.data) {
-    this.data = {};
-  }
-  if (!('number_cost' in this.data)) {
-    this.data.number_cost = 10;
-  }
-
-  // INFOS from COOKIE
-  if (infos) {
-    this.extends(infos);
-  }
-
-};
-
-/**
- * Init the character if does not exist in COOKIE
- */
-Enemy.prototype.init = function() {
-  if (!this.data.number) {
-    this.data.number = 0;
-  }
-  if (!this.data.current_hp) {
-    this.data.current_hp = this.data.hp;
+  if (data) {
+    this.extends(data);
   }
 };
 
@@ -42,94 +20,25 @@ Enemy.prototype.init = function() {
 Enemy.prototype.extends = function(data) {
   self = this;
   for (var i in data) {
-    self.data[i] = data[i];
+    self[i] = data[i];
   }
-};
-
-/**
- * Returns true if difficulty is acceptable
- * @return {boolean}
- */
-Enemy.prototype.can_fight = function() {
-  var res = (this.Game.characters_level_max + 1 >= this.data.level);
-
-  if (this.data.boss && this.Game.boss_defeated) {
-    res = false;
-  }
-
-  return res;
-};
-
-/**
- * Returns color enemy difficulty
- * @return {string}
- */
-Enemy.prototype.get_difficulty = function() {
-  var res;
-  var characters_level_max = this.Game.characters_level_max;
-  var level = Math.ceil(this.data.level);
-  if (characters_level_max > level) {
-    res = "grey";
-  }
-  if (characters_level_max == level) {
-    res = "green";
-  }
-  if (characters_level_max < level) {
-    res = "red";
-  }
-  return res;
-};
-
-/**
- * Enemy auto-attack process
- */
-Enemy.prototype.run = function() {
-  var self = this;
-  var $timeout = this.Game.$timeout;
-
-  if (!this.timer) {
-    this.timer = [];
-  }
-
-  this.timer[this.data.number] = $timeout(function() {
-    // Stop attacking if fight's over
-    if (!self.Game.fight) return;
-
-    var hits = self.get_pwr();
-    self.Game.attack_characters(hits);
-
-    console.log("- " + self.data.name + " attacking with" + hits);
-
-    self.run();
-  }, 1000);
-};
-
-/**
- * Enemy waiting process
- */
-Enemy.prototype.wait = function() {
-  var $timeout = this.Game.$timeout;
-  for (var i in this.timer) {
-    $timeout.cancel(this.timer[i]);
-  }
-  this.timer = [];
 };
 
 /**
  * Returns enemy HP
  * @return {int}
  */
-Enemy.prototype.get_hp = function() {
-  var level = this.data.level;
-  var zone_level = Math.ceil(level / 4);
+Enemy.prototype.getHpMax = function() {
+  var level = this.level;
+  var zoneLvl = Math.ceil(level / 4);
   var hits = [12.8, 38.4, 62.4, 84.8, 154];
-  var characters_hits = hits[zone_level - 1];
+  var characters_hits = hits[zoneLvl - 1];
   var res;
 
-  if (this.data.boss) {
+  if (this.boss) {
     res = characters_hits * 30;
   } else {
-    res = Math.ceil((level / (zone_level * 4)) * characters_hits * 28);
+    res = Math.ceil((level / (zoneLvl * 4)) * characters_hits * 28);
   }
 
   return res;
@@ -139,17 +48,17 @@ Enemy.prototype.get_hp = function() {
  * Returns enemy pwr
  * @return {int}
  */
-Enemy.prototype.get_pwr = function() {
-  var level = this.data.level;
-  var zone_level = Math.ceil(level / 4);
+Enemy.prototype.getHits = function() {
+  var level = this.level;
+  var zoneLvl = Math.ceil(level / 4);
   var hp = [120, 344, 468, 688, 1200];
-  var characters_hp = hp[zone_level - 1];
+  var characters_hp = hp[zoneLvl - 1];
   var res;
 
-  if (this.data.boss) {
+  if (this.boss) {
     res = Math.ceil(characters_hp / 6);
   } else {
-    res = Math.ceil((level / (zone_level * 4)) * characters_hp / 7);
+    res = Math.ceil((level / (zoneLvl * 4)) * characters_hp / 7);
   }
 
   return res;
@@ -159,9 +68,9 @@ Enemy.prototype.get_pwr = function() {
  * returns enemy XP reward
  * @return {int}
  */
-Enemy.prototype.get_xp = function() {
-  var res = this.data.level * 10;
-  if (this.data.boss) {
+Enemy.prototype.xpReward = function() {
+  var res = this.level * 10;
+  if (this.boss) {
     res *= 2;
   }
   return res;
@@ -171,10 +80,10 @@ Enemy.prototype.get_xp = function() {
  * returns enemy AP reward
  * @return {int}
  */
-Enemy.prototype.get_ap = function() {
-  var zone_level = this.Game.zone.level;
-  var res = Math.ceil(this.data.level + zone_level);
-  if (this.data.boss) {
+Enemy.prototype.apReward = function() {
+  var zoneLvl = this.Enemies.Game.zoneLvl;
+  var res = Math.ceil(this.level + zoneLvl);
+  if (this.boss) {
     res *= 2;
   }
   return res;
@@ -184,40 +93,18 @@ Enemy.prototype.get_ap = function() {
  * returns enemy gils reward
  * @return {int}
  */
-Enemy.prototype.get_gils = function() {
-  var zone_level = this.Game.zone.level;
-  var res = Math.ceil(this.data.level * 10 + zone_level);
-  if (this.data.boss) {
+Enemy.prototype.gilsReward = function() {
+  var zoneLvl = this.Enemies.Game.zoneLvl;
+  var res = Math.ceil(this.level * 10 + zoneLvl);
+  if (this.boss) {
     res *= 2;
   }
   return res;
 };
 
 /**
- * Current enemy is under attack
- * @param  {int} hits
- */
-Enemy.prototype.get_attacked = function(hits) {
-  this.data.current_hp -= hits;
-  if (this.data.current_hp <= 0) {
-    this.data.number -= 1;
-    this.data.current_hp = this.data.hp;
-    this.Game.attribute_xp(this.data.xp);
-    this.Game.attribute_gils(this.data.gils);
-  }
-};
-
-/**
- * Returns true if character can upgrade his weapon
- * @return {boolean}
- */
-Enemy.prototype.can_be_escaped = function() {
-  return (this.data.number > 0);
-};
-
-/**
  * Save enemy data
  */
 Enemy.prototype.save = function() {
-  return _.omit(this.data, 'image', 'name');
+  return _.omit(this, 'image', 'name');
 };

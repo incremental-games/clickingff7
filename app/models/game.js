@@ -26,12 +26,10 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
   this.total_gils = 0;
   this.boss_defeated = false;
 
-  this.zone = {
-    "level": 1
-  };
+  this.zoneLvl = 1;
 
-  this.enemy = {};
-  this.characters = {};
+  this.enemies = new Enemies(this);
+  this.characters = new Characters(this);
   this.weapons = {};
   this.materias = {};
   this.items = {};
@@ -48,7 +46,7 @@ Game.prototype.load = function() {
   if (!this.loaded) {
     var save = this.$cookieStore.get('game');
     if (save) {
-      this.zone.level = save.zone.level;
+      this.zoneLvl = save.zone.level;
     }
   }
 
@@ -86,7 +84,10 @@ Game.prototype._loadJSON = function(jsons) {
 Game.prototype._load_lines = function(finish) {
   var self = this;
   this.$http.get('data/lines.json').success(function(data) {
-    self.lines = data[self.zone.level];
+    self.data.lines = data;
+
+    // Setting current zone
+    self.zone = data[self.zoneLvl];
 
     finish();
   });
@@ -95,7 +96,7 @@ Game.prototype._load_lines = function(finish) {
 Game.prototype._load_zone = function(finish) {
   var self = this;
   this.$http.get('data/zone.json').success(function(data) {
-    self.zone = data[self.zone.level];
+    self.data.zones = data;
 
     finish();
   });
@@ -104,13 +105,7 @@ Game.prototype._load_zone = function(finish) {
 Game.prototype._load_enemy = function(finish) {
   var self = this;
   this.$http.get('data/enemy.json?v=' + new Date().getTime()).success(function(data) {
-    var enemy, _data = {};
-    for (var i in data[self.zone.level]) {
-      enemy = new Enemy(self, data[self.zone.level][i]);
-      enemy.init();
-      _data[i] = enemy;
-    }
-    self.enemy = _data;
+    self.data.enemies = data;
 
     finish();
   });
@@ -120,19 +115,7 @@ Game.prototype._load_weapons = function(finish) {
   var self = this,
     weapon;
   this.$http.get('data/weapons.json?v=' + new Date().getTime()).success(function(data) {
-    self.data.weapons = {};
-    for (var i in data) {
-      var in_zone = (self.zone.level >= data[i].zone);
-      var in_current = (i in self.weapons);
-      if (in_zone) {
-        weapon = new Weapon(self, i);
-        weapon.extends(data[i]);
-        if (!in_current && data[i].number > 0) {
-          self.weapons[i] = weapon;
-        }
-        self.data.weapons[i] = weapon;
-      }
-    }
+    self.data.weapons = data;
 
     finish();
   });
@@ -142,19 +125,7 @@ Game.prototype._load_materias = function(finish) {
   var self = this,
     materia;
   this.$http.get('data/materias.json?v=' + new Date().getTime()).success(function(data) {
-    self.data.materias = {};
-    for (var i in data) {
-      var in_zone = (self.zone.level >= data[i].zone);
-      var in_current = (i in self.materias);
-      if (in_zone) {
-        materia = new Materia(self, i);
-        materia.extends(data[i]);
-        if (!in_current && data[i].level > 0) {
-          self.materias[i] = materia;
-        }
-        self.data.materias[i] = materia;
-      }
-    }
+    self.data.materias = data;
 
     finish();
   });
@@ -164,19 +135,7 @@ Game.prototype._load_items = function(finish) {
   var self = this,
     item;
   this.$http.get('data/items.json?v=' + new Date().getTime()).success(function(data) {
-    self.data.items = {};
-    for (var i in data) {
-      var in_zone = (self.zone.level >= data[i].zone);
-      var in_current = (i in self.items);
-      if (in_zone) {
-        item = new Item(self, i);
-        item.extends(data[i]);
-        if (!in_current && data[i].number > 0) {
-          self.items[i] = item;
-        }
-        self.data.items[i] = item;
-      }
-    }
+    self.data.items = data;
 
     finish();
   });
@@ -185,17 +144,10 @@ Game.prototype._load_items = function(finish) {
 Game.prototype._load_characters = function(finish) {
   var self = this;
   this.$http.get('data/characters.json?v=' + new Date().getTime()).success(function(data) {
-    self.data.characters = {};
+    self.data.characters = data;
     for (var i in data) {
-      var in_zone = ($.inArray(self.zone.level, data[i].zones) != -1);
-      var in_current = (i in self.characters);
-      if (!in_current) {
-        self.characters[i] = new Character(self, i);
-        self.characters[i].extends(data[i]);
-      }
-      self.characters[i].data.available = in_zone;
+      self.characters.add(data[i]);
     }
-    self.data.characters = self.characters;
 
     finish();
   });
@@ -211,15 +163,15 @@ Game.prototype.begin = function() {
   if (!this.loaded) {
     var save = this.$cookieStore.get('game');
     if (save) {
-      this.extends(save);
+      //this.extends(save);
     }
   }
 
   this.loaded = true;
 
-  this.refresh_characters_hp();
-  this.refresh_characters_limit();
-  this.refresh_level_max();
+  this.characters.build();
+  this.characters.refresh();
+  this.enemies.refresh();
 
   this.refresh();
 };
@@ -279,22 +231,6 @@ Game.prototype.extends = function(save) {
  */
 Game.prototype.can_next_zone = function() {
   return !this.fight && this.boss_defeated;
-};
-
-/**
- * Returns if it is possible to execute a limit (powerful attack)
- * @return {boolean}
- */
-Game.prototype.can_limit = function() {
-  return (this.fight && this.characters_limit == this.characters_limit_max);
-};
-
-/**
- * Returns if it is possible to attack enemy hp
- * @return {boolean}
- */
-Game.prototype.can_attack = function() {
-  return this.fight;
 };
 
 /**
@@ -404,9 +340,8 @@ Game.prototype.start_fight = function() {
   if (!this.fight) {
     this.fight = true;
 
-    this.get_characters(function(i, character) {
-      character.run();
-    });
+    this.characters.run();
+    this.enemies.run();
   }
 };
 
@@ -417,38 +352,36 @@ Game.prototype.start_fight = function() {
 Game.prototype.end_fight = function(victory) {
   this.fight = false;
 
-  for (var i in this.enemy) {
-    var enemy = this.enemy[i];
-    var number = enemy.data.number;
-    if (number > 0) {
-      enemy.data.number = 0;
+  var enemies = this.enemies.getTeam();
+  var characters = this.characters.getTeam();
 
-      // Rewards if victory
-      if (victory) {
-        this.add("total_gils", enemy.get_gils() * number);
+  for (var i in enemies) {
+    var enemy = enemies[i];
 
-        if (enemy.data.boss) {
-          this.boss_defeated = true;
-        }
+    // Rewards if victory
+    if (victory) {
+      this.total_gils += enemy.gilsReward();
 
-        // XP for characters
-
-        this.get_characters(function(j, character) {
-          var xp = enemy.get_xp() * number;
-          character.set_xp(xp);
-        });
-
-        // AP for materias
-        for (var j in this.materias) {
-          var ap = enemy.get_ap() * number;
-          this.materias[j].set_ap(ap);
-        }
+      if (enemy.boss) {
+        this.boss_defeated = true;
       }
+
+      // XP for characters
+      for (var j in characters) {
+        var character = characters[j];
+        var xp = enemy.xpReward();
+        character.setXp(xp);
+      }
+
+      // AP for materias
+      /*for (var j in this.materias) {
+        var ap = enemy.apReward();
+        this.materias[j].set_ap(ap);
+      }*/
     }
   }
 
-  this.set('enemy_hp_max', 0);
-  this.set('enemy_hp', 0);
+  this.enemies.remove();
 };
 
 /**
@@ -457,31 +390,6 @@ Game.prototype.end_fight = function(victory) {
  */
 Game.prototype.escape = function() {
   this.end_fight(false);
-};
-
-/**
- * Inflicts damages to total enemy hp
- * @param  {int} hits
- */
-Game.prototype.attack_enemy = function(hits) {
-  // enemy hp IS 0
-  if (this.sub('enemy_hp', hits) == 0) {
-    this.end_fight(true);
-  }
-};
-
-/**
- * Inflicts damages to total enemy hp
- * @param  {int} hits
- */
-Game.prototype.attack_characters = function(hits) {
-  this.add('characters_limit', hits);
-
-  // characters hp IS 0
-  if (this.sub('characters_hp', hits) == 0) {
-    this.end_fight(false);
-    this.set('characters_limit', 0);
-  }
 };
 
 /**
@@ -498,47 +406,6 @@ Game.prototype.next_zone = function() {
  */
 Game.prototype.refresh = function() {
   this.$rootScope.game = this;
-};
-
-/**
- * Returns in pixels enemy bar width
- * @param  {int} pixel_max
- * @return {int}
- */
-Game.prototype.enemy_hp_progress = function(pixels_max) {
-  return (this.enemy_hp_max == 0 ? 0 : this.enemy_hp / this.enemy_hp_max * pixels_max);
-};
-
-/**
- * Iterate through available characters
- */
-Game.prototype.get_characters = function(callback) {
-  for (var i in this.characters) {
-    if (this.characters[i].data.available) {
-      callback(i, this.characters[i]);
-    }
-  }
-}
-
-/**
- * Returns total characters hits
- * @return {int}
- */
-Game.prototype.characters_hits = function(pixels_max) {
-  var hits = 0;
-  this.get_characters(function(i, character) {
-    hits += character.get_hits();
-  });
-  return hits;
-}
-
-/**
- * Returns in pixels characters hp bar width
- * @param  {int} pixel_max
- * @return {int}
- */
-Game.prototype.characters_hp_progress = function(pixels_max) {
-  return this.characters_hp / this.characters_hp_max * pixels_max;
 };
 
 /**
@@ -614,59 +481,4 @@ Game.prototype.save = function() {
  */
 Game.prototype.reset = function() {
   this.$cookieStore.remove('game');
-};
-
-/**
- * Set a game value
- * @param {string} key
- * @param {int} value
- */
-Game.prototype.set = function(key, value) {
-  var self = this;
-
-  self[key] = value;
-
-  return value;
-};
-
-/**
- * Add a game value
- * @param  {[string]} key
- * @param  {[int]} value
- * @return {[int]}
- */
-Game.prototype.add = function(key, value) {
-  var self = this;
-  var new_value = self[key] + value;
-
-  if (key == 'enemy_hp') {
-    new_value = Math.min(new_value, this.enemy_hp_max);
-  }
-
-  if (key == 'characters_hp') {
-    new_value = Math.min(new_value, this.characters_hp_max);
-  }
-
-  if (key == 'characters_limit') {
-    new_value = Math.min(new_value, this.characters_limit_max);
-  }
-
-  self[key] = new_value;
-
-  return new_value;
-};
-
-/**
- * Sub a game value
- * @param  {[string]} key
- * @param  {[int]} value
- * @return {[int]}
- */
-Game.prototype.sub = function(key, value) {
-  var self = this;
-  var new_value = Math.max(self[key] - value, 0);
-
-  self[key] = new_value;
-
-  return new_value;
 };

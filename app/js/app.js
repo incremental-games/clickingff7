@@ -160,20 +160,32 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game, Ut
   // Scope actions
 
   /**
+   * Explore for fight
+   */
+  $rootScope.explore = function(ev) {
+    if (!Game.fight) {
+      Game.enemies.random();
+      Game.enemies.refresh();
+      Game.start_fight();
+      Utils.animate(ev, 'OK!');
+    }
+  };
+
+  /**
    * Attack manually enemy
    */
   $rootScope.attack = function(ev) {
-    if (Game.can_attack()) {
-      var characters_hits = Game.characters_hits();
+    if (Game.characters.canAttack()) {
+      var hits = Game.characters.hits;
       var d = Math.pow(10, 2);
-      characters_hits = Math.round(characters_hits * d) / d;
+      hits = Math.round(hits * d) / d;
       // checks limit
-      if (Game.can_limit()) {
-        characters_hits *= 2;
-        Game.set('characters_limit', 0);
+      if (Game.characters.canLimit()) {
+        hits *= 2;
+        Game.characters.limit = 0;
       }
-      Game.attack_enemy(characters_hits);
-      Utils.animate(ev, '+' + characters_hits);
+      Game.enemies.get_attacked(hits);
+      Utils.animate(ev, '+' + hits);
     }
   };
 
@@ -197,24 +209,6 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game, Ut
       var res = Math.ceil(characters_hp * (restore * 2 / 100));
       Game.add('characters_hp', res);
       Utils.animate(ev, '+' + res);
-    }
-  };
-
-  /**
-   * Use ??? to search enemy
-   * @param  {object} id Enemy in the zone
-   */
-  $rootScope.fight = function(ev, enemy) {
-    enemy.data.number += 1;
-    Utils.animate(ev, '+1');
-
-    Game.add('enemy_hp_max', enemy.get_hp());
-    Game.add('enemy_hp', enemy.get_hp());
-
-    enemy.run();
-
-    if (Game.enemy_hp > 0) {
-      Game.start_fight();
     }
   };
 
