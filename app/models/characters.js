@@ -9,10 +9,6 @@ function Characters(Game) {
 
   this.characters = [];
 
-  this.hpMax = 0;
-  this.mpMax = 0;
-  this.limitMax = 0;
-  this.hits = 0;
   this.gils = 0;
 };
 
@@ -65,6 +61,11 @@ Characters.prototype.build = function() {
  * Refresh all the party
  */
 Characters.prototype.refresh = function() {
+  this.hpMax = 0;
+  this.mpMax = 0;
+  this.limitMax = 0;
+  this.hits = 0;
+
   var characters = this.getTeam();
   for (var i in characters) {
     // HP

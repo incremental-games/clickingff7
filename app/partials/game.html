@@ -128,6 +128,7 @@
           <div>{{character.name}} <strong>(LVL{{character.level}})</strong></div>
           <div ng-if="character.level > 0">
             <span class="label">hp</span> {{character.getHpMax()}} 
+            <span class="label">mp</span> {{character.getMpMax()}} 
             <span class="label">pwr</span> {{character.getHits()|round:2}}
           </div>
           <div class="line">"{{character.getLine()}}"</div>

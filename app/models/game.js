@@ -178,8 +178,8 @@ Game.prototype.begin = function() {
  * @param  {object} infos
  */
 Game.prototype.extends = function(save) {
-  for (var i in save.characters) {
-    _.extend(this.data.characters[i], save.characters.data[i]);
+  for (var i in save.characters.data) {
+    this.data.characters[i] = _.extend(this.data.characters[i], save.characters.data[i]);
   }
 
   this.characters.hp = save.characters.hp;
