@@ -222,7 +222,7 @@ Game.prototype.extends = function(save) {
     }
   }
 
-  this.time = new Date(save.time).toLocaleString();
+  this.time = save.time;
 
   this.last_export = JSON.stringify(save);
 };
@@ -369,14 +369,6 @@ Game.prototype.end_fight = function(victory) {
 
   this.enemies.remove();
   this.enemies.refresh();
-};
-
-/**
- * Escape from fight
- * @return {[type]} [description]
- */
-Game.prototype.escape = function() {
-  this.end_fight(false);
 };
 
 /**

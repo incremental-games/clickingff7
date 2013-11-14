@@ -193,8 +193,8 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game, Ut
    * Escape fight
    */
   $rootScope.escape = function(ev) {
-    if (Game.can_escape()) {
-      Game.escape();
+    if (Game.characters.canEscape()) {
+      Game.characters.escape();
       Utils.animate(ev, 'Success!');
     }
   };
@@ -202,9 +202,9 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game, Ut
   /**
    * Cure maually characters
    */
-  $rootScope.cure = function(ev) {
-    if (Game.characters.canCure()) {
-      var res = Game.characters.manualCure();
+  $rootScope.restore = function(ev) {
+    if (Game.characters.canRestore()) {
+      var res = Game.characters.restore();
       Utils.animate(ev, '+' + res);
     }
   };

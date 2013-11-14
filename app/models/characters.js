@@ -125,7 +125,7 @@ Characters.prototype.get_attacked = function(hits) {
  * Do a manual cure - based on materia
  * @return {[type]} [description]
  */
-Characters.prototype.manualCure = function() {
+Characters.prototype.restore = function() {
   var hpMax = this.hpMax;
   var characters = this.getTeam();
 
@@ -138,7 +138,20 @@ Characters.prototype.manualCure = function() {
   }
 
   var res = Math.ceil(hpMax * (Lvl * 2 / 100));
+
+  this.hp += res;
+  if (this.hp > this.hpMax) {
+    this.hp = this.hpMax;
+  }
+
   return res;
+};
+
+/**
+ * Escape from fight
+ */
+Characters.prototype.escape = function() {
+  this.Game.end_fight(false);
 };
 
 /**
@@ -161,7 +174,7 @@ Characters.prototype.canLimit = function() {
  * Returns if it is possible to cure characters hp
  * @return {boolean}
  */
-Characters.prototype.canCure = function() {
+Characters.prototype.canRestore = function() {
   return (this.hp < this.hpMax);
 };
 

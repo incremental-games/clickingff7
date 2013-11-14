@@ -11,6 +11,10 @@ function Materia(Character, data) {
   if (data) {
     this.extends(data);
   }
+
+  if (!_.has(this, 'level')) {
+    this.level = 1;
+  }
 };
 
 /**

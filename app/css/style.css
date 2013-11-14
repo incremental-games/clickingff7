@@ -195,14 +195,12 @@ img.gils {width: 14px; margin-bottom: -3px;}
 }
 
 .xp_progress, .ap_progress {
-  background-color: #BEECBE;
+  background-color: #806E94;
   position: absolute;
   height: 9px;
   top: 0;
   left: 0;
 }
-
-.disabled .xp_progress {background-color: #ccc;}
 
 .label {
   text-transform: uppercase;

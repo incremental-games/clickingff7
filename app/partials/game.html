@@ -53,7 +53,7 @@
         <span ng-if="!game.characters.canLimit()">ATTACK</span>
         <span ng-if="game.characters.canLimit()">LIMIT</span>
       </div>
-      <div ng-click="cure($event)" class="button" ng-class="{disabled: !game.characters.canCure()}">RESTORE</div>
+      <div ng-click="restore($event)" class="button" ng-class="{disabled: !game.characters.canRestore()}">RESTORE</div>
     </div>
 
     <div>
