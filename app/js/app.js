@@ -164,9 +164,7 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game, Ut
    */
   $rootScope.explore = function(ev) {
     if (!Game.fight) {
-      Game.enemies.random();
-      Game.enemies.refresh();
-      Game.start_fight();
+      Game.characters.explore();
       Utils.animate(ev, 'OK!');
     }
   };

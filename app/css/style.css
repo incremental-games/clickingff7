@@ -116,6 +116,15 @@ footer {
   padding: 5px 0;
 }
 
+.weapons {
+  background-color: #fff;
+  padding-left: 10px;
+}
+
+  .weapon {
+    border-top: 1px dashed #999;
+  }
+
 .div400 {
   padding: 10px 0;
   position: relative;

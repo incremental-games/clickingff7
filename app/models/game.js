@@ -30,9 +30,12 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
 
   this.enemies = new Enemies(this);
   this.characters = new Characters(this);
-  this.weapons = {};
-  this.materias = {};
-  this.items = {};
+
+  this.shop = new Shop(this);
+
+  this.weapons = [];
+  this.materias = [];
+  this.items = [];
 
   this.data = {};
 };
@@ -166,8 +169,13 @@ Game.prototype.begin = function() {
 
   this.loaded = true;
 
+  this.buildInventory();
+
+  this.shop.refresh();
+
   this.characters.build();
   this.characters.refresh();
+
   this.enemies.refresh();
 
   this.refresh();
@@ -178,6 +186,9 @@ Game.prototype.begin = function() {
  * @param  {object} infos
  */
 Game.prototype.extends = function(save) {
+
+  // Characters
+
   for (var i in save.characters.data) {
     this.data.characters[i] = _.extend(this.data.characters[i], save.characters.data[i]);
   }
@@ -187,35 +198,25 @@ Game.prototype.extends = function(save) {
   this.characters.limit = save.characters.limit;
   this.characters.gils = save.characters.gils;
 
+  // Weapons
+
   for (var i in save.weapons) {
-    if (i in this.weapons) {
-      this.weapons[i].extends(save.weapons[i]);
-    } else {
-      this.weapons[i] = new Weapon(this, i);
-      this.weapons[i].extends(this.data.weapons[i].data);
-      this.weapons[i].extends(save.weapons[i]);
-    }
+    this.data.weapons[i] = _.extend(this.data.weapons[i], save.weapons[i]);
   }
+
+  // Materias
 
   for (var i in save.materias) {
-    if (i in this.materias) {
-      this.materias[i].extends(save.materias[i]);
-    } else {
-      this.materias[i] = new Materia(this, i);
-      this.materias[i].extends(this.data.materias[i].data);
-      this.materias[i].extends(save.materias[i]);
-    }
+    this.data.materias[i] = _.extend(this.data.materias[i], save.materias[i]);
   }
 
+  // Items
+
   for (var i in save.items) {
-    if (i in this.items) {
-      this.items[i].extends(save.items[i]);
-    } else {
-      this.items[i] = new Item(this, i);
-      this.items[i].extends(this.data.items[i].data);
-      this.items[i].extends(save.items[i]);
-    }
+    this.data.items[i] = _.extend(this.data.items[i], save.items[i]);
   }
+
+  // Zones
 
   for (var i in save.zone) {
     if (i in this.zone) {
@@ -233,49 +234,41 @@ Game.prototype.extends = function(save) {
 };
 
 /**
+ * Build inventory : weapons, materias, items
+ * @return {[type]} [description]
+ */
+Game.prototype.buildInventory = function() {
+  // Weapons
+  for (var i in this.data.weapons) {
+    var data = this.data.weapons[i];
+    if (data.number > 0) {
+      this.weapons.push(new Weapon(this, data));
+    }
+  }
+
+  // Materias
+  for (var i in this.data.materias) {
+    var data = this.data.materias[i];
+    if (data.number > 0) {
+      this.materias.push(new Materia(this, data));
+    }
+  }
+
+  // Items
+  for (var i in this.data.items) {
+    var data = this.data.items[i];
+    if (data.number > 0) {
+      this.items.push(new Item(this, data));
+    }
+  }
+};
+
+/**
  * Returns if it is possible to go next zone
  * @return {boolean}
  */
 Game.prototype.can_next_zone = function() {
   return !this.fight && this.boss_defeated;
-};
-
-/**
- * Returns if it is possible to buy an item from the shop
- * @return {boolean}
- */
-Game.prototype.can_buy = function(item) {
-  return this.total_gils >= item.get_gils();
-};
-
-/**
- * Refresh the total characters hp
- * @return {[type]} [description]
- */
-Game.prototype.refresh_characters_hp = function() {
-  var characters_hp = 0;
-  this.get_characters(function(i, character) {
-    characters_hp += character.get_hp();
-  });
-  this.set('characters_hp_max', characters_hp);
-  if (!this.characters_hp || this.characters_hp > characters_hp) {
-    this.set('characters_hp', characters_hp);
-  }
-};
-
-/**
- * Refresh the total characters hp
- * @return {[type]} [description]
- */
-Game.prototype.refresh_characters_limit = function() {
-  var characters_limit = 0;
-  this.get_characters(function(i, character) {
-    characters_limit += character.get_hp();
-  });
-  this.set('characters_limit_max', characters_limit);
-  if (!this.characters_limit || this.characters_limit > characters_limit) {
-    this.set('characters_limit', 0);
-  }
 };
 
 /**
@@ -393,15 +386,6 @@ Game.prototype.refresh = function() {
 };
 
 /**
- * Returns in pixels characters limit bar width
- * @param  {int} pixel_max
- * @return {int}
- */
-Game.prototype.characters_limit_progress = function(pixels_max) {
-  return this.characters_limit / this.characters_limit_max * pixels_max;
-};
-
-/**
  * Export the game for saving
  * @return {object}
  */
@@ -446,7 +430,7 @@ Game.prototype.export = function() {
 
 /**
  * Import a save
- * @param  {object} save
+ * @param  {Object} save
  */
 Game.prototype.import = function(save) {
   this.$cookieStore.put('game', save);

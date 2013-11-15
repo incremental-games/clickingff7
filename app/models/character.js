@@ -104,10 +104,7 @@ Character.prototype.getLine = function() {
  * Save character data
  */
 Character.prototype.save = function() {
-  var json = _.pick(this, 'level', 'xp');
-
-  json.weapon = this.weapon.ref;
-  json.materia = this.materia.ref;
+  var json = _.pick(this, 'level', 'xp', 'weapon_ref', 'materia_ref');
 
   return json;
 };

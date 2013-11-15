@@ -3,18 +3,24 @@
     "ref": "restore",
     "name": "Restore",
     "color": "green",
-    "ap_formula": "Math.pow(x+1,4)*30"
+    "ap_formula": "Math.pow(x+1,4)*30",
+    "zone": 1,
+    "number": 1
   },
   "bolt": {
     "ref": "bolt",
     "name": "Bolt",
     "color": "green",
-    "ap_formula": "Math.pow(x+1,4)*30"
+    "ap_formula": "Math.pow(x+1,4)*30",
+    "zone": 1,
+    "number": 1
   },
   "ice": {
     "ref": "ice",
     "name": "Ice",
     "color": "green",
-    "ap_formula": "Math.pow(x+1,4)*30"
+    "ap_formula": "Math.pow(x+1,4)*30",
+    "zone": 1,
+    "number": 1
   }
 }

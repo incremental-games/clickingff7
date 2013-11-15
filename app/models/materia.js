@@ -1,12 +1,12 @@
 /**
  * Materia class
- * @param {Character} Character
+ * @param {Game} Game
  * @param {Object} data
  */
 
-function Materia(Character, data) {
+function Materia(Game, data) {
 
-  this.Character = Character;
+  this.Game = Game;
 
   if (data) {
     this.extends(data);
@@ -34,6 +34,7 @@ Materia.prototype.extends = function(data) {
  */
 Materia.prototype.getName = function() {
   var Txt;
+
   switch (this.ref) {
     case 'restore':
       Txt = 'Restore';
@@ -48,6 +49,7 @@ Materia.prototype.getName = function() {
       Txt = "Unknown"
       break;
   }
+
   return Txt;
 };
 
@@ -55,16 +57,16 @@ Materia.prototype.getName = function() {
  * Returns description of the materia
  */
 Materia.prototype.getDesc = function() {
-  var text = '';
+  var Txt = '';
 
   switch (this.ref) {
     case 'restore':
-      text = 'You can cure your characters HP by ' + (this.level * 2) + '%';
+      Txt = 'You can cure your characters HP by ' + (this.level * 2) + '%';
       break;
 
   };
 
-  return text;
+  return Txt;
 };
 
 /**
@@ -73,6 +75,30 @@ Materia.prototype.getDesc = function() {
  */
 Materia.prototype.getApMax = function() {
   return eval(this.ap_formula.replace('x', this.level));
+};
+
+/**
+ * Returns the price of the weapon
+ * @return {int}
+ */
+Weapon.prototype.getPrice = function() {
+  return this.gils;
+};
+
+/**
+ * Returns true if the weapon is owned in the inventory
+ * @return {boolean}
+ */
+Materia.prototype.inStock = function() {
+  var Nbr = 0;
+  var ref = this.ref;
+  var materia = _.find(this.Game.materias, function(o) {
+    return (o.ref = ref);
+  });
+  if (materia) {
+    Nbr = materia.number;
+  }
+  return Nbr;
 };
 
 /**

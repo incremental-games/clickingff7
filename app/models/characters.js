@@ -10,6 +10,8 @@ function Characters(Game) {
   this.characters = [];
 
   this.gils = 0;
+
+  this.timer = [];
 };
 
 /**
@@ -45,15 +47,14 @@ Characters.prototype.build = function() {
     var character = this.add(data);
 
     // Weapon
-    var ref = character.weapon;
-    var data = this.Game.data.weapons[ref];
-    character.weapon = new Weapon(character, data);
+    character.weapon = _.findWhere(this.Game.weapons, {
+      "ref": character.weapon_ref
+    });
 
     // Materia
-    var ref = character.materia;
-    var data = this.Game.data.materias[ref];
-    character.materia = new Materia(character, data);
-
+    character.materia = _.findWhere(this.Game.materias, {
+      "ref": character.materia_ref
+    });
   }
 };
 
@@ -85,6 +86,32 @@ Characters.prototype.refresh = function() {
   if (!_.has(this, 'limit')) {
     this.limit = 0;
   }
+
+  this.auto();
+};
+
+/**
+ * Auto-restore HP, MP while not in fight
+ * @return {[type]} [description]
+ */
+Characters.prototype.auto = function() {
+  var self = this;
+  var $timeout = this.Game.$timeout;
+
+  this.timer[1] = $timeout(function() {
+
+    if (!self.Game.fight) {
+      self.restore();
+
+      // Auto explore
+      //if (self.hp == self.hpMax) {
+      //  self.explore();
+      //}
+
+    }
+
+    self.auto();
+  }, 1000);
 };
 
 /**
@@ -121,7 +148,7 @@ Characters.prototype.run = function() {
   var self = this;
   var $timeout = this.Game.$timeout;
 
-  this.timer = $timeout(function() {
+  this.timer[0] = $timeout(function() {
     // Stop attacking if fight's over
     if (!self.Game.fight) return;
 
@@ -150,6 +177,12 @@ Characters.prototype.get_attacked = function(hits) {
 
     this.Game.end_fight(false);
   }
+};
+
+Characters.prototype.explore = function() {
+  this.Game.enemies.random();
+  this.Game.enemies.refresh();
+  this.Game.start_fight();
 };
 
 /**

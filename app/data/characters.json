@@ -6,8 +6,8 @@
     "hpBase": 14,
     "mpBase": 5,
     "xp_formula": "x*30",
-    "weapon": "buster-sword",
-    "materia": "bolt",
+    "weapon_ref": "buster-sword",
+    "materia_ref": "bolt",
     "inTeam": true
   },
   "barret": {
@@ -17,8 +17,8 @@
     "hpBase": 16,
     "mpBase": 5,
     "xp_formula": "x*30-2",
-    "weapon": "gatling-gun",
-    "materia": "restore",
+    "weapon_ref": "gatling-gun",
+    "materia_ref": "restore",
     "inTeam": true
   },
   "tifa": {
@@ -28,8 +28,8 @@
     "hpBase": 13,
     "mpBase": 2,
     "xp_formula": "x*30-4",
-    "weapon": "leather-glove",
-    "materia": "ice",
+    "weapon_ref": "leather-glove",
+    "materia_ref": "ice",
     "inTeam": true
   },
   "aerith": {
@@ -39,7 +39,7 @@
     "hpBase": 12,
     "mpBase": 3,
     "xp_formula": "x*30+2",
-    "weapon": "guard-stick"
+    "weapon_ref": "guard-stick"
   },
   "redxiii": {
     "ref": "redxiii",
@@ -48,6 +48,6 @@
     "hpBase": 17,
     "mpBase": 4,
     "xp_formula": "x*30-1",
-    "weapon": "mythril-clip"
+    "weapon_ref": "mythril-clip"
   }
 }

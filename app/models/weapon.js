@@ -1,12 +1,12 @@
 /**
  * Weapon class
- * @param {object} Game
+ * @param {Game} Game
  * @param {string} ref
  */
 
-function Weapon(Character, data) {
+function Weapon(Game, data) {
 
-  this.Character = Character;
+  this.Game = Game;
 
   if (data) {
     this.extends(data);
@@ -29,15 +29,23 @@ Weapon.prototype.extends = function(data) {
  * @return {int}
  */
 Weapon.prototype.getPrice = function() {
-  return this.data.gils;
+  return this.gils;
 };
 
 /**
  * Returns true if the weapon is owned in the inventory
  * @return {boolean}
  */
-Weapon.prototype.is_owned = function() {
-  return (this.data.ref in this.Game.weapons);
+Weapon.prototype.inStock = function() {
+  var Nbr = 0;
+  var ref = this.ref;
+  var weapon = _.find(this.Game.weapons, function(o) {
+    return (o.ref = ref);
+  });
+  if (weapon) {
+    Nbr = weapon.number;
+  }
+  return Nbr;
 };
 
 /**

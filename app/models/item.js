@@ -1,25 +1,18 @@
 /**
  * Item class
- * @param {object} Game
+ * @param {Game} Game
  * @param {string} ref
  */
 
-function Item(Game, ref) {
+function Item(Game, data) {
 
   this.Game = Game;
 
-  // scopes INFOS
-  if (!this.data) {
-    this.data = {};
+  if (data) {
+    this.extends(data);
   }
-  if (!('ref' in this.data)) {
-    this.data.ref = ref;
-  }
-  if (!('type' in this.data)) {
-    this.data.type = 'items';
-  }
-  if (!('number' in this.data)) {
-    this.data.number = 1;
+  if (!('type' in this)) {
+    this.type = 'items';
   }
 };
 
@@ -30,7 +23,7 @@ function Item(Game, ref) {
 Item.prototype.extends = function(data) {
   self = this;
   for (var i in data) {
-    self.data[i] = data[i];
+    self[i] = data[i];
   }
 };
 
@@ -39,7 +32,7 @@ Item.prototype.extends = function(data) {
  */
 Item.prototype.use = function() {
   var self = this;
-  switch (this.data.ref) {
+  switch (this.ref) {
     case 'health-potion':
       this.Game.add('characters_hp', this.get_bonus());
       break;
@@ -49,37 +42,52 @@ Item.prototype.use = function() {
       });
       break;
   }
-  this.data.number--;
-  if (this.data.number == 0) {
-    delete this.Game.items[this.data.ref];
+  this.number--;
+  if (this.number == 0) {
+    delete this.Game.items[this.ref];
   }
 };
 
 /**
  * Return description of the materia
  */
-Item.prototype.get_desc = function() {
-  var text = '';
+Item.prototype.getDesc = function() {
+  var Txt = '';
 
-  switch (this.data.ref) {
+  switch (this.ref) {
     case 'health-potion':
-      text = 'Your characters regain ' + this.get_bonus() + ' HP';
+      Txt = 'Your characters regain ' + this.get_bonus() + ' HP';
       break;
     case 'xp-potion':
-      text = 'Your characters earn ' + this.get_bonus() + ' XP';
+      Txt = 'Your characters earn ' + this.get_bonus() + ' XP';
       break;
-
   }
 
-  return text;
+  return Txt;
 };
 
 /**
- * Return the price of the item
+ * Returns the price of the weapon
  * @return {int}
  */
-Item.prototype.get_gils = function() {
-  return this.data.gils * this.Game.zone.level;
+Item.prototype.getPrice = function() {
+  return this.gils * this.Game.zoneLvl;
+};
+
+/**
+ * Returns true if the weapon is owned in the inventory
+ * @return {boolean}
+ */
+Item.prototype.inStock = function() {
+  var Nbr = 0;
+  var ref = this.ref;
+  var item = _.find(this.Game.items, function(o) {
+    return (o.ref = ref);
+  });
+  if (item) {
+    Nbr = item.number;
+  }
+  return Nbr;
 };
 
 /**
@@ -87,12 +95,12 @@ Item.prototype.get_gils = function() {
  * @return {int}
  */
 Item.prototype.get_bonus = function() {
-  return this.data.bonus * this.Game.zone.level;
+  return this.bonus * this.Game.zone.level;
 };
 
 /**
  * Save materia data
  */
 Item.prototype.save = function() {
-  return _.pick(this.data, 'number');
+  return _.pick(this, 'number');
 };

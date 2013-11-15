@@ -4,7 +4,8 @@
     "name": "Health potion",
     "gils": 20,
     "bonus": 30,
-    "zone": 1
+    "zone": 1,
+    "number": 1
   },
   "xp-potion": {
     "ref": "xp-potion",
