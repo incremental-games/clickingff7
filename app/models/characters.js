@@ -196,7 +196,7 @@ Characters.prototype.restore = function() {
   var Lvl = 0;
   for (var i in characters) {
     var character = characters[i];
-    if (character.materia.ref == 'restore') {
+    if (character.materia && character.materia.ref == 'restore') {
       Lvl += character.materia.level;
     }
   }
