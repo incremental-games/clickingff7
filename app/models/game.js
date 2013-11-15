@@ -187,6 +187,11 @@ Game.prototype.begin = function() {
  */
 Game.prototype.extends = function(save) {
 
+  // Number: 1
+  var number = {
+    number: 0
+  };
+
   // Characters
 
   for (var i in save.characters.data) {
@@ -200,20 +205,20 @@ Game.prototype.extends = function(save) {
 
   // Weapons
 
-  for (var i in save.weapons) {
-    this.data.weapons[i] = _.extend(this.data.weapons[i], save.weapons[i]);
+  for (var i in this.data.weapons) {
+    this.data.weapons[i] = _.extend(this.data.weapons[i], ((_.has(save.weapons, i)) ? save.weapons[i] : number));
   }
 
   // Materias
 
-  for (var i in save.materias) {
-    this.data.materias[i] = _.extend(this.data.materias[i], save.materias[i]);
+  for (var i in this.data.materias) {
+    this.data.materias[i] = _.extend(this.data.materias[i], ((_.has(save.materias, i)) ? save.materias[i] : number));
   }
 
   // Items
 
-  for (var i in save.items) {
-    this.data.items[i] = _.extend(this.data.items[i], save.items[i]);
+  for (var i in this.data.items) {
+    this.data.items[i] = _.extend(this.data.items[i], ((_.has(save.items, i)) ? save.items[i] : number));
   }
 
   // Zones
@@ -394,17 +399,17 @@ Game.prototype.export = function() {
 
   var weapons = {};
   for (var i in this.weapons) {
-    weapons[i] = this.weapons[i].save();
+    weapons[this.weapons[i].ref] = this.weapons[i].save();
   }
 
   var materias = {};
   for (var i in this.materias) {
-    materias[i] = this.materias[i].save();
+    materias[this.materias[i].ref] = this.materias[i].save();
   }
 
   var items = {};
   for (var i in this.items) {
-    items[i] = this.items[i].save();
+    items[this.items[i].ref] = this.items[i].save();
   }
 
   var zones = {};

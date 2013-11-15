@@ -40,7 +40,7 @@ Weapon.prototype.inStock = function() {
   var Nbr = 0;
   var ref = this.ref;
   var weapon = _.find(this.Game.weapons, function(o) {
-    return (o.ref = ref);
+    return (o.ref == ref);
   });
   if (weapon) {
     Nbr = weapon.number;
@@ -64,8 +64,8 @@ Weapon.prototype.equip = function() {
 };
 
 /**
- * Save materia data
+ * Save weapon number
  */
 Weapon.prototype.save = function() {
-  return _.pick(this.data, 'number');
+  return _.pick(this, 'number');
 };

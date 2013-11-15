@@ -93,7 +93,7 @@ Materia.prototype.inStock = function() {
   var Nbr = 0;
   var ref = this.ref;
   var materia = _.find(this.Game.materias, function(o) {
-    return (o.ref = ref);
+    return (o.ref == ref);
   });
   if (materia) {
     Nbr = materia.number;
@@ -126,5 +126,5 @@ Materia.prototype.setAp = function(ap) {
  * Save materia data
  */
 Materia.prototype.save = function() {
-  return _.pick(this, 'ap', 'level');
+  return _.pick(this, 'number', 'ap', 'level');
 };

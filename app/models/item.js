@@ -82,7 +82,7 @@ Item.prototype.inStock = function() {
   var Nbr = 0;
   var ref = this.ref;
   var item = _.find(this.Game.items, function(o) {
-    return (o.ref = ref);
+    return (o.ref == ref);
   });
   if (item) {
     Nbr = item.number;
