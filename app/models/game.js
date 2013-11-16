@@ -340,7 +340,6 @@ Game.prototype.end_fight = function(victory) {
       if (enemy.boss) {
         // Complete zone
         this.zones.completed();
-        this.newItems();
       }
 
       // XP for characters

@@ -22,6 +22,9 @@ Zones.prototype.build = function() {
     var data = this.Game.data.zones[i];
     this.zones.push(new Zone(this, data));
   }
+
+  // Max of zones
+  this.max = this.Game.data.zones.length;
 };
 
 /**
@@ -40,8 +43,11 @@ Zones.prototype.getAll = function() {
  */
 Zones.prototype.completed = function() {
   this.zone().completed = true;
-  this.level++;
-  this.levelMax++;
+  if (this.level < this.max) {
+    this.level++;
+    this.levelMax++;
+    this.Game.newItems();
+  }
 };
 
 /**

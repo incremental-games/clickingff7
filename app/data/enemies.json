@@ -165,7 +165,8 @@
     "7": {
       "level": 20,
       "name": "Sample:H0512",
-      "image": "sample_h0512.png"
+      "image": "sample_h0512.png",
+      "boss": true
     }
   }
 }
