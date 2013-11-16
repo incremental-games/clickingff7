@@ -62,5 +62,5 @@ Weapon.prototype.equip = function() {
  * Save weapon
  */
 Weapon.prototype.save = function() {
-  return _.pick(this, 'equiped');
+  return _.pick(this, 'ref', 'equiped');
 };

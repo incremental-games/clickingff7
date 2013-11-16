@@ -176,7 +176,8 @@ Game.prototype.extends = function(save) {
   // Zones
 
   for (var i in save.zones.data) {
-    this.data.zones[i] = _.extend(this.data.zones[i], save.zones.data[i]);
+    var data = save.zones.data[i];
+    this.data.zones[data.ref] = _.extend(this.data.zones[data.ref], data);
   }
 
   this.zones.level = save.zones.level;
@@ -185,28 +186,32 @@ Game.prototype.extends = function(save) {
   // Weapons
 
   for (var i in save.weapons) {
-    var data = _.extend(this.data.weapons[i], save.weapons[i]);
+    var data = save.weapons[i];
+    data = _.extend(this.data.weapons[data.ref], data);
     this.addWeapon(data);
   }
 
   // Materias
 
   for (var i in save.materias) {
-    var data = _.extend(this.data.materias[i], save.materias[i]);
+    var data = save.materias[i];
+    data = _.extend(this.data.materias[data.ref], data);
     this.addMateria(data);
   }
 
   // Items
 
   for (var i in save.items) {
-    var data = _.extend(this.data.items[i], save.items[i]);
+    var data = save.items[i];
+    data = _.extend(this.data.items[data.ref], data);
     this.addItem(data);
   }
 
   // Characters
 
   for (var i in save.characters.data) {
-    var data = _.extend(this.data.characters[i], save.characters.data[i]);
+    var data = save.characters.data[i];
+    var data = _.extend(this.data.characters[data.ref], data);
     this.characters.add(data);
   }
 
@@ -374,19 +379,19 @@ Game.prototype.export = function() {
   var zones = this.zones.save();
   var characters = this.characters.save();
 
-  var weapons = {};
+  var weapons = [];
   for (var i in this.weapons) {
-    weapons[this.weapons[i].ref] = this.weapons[i].save();
+    weapons.push(this.weapons[i].save());
   }
 
-  var materias = {};
+  var materias = [];
   for (var i in this.materias) {
-    materias[this.materias[i].ref] = this.materias[i].save();
+    materias.push(this.materias[i].save());
   }
 
-  var items = {};
+  var items = [];
   for (var i in this.items) {
-    items[this.items[i].ref] = this.items[i].save();
+    items.push(this.items[i].save());
   }
 
   var save = {};

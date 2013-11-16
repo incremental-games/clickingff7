@@ -15,6 +15,9 @@ function Materia(Game, data) {
   if (!_.has(this, 'level')) {
     this.level = 1;
   }
+  if (!_.has(this, 'level')) {
+    this.ap = 0;
+  }
 };
 
 /**
@@ -126,5 +129,5 @@ Materia.prototype.setAp = function(ap) {
  * Save materia data
  */
 Materia.prototype.save = function() {
-  return _.pick(this, 'character', 'ap', 'level');
+  return _.pick(this, 'ref', 'character', 'ap', 'level');
 };

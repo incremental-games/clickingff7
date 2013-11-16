@@ -66,11 +66,10 @@ Zones.prototype.zone = function(level) {
 Zones.prototype.save = function() {
   var json = _.pick(this, 'level', 'levelMax');
 
-  json.data = {};
+  json.data = [];
   for (var i in this.zones) {
-    var zone = this.zones[i];
-    if (zone.level <= this.levelMax) {
-      json.data[zone.level] = zone.save();
+    if (this.zones[i].level <= this.levelMax) {
+      json.data.push(this.zones[i].save());
     }
   }
 

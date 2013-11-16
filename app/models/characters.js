@@ -253,12 +253,11 @@ Characters.prototype.save = function() {
     "hp": this.hp,
     "mp": this.mp,
     "limit": this.limit,
-    "data": {}
+    "data": []
   };
 
   for (var i in this.characters) {
-    var character = this.characters[i];
-    res.data[character.ref] = character.save();
+    res.data[i] = this.characters[i].save();
   }
 
   return res;

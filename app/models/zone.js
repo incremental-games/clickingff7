@@ -38,7 +38,7 @@ Zone.prototype.here = function() {
  * Save zone data
  */
 Zone.prototype.save = function() {
-  var json = _.pick(this, 'completed');
+  var json = _.pick(this, 'ref', 'completed');
 
   return json;
 };
