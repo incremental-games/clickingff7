@@ -186,54 +186,38 @@ Game.prototype.extends = function(save) {
   this.zones.level = save.zones.level;
   this.zones.levelMax = save.zones.levelMax;
 
-  // Number: 1
-  var number = {
-    "number": 0
-  };
+  // Weapons
+
+  for (var i in save.weapons) {
+    var data = _.extend(this.data.weapons[i], save.weapons[i]);
+    this.addWeapon(data);
+  }
+
+  // Materias
+
+  for (var i in save.materias) {
+    var data = _.extend(this.data.materias[i], save.materias[i]);
+    this.addMateria(data);
+  }
+
+  // Items
+
+  for (var i in save.items) {
+    var data = _.extend(this.data.items[i], save.items[i]);
+    this.addItem(data);
+  }
 
   // Characters
 
   for (var i in save.characters.data) {
-    /*this.data.characters[i] = _.extend(this.data.characters[i], {
-      "equiped": false
-    });*/
-    this.data.characters[i] = _.extend(this.data.characters[i], save.characters.data[i]);
+    var data = _.extend(this.data.characters[i], save.characters.data[i]);
+    this.characters.add(data);
   }
 
   this.characters.hp = save.characters.hp;
   this.characters.mp = save.characters.mp;
   this.characters.limit = save.characters.limit;
   this.characters.gils = save.characters.gils;
-
-  // Weapons
-
-  for (var i in this.data.weapons) {
-    this.data.weapons[i] = _.extend(this.data.weapons[i], ((_.has(save.weapons, i)) ? save.weapons[i] : number));
-  }
-
-  // Materias
-
-  for (var i in this.data.materias) {
-    this.data.materias[i] = _.extend(this.data.materias[i], ((_.has(save.materias, i)) ? save.materias[i] : number));
-  }
-
-  // Items
-
-  for (var i in this.data.items) {
-    this.data.items[i] = _.extend(this.data.items[i], ((_.has(save.items, i)) ? save.items[i] : number));
-  }
-
-  // Zones
-
-  for (var i in save.zone) {
-    if (i in this.zone) {
-      this.zone[i].extends(save.zone[i]);
-    } else {
-      this.zone[i] = new Zone(this, i);
-      this.zone[i].extends(this.data.itzoneems[i].data);
-      this.zone[i].extends(save.zone[i]);
-    }
-  }
 
   this.time = save.time;
 
@@ -272,13 +256,15 @@ Game.prototype.newItems = function() {
 
 /**
  * Add a weapon to the game or character
- * @param {String} weaponRef
+ * @param {String|Object} data
  * @param {Boolean} eqiuped
  */
-Game.prototype.addWeapon = function(weaponRef, equiped) {
-  var data = _.findWhere(this.data.weapons, {
-    ref: weaponRef
-  });
+Game.prototype.addWeapon = function(data, equiped) {
+  if (typeof data == 'string') {
+    data = _.findWhere(this.data.weapons, {
+      ref: data
+    });
+  }
 
   // Give the weapon to a character
   if (equiped) {
@@ -290,13 +276,15 @@ Game.prototype.addWeapon = function(weaponRef, equiped) {
 
 /**
  * Add a materia to the game or character
- * @param {String} materiaRef
+ * @param {String|Object} data
  * @param {String} characterRef
  */
-Game.prototype.addMateria = function(materiaRef, characterRef) {
-  var data = _.findWhere(this.data.materias, {
-    ref: materiaRef
-  });
+Game.prototype.addMateria = function(data, characterRef) {
+  if (typeof data == 'string') {
+    data = _.findWhere(this.data.materias, {
+      ref: data
+    });
+  }
 
   // Give the weapon to a character
   if (characterRef) {
@@ -308,12 +296,14 @@ Game.prototype.addMateria = function(materiaRef, characterRef) {
 
 /**
  * Add a item to the game
- * @param {String} itemRef
+ * @param {String|Object} data
  */
-Game.prototype.addItem = function(itemRef, characterRef) {
-  var data = _.findWhere(this.data.items, {
-    ref: itemRef
-  });
+Game.prototype.addItem = function(data) {
+  if (typeof data == 'string') {
+    var data = _.findWhere(this.data.items, {
+      ref: data
+    });
+  }
 
   this.items.push(new Item(this, data));
 };

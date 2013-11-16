@@ -31,10 +31,12 @@ Characters.prototype.getTeam = function() {
 
 /**
  * Build elements linked to characters
- * @param {String} characterRef
+ * @param {String|Object} data
  */
-Characters.prototype.add = function(characterRef) {
-  var data = this.Game.data.characters[characterRef];
+Characters.prototype.add = function(data) {
+  if (typeof data == 'string') {
+    data = this.Game.data.characters[data];
+  }
 
   // Character
   var character = new Character(this, data);

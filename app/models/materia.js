@@ -126,5 +126,5 @@ Materia.prototype.setAp = function(ap) {
  * Save materia data
  */
 Materia.prototype.save = function() {
-  return _.pick(this, 'number', 'ap', 'level');
+  return _.pick(this, 'character', 'ap', 'level');
 };

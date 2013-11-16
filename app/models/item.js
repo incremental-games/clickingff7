@@ -97,5 +97,5 @@ Item.prototype.get_bonus = function() {
  * Save materia data
  */
 Item.prototype.save = function() {
-  return _.pick(this, 'number');
+  return _.pick(this, 'ref');
 };
