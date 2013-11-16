@@ -70,6 +70,10 @@ app.config(['$routeProvider',
       templateUrl: 'partials/game.html',
       controller: GameCtrl
     }).
+    when('/map', {
+      templateUrl: 'partials/map.html',
+      controller: ShopCtrl
+    }).
     when('/shop', {
       templateUrl: 'partials/shop.html',
       controller: ShopCtrl
@@ -103,6 +107,15 @@ function NavCtrl($scope, $location, Game) {
    */
   $scope.game = function() {
     $location.path("/game");
+  };
+
+  /**
+   * Go to the map
+   */
+  $scope.map = function() {
+    if (!Game.fight) {
+      $location.path("/map");
+    }
   };
 
   /**

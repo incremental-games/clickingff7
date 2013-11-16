@@ -1,0 +1,43 @@
+<div class="zone part w400 aleft">
+  <div class="main">
+    <div class="part avatar w100">
+      <img ng-src="img/zones/{{game.zones.zone().img}}" width="100" />
+    </div><!--
+    --><div class="part w300">
+      <div>{{game.zones.zone().name}} <strong>(#{{game.zones.zone().level}})</strong></div>
+      <div class="line">"{{game.zones.zone().desc}}"</div>
+    </div>
+  </div>
+  <div class="infos">
+    <div class="powerUp">
+      <img ng-src="img/icons/gils.png" class="icon gils" />
+      {{game.total_gils|floor}} Gils
+    </div>
+  </div>
+</div><!--
+
+--><div class="items part w400">
+  <div class="main">
+    
+  </div>
+</div>
+
+<div class="space"></div>
+
+<div class="title">MAP</div>
+
+<div class="shopList">
+
+  <div class="zones">
+    <div ng-repeat="zone in game.zones.getAll() | clean" class="line">
+      <div class="name">
+        #{{zone.level}} {{zone.name}}
+      </div>
+      <div class="actions">
+        <div class="button" ng-click="goZone($event, zone)" ng-if="!zone.here()">GO</div>
+        <div ng-if="zone.here()">You are here</div>
+      </div>
+    </div>
+  </div>
+
+</div>

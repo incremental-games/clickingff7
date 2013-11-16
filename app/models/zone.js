@@ -27,6 +27,14 @@ Zone.prototype.extends = function(data) {
 };
 
 /**
+ * Returns true if player is on this level
+ * @return {[type]} [description]
+ */
+Zone.prototype.here = function() {
+  return (this.level == this.Zones.level)
+};
+
+/**
  * Save zone data
  */
 Zone.prototype.save = function() {

@@ -25,6 +25,17 @@ Zones.prototype.build = function() {
 };
 
 /**
+ * Returne all the discovered zones
+ * @return {[type]} [description]
+ */
+Zones.prototype.getAll = function() {
+  var zoneLvlMax = this.levelMax;
+  return _.filter(this.zones, function(o) {
+    return (o.level <= zoneLvlMax);
+  });
+};
+
+/**
  * Complete the current level zone
  */
 Zones.prototype.completed = function() {
