@@ -28,6 +28,17 @@ Characters.prototype.getTeam = function() {
 };
 
 /**
+ * Set hp characters
+ * @param {int} hp
+ */
+Characters.prototype.addHp = function(hp) {
+  this.hp += hp;
+  if (this.hp > this.hpMax) {
+    this.hp = this.hpMax;
+  }
+};
+
+/**
  * Build elements linked to characters
  * @param {String|Object} data
  */
@@ -183,10 +194,7 @@ Characters.prototype.restore = function() {
 
   var res = Math.ceil(hpMax * (Lvl * 2 / 100));
 
-  this.hp += res;
-  if (this.hp > this.hpMax) {
-    this.hp = this.hpMax;
-  }
+  this.addHp(res);
 
   return res;
 };

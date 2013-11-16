@@ -31,20 +31,21 @@ Item.prototype.extends = function(data) {
  * Use an item
  */
 Item.prototype.use = function() {
-  var self = this;
   switch (this.ref) {
     case 'health-potion':
-      this.Game.add('characters_hp', this.get_bonus());
+      this.Game.characters.addHp(this.getBonus());
       break;
     case 'xp-potion':
-      this.Game.get_characters(function(i, character) {
-        character.set_xp(self.get_bonus());
-      });
+      var characters = this.Game.characters.getTeam();
+      for (var i in characters) {
+        characters[i].setXp(this.getBonus());
+      }
       break;
   }
-  this.number--;
-  if (this.number == 0) {
-    delete this.Game.items[this.ref];
+  for (var i in this.Game.items) {
+    if (_.isEqual(this.Game.items[i], this)) {
+      this.Game.items.splice(i, 1);
+    }
   }
 };
 
@@ -56,10 +57,10 @@ Item.prototype.getDesc = function() {
 
   switch (this.ref) {
     case 'health-potion':
-      Txt = 'Your characters regain ' + this.get_bonus() + ' HP';
+      Txt = 'Your characters regain ' + this.getBonus() + ' HP';
       break;
     case 'xp-potion':
-      Txt = 'Your characters earn ' + this.get_bonus() + ' XP';
+      Txt = 'Your characters earn ' + this.getBonus() + ' XP';
       break;
   }
 
@@ -89,7 +90,7 @@ Item.prototype.inStock = function() {
  * Return the total bonus of the item
  * @return {int}
  */
-Item.prototype.get_bonus = function() {
+Item.prototype.getBonus = function() {
   return this.bonus;
 };
 
