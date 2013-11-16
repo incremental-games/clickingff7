@@ -8,8 +8,8 @@
     "xp_formula": "x*30",
     "weapon_ref": "buster-sword",
     "materia_ref": "bolt",
-    "inTeam": true,
-    "zone": 1
+    "zone": 1,
+    "level": 100
   },
   "barret": {
     "ref": "barret",
@@ -20,9 +20,8 @@
     "xp_formula": "x*30-2",
     "weapon_ref": "gatling-gun",
     "materia_ref": "restore",
-    "inTeam": true,
     "zone": 1,
-    "notAvalaible": [3]
+    "notAvailable": [3]
   },
   "tifa": {
     "ref": "tifa",
@@ -34,7 +33,7 @@
     "weapon_ref": "leather-glove",
     "materia_ref": "ice",
     "zone": 2,
-    "notAvalaible": [3]
+    "notAvailable": [3]
   },
   "aerith": {
     "ref": "aerith",
@@ -45,7 +44,7 @@
     "xp_formula": "x*30+2",
     "weapon_ref": "guard-stick",
     "zone": 3,
-    "notAvalaible": [4, 5]
+    "notAvailable": [4, 5]
   },
   "redxiii": {
     "ref": "redxiii",

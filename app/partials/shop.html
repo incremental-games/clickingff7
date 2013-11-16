@@ -29,7 +29,7 @@
 <div class="shopList">
 
   <div class="weapons">
-    <div ng-repeat="weapon in game.shop.weapons | clean" class="line">
+    <div ng-repeat="weapon in game.shop.getWeapons() | clean" class="line">
       <div class="name">
         <img ng-src="img/icons/{{weapon.type}}.png" class="icon weapon" /> 
         {{weapon.name}}  <span class="desc">{{weapon.getDesc()}}</span>
@@ -47,7 +47,7 @@
   </div>
 
   <div class="materias">
-    <div ng-repeat="materia in game.shop.materias | clean" class="line">
+    <div ng-repeat="materia in game.shop.getMaterias() | clean" class="line">
       <div class="name">
         <img ng-src="img/icons/{{materia.color}}-materia.png" class="icon materia" /> 
         {{materia.name}} <span class="desc">{{materia.getDesc()}}</span>
@@ -65,7 +65,7 @@
   </div>
 
   <div class="items">
-    <div ng-repeat="item in game.shop.items | clean" class="line">
+    <div ng-repeat="item in game.shop.getItems() | clean" class="line">
       <div class="name">
         <img ng-src="img/icons/{{item.type}}.png" class="icon item" /> 
         {{item.name}} <span class="desc">{{item.getDesc()}}</span>

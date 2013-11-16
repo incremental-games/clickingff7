@@ -9,44 +9,63 @@ function Shop(Game) {
 };
 
 /**
- * Refresh weapons available in shop
+ * Build contents
  */
-Shop.prototype.refresh = function() {
-  var zoneLvlMax = this.Game.zones.levelMax;
-
+Shop.prototype.build = function() {
   // Weapons
-
-  var weapons = _.filter(this.Game.data.weapons, function(o) {
-    return (zoneLvlMax >= o.zone);
-  });
-
   this.weapons = [];
-  for (var i in weapons) {
-    var data = weapons[i];
-    this.weapons[i] = new Weapon(this.Game, data);
+  for (var i in this.Game.data.weapons) {
+    var data = this.Game.data.weapons[i];
+    this.weapons.push(new Weapon(this.Game, data));
   }
 
   // Materias
-
-  var materias = _.filter(this.Game.data.materias, function(o) {
-    return (zoneLvlMax >= o.zone);
-  });
-
   this.materias = [];
-  for (var i in materias) {
-    var data = materias[i];
-    this.materias[i] = new Materia(this.Game, data);
+  for (var i in this.Game.data.materias) {
+    var data = this.Game.data.materias[i];
+    this.materias.push(new Materia(this.Game, data));
   }
 
   // Items
+  this.items = [];
+  for (var i in this.Game.data.items) {
+    var data = this.Game.data.items[i];
+    this.items.push(new Item(this.Game, data));
+  }
+};
 
-  var items = _.filter(this.Game.data.items, function(o) {
-    return (zoneLvlMax >= o.zone);
+/**
+ * Get weapons available in shop
+ */
+Shop.prototype.getWeapons = function() {
+  var zoneLvlMax = this.Game.zones.levelMax;
+
+  return _.filter(this.weapons, function(o) {
+    return (o.zone <= zoneLvlMax);
   });
 
-  this.items = [];
-  for (var i in items) {
-    var data = items[i];
-    this.items[i] = new Item(this.Game, data);
-  }
+};
+
+/**
+ * Get materias available in shop
+ */
+Shop.prototype.getMaterias = function() {
+  var zoneLvlMax = this.Game.zones.levelMax;
+
+  return _.filter(this.materias, function(o) {
+    return (o.zone <= zoneLvlMax);
+  });
+
+};
+
+/**
+ * Get items available in shop
+ */
+Shop.prototype.getItems = function() {
+  var zoneLvlMax = this.Game.zones.levelMax;
+
+  return _.filter(this.items, function(o) {
+    return (o.zone <= zoneLvlMax);
+  });
+
 };

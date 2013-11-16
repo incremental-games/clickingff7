@@ -162,7 +162,7 @@ Game.prototype.begin = function() {
 
   this.buildInventory();
 
-  this.shop.refresh();
+  this.shop.build();
 
   this.characters.build();
   this.characters.refresh();

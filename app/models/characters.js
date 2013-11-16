@@ -19,9 +19,14 @@ function Characters(Game) {
  * @return {Array}
  */
 Characters.prototype.getTeam = function() {
-  return _.where(this.characters, {
-    inTeam: true
-  })
+  var zoneLvlMax = this.Game.zones.levelMax;
+  return _.filter(this.characters, function(o) {
+    var available = true;
+    if (_.has(o, 'notAvailable')) {
+      available = ($.inArray(zoneLvlMax, o.notAvailable) == -1);
+    }
+    return o.zone <= zoneLvlMax && available;
+  });
 };
 
 /**
@@ -82,7 +87,6 @@ Characters.prototype.refresh = function() {
 
 /**
  * Auto-restore HP, MP while not in fight
- * @return {[type]} [description]
  */
 Characters.prototype.auto = function() {
   var self = this;

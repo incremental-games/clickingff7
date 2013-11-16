@@ -36,9 +36,9 @@ Enemy.prototype.getHpMax = function() {
   var res;
 
   if (this.boss) {
-    res = characters_hits * 30;
+    res = characters_hits * 20;
   } else {
-    res = Math.ceil((level / (zoneLvl * 4)) * characters_hits * 28);
+    res = Math.ceil((level / (zoneLvl * 4)) * characters_hits * 15);
   }
 
   return res;
@@ -56,9 +56,9 @@ Enemy.prototype.getHits = function() {
   var res;
 
   if (this.boss) {
-    res = Math.ceil(characters_hp / 6);
+    res = Math.ceil(characters_hp / 9);
   } else {
-    res = Math.ceil((level / (zoneLvl * 4)) * characters_hp / 7);
+    res = Math.ceil((level / (zoneLvl * 4)) * characters_hp / 12);
   }
 
   return res;
