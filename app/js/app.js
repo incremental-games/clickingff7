@@ -72,7 +72,7 @@ app.config(['$routeProvider',
     }).
     when('/map', {
       templateUrl: 'partials/map.html',
-      controller: ShopCtrl
+      controller: MapCtrl
     }).
     when('/shop', {
       templateUrl: 'partials/shop.html',
@@ -245,6 +245,22 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game, Ut
 };
 
 /**
+ * /Map
+ */
+
+function MapCtrl($rootScope, $location, Game, Utils) {
+
+  /**
+   * Checkin'
+   */
+  if (!Game.loaded) {
+    $location.path("/game");
+    return;
+  }
+
+}
+
+/**
  * /Inventory
  */
 
@@ -257,6 +273,36 @@ function InventoryCtrl($rootScope, $location, Game, Utils) {
     $location.path("/game");
     return;
   }
+
+  /**
+   * Sell an item
+   */
+  $rootScope.sell = function(ev, thing) {
+    if (thing instanceof Weapon) {
+      for (var i in Game.weapons) {
+        if (_.isEqual(Game.weapons[i], thing)) {
+          Game.weapons.splice(i, 1);
+        }
+      }
+    }
+    if (thing instanceof Materia) {
+      for (var i in Game.materias) {
+        if (_.isEqual(Game.materias[i], thing)) {
+          Game.materias.splice(i, 1);
+        }
+      }
+    }
+    if (thing instanceof Item) {
+      for (var i in Game.items) {
+        if (_.isEqual(Game.items[i], thing)) {
+          Game.items.splice(i, 1);
+        }
+      }
+    }
+
+    Game.gils += thing.getPrice();
+    Utils.animate(ev, 'Success!');
+  };
 
   /**
    * Use an item from the inventory
@@ -291,7 +337,7 @@ function ShopCtrl($rootScope, $location, Game, Utils) {
   }
 
   /**
-   * Buy a weapon from the store
+   * Buy an item from the store
    */
   $rootScope.buy = function(ev, item) {
     if (Game.shop.canBuy(item)) {
