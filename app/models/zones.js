@@ -24,7 +24,7 @@ Zones.prototype.build = function() {
   }
 
   // Max of zones
-  this.max = this.Game.data.zones.length;
+  this.max = Object.keys(this.Game.data.zones).length;
 };
 
 /**
