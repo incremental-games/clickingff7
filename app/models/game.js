@@ -334,7 +334,7 @@ Game.prototype.end_fight = function(victory) {
     if (victory) {
       this.gils += enemy.gilsReward();
 
-      if (enemy.boss) {
+      if (enemy.boss && this.zones.level + 1 > this.zones.levelMax) {
         // Complete zone
         this.zones.completed();
       }

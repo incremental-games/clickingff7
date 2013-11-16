@@ -258,6 +258,14 @@ function MapCtrl($rootScope, $location, Game, Utils) {
     return;
   }
 
+  /**
+   * Go the a zone
+   */
+  $rootScope.goZone = function(ev, zone) {
+    zone.go();
+    Utils.animate(ev, 'SUCCESS!');
+  };
+
 }
 
 /**

@@ -6,7 +6,8 @@
     "hpBase": 14,
     "mpBase": 5,
     "xp_formula": "x*30",
-    "zone": 1
+    "zone": 1,
+    "level": 100
   },
   "barret": {
     "ref": "barret",

@@ -27,11 +27,18 @@ Zone.prototype.extends = function(data) {
 };
 
 /**
+ * Go to the zone
+ */
+Zone.prototype.go = function() {
+  this.Zones.level = this.level;
+};
+
+/**
  * Returns true if player is on this level
- * @return {[type]} [description]
+ * @return {Boolean}
  */
 Zone.prototype.here = function() {
-  return (this.level == this.Zones.level)
+  return (this.level == this.Zones.level);
 };
 
 /**
