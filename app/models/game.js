@@ -158,7 +158,7 @@ Game.prototype.begin = function() {
 
   this.loaded = true;
 
-  this.zones.refresh();
+  this.zones.build();
 
   this.buildInventory();
 
@@ -352,7 +352,8 @@ Game.prototype.end_fight = function(victory) {
       this.total_gils += enemy.gilsReward();
 
       if (enemy.boss) {
-        this.boss_defeated = true;
+        // Complete zone
+        this.zones.completed();
       }
 
       // XP for characters

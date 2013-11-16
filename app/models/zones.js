@@ -18,22 +18,31 @@ function Zones(Game) {
  * Build zones
  * @return {[type]} [description]
  */
-Zones.prototype.refresh = function() {
-  var zoneLvlMax = this.levelMax;
-
-  var zones = _.filter(this.Game.data.zones, function(o) {
-    return (o.level >= zoneLvlMax);
-  });
-
-  for (var i in zones) {
-    this.zones.push(new Zone(this, zones[i]));
+Zones.prototype.build = function() {
+  for (var i in this.Game.data.zones) {
+    var data = this.Game.data.zones[i];
+    this.zones.push(new Zone(this, data));
   }
+};
 
-  this.zones = zones;
+/**
+ * Complete the current level zone
+ * @return {[type]} [description]
+ */
+Zones.prototype.completed = function() {
+  this.zone().completed = true;
+  this.level++;
+  this.levelMax++;
+};
 
-  this.zone = _.findWhere(this.zones, {
+/**
+ * Go to a level zone
+ * @param  {Int} level
+ */
+Zones.prototype.zone = function(level) {
+  return _.findWhere(this.zones, {
     level: this.level
-  })
+  });
 };
 
 /**
@@ -42,9 +51,12 @@ Zones.prototype.refresh = function() {
 Zones.prototype.save = function() {
   var json = _.pick(this, 'level', 'levelMax');
 
+  json.data = {};
   for (var i in this.zones) {
     var zone = this.zones[i];
-    json.zones[zone.ref] = zone.save();
+    if (zone.level <= this.levelMax) {
+      json.data[zone.level] = zone.save();
+    }
   }
 
   return json;

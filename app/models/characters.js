@@ -15,18 +15,6 @@ function Characters(Game) {
 };
 
 /**
- *
- * Add a character to the party
- * @param {Object} data [description]
- * @return {Character}
- */
-Characters.prototype.add = function(data) {
-  var character = new Character(this, data);
-  this.characters.push(character);
-  return character;
-};
-
-/**
  * Get the in-team characters
  * @return {Array}
  */
@@ -44,7 +32,7 @@ Characters.prototype.build = function() {
     var data = this.Game.data.characters[i];
 
     // Character
-    var character = this.add(data);
+    var character = new Character(this, data);
 
     // Weapon
     character.weapon = _.findWhere(this.Game.weapons, {
@@ -55,6 +43,8 @@ Characters.prototype.build = function() {
     character.materia = _.findWhere(this.Game.materias, {
       "ref": character.materia_ref
     });
+
+    this.characters.push(character);
   }
 };
 
