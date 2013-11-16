@@ -32,7 +32,9 @@
     <div ng-repeat="weapon in game.weapons | clean" class="line">
       <div class="name">
         <img ng-src="img/icons/{{weapon.type}}.png" class="icon weapon" /> 
-        {{weapon.name}}  <span class="desc">{{weapon.getDesc()}}</span>
+        {{weapon.name}}  
+        <span class="boss" ng-if="weapon.equiped">EQUIPED</span> 
+        <span class="desc">{{weapon.getDesc()}}</span>
       </div>
       <div class="price">
         {{weapon.getPrice()}} Gils
@@ -47,7 +49,9 @@
     <div ng-repeat="materia in game.materias | clean" class="line">
       <div class="name">
         <img ng-src="img/icons/{{materia.color}}-materia.png" class="icon materia" /> 
-        {{materia.name}} <span class="desc">{{materia.getDesc()}}</span>
+        {{materia.name}} 
+        <span class="boss" ng-if="materia.character">EQUIPED TO {{materia.character}}</span> 
+        <span class="desc">{{materia.getDesc()}}</span>
       </div>
       <div class="price">
         {{materia.getPrice()}} Gils

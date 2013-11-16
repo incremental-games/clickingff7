@@ -279,6 +279,10 @@ function InventoryCtrl($rootScope, $location, Game, Utils) {
    */
   $rootScope.sell = function(ev, thing) {
     if (thing instanceof Weapon) {
+      if (thing.equiped) {
+        Utils.animate(ev, 'FAIL!');
+        return;
+      }
       for (var i in Game.weapons) {
         if (_.isEqual(Game.weapons[i], thing)) {
           Game.weapons.splice(i, 1);
@@ -286,6 +290,10 @@ function InventoryCtrl($rootScope, $location, Game, Utils) {
       }
     }
     if (thing instanceof Materia) {
+      if (thing.character) {
+        Utils.animate(ev, 'FAIL!');
+        return;
+      }
       for (var i in Game.materias) {
         if (_.isEqual(Game.materias[i], thing)) {
           Game.materias.splice(i, 1);
@@ -309,7 +317,7 @@ function InventoryCtrl($rootScope, $location, Game, Utils) {
    */
   $rootScope.use = function(ev, item) {
     item.use();
-    Utils.animate(ev, 'OK!');
+    Utils.animate(ev, 'SUCCESS!');
   };
 
   /**
@@ -342,13 +350,13 @@ function ShopCtrl($rootScope, $location, Game, Utils) {
   $rootScope.buy = function(ev, item) {
     if (Game.shop.canBuy(item)) {
       if (item instanceof Weapon) {
-        Game.weapons.push($.extend(true, {}, item));
+        Game.addWeapon(item.ref);
       }
       if (item instanceof Materia) {
-        Game.materias.push($.extend(true, {}, item));
+        Game.addMateria(item.ref);
       }
       if (item instanceof Item) {
-        Game.items.push($.extend(true, {}, item));
+        Game.addItem(item.ref);
       }
 
       Game.gils = Math.max(Game.gils - item.getPrice(), 0);
