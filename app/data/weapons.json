@@ -6,8 +6,7 @@
     "type": "broadsword",
     "hits": 18,
     "gils": 170,
-    "zone": 1,
-    "number": 1
+    "zone": 1
   },
   "gatling-gun": {
     "ref": "gatling-gun",
@@ -16,8 +15,7 @@
     "type": "gun-arm",
     "hits": 14,
     "gils": 130,
-    "zone": 1,
-    "number": 1
+    "zone": 1
   },
   "assault-gun": {
     "ref": "assault-gun",
@@ -35,8 +33,7 @@
     "type": "knuckle",
     "hits": 13,
     "gils": 120,
-    "zone": 2,
-    "number": 1
+    "zone": 2
   },
   "metal-knuckle": {
     "ref": "metal-knuckle",
@@ -54,8 +51,7 @@
     "type": "stave",
     "hits": 12,
     "gils": 140,
-    "zone": 3,
-    "number": 1
+    "zone": 3
   },
   "mythril-rod": {
     "ref": "mythril-rod",
@@ -73,7 +69,6 @@
     "type": "headdresse",
     "hits": 24,
     "gils": 800,
-    "zone": 5,
-    "number": 1
+    "zone": 5
   }
 }

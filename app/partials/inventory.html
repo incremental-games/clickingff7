@@ -1,68 +1,76 @@
-<div class="part w300">
-  <div>{{game.zone.name}}</div>
-  <div><span class="label">gils</span> {{game.total_gils|floor}}</span></div>
+<div class="zone part w400 aleft">
+  <div class="main">
+    <div class="part avatar w100">
+      <img ng-src="img/zones/{{game.zones.zone().img}}" width="100" />
+    </div><!--
+    --><div class="part w300">
+      <div>{{game.zones.zone().name}} <strong>(#{{game.zones.zone().level}})</strong></div>
+      <div class="line">"{{game.zones.zone().desc}}"</div>
+    </div>
+  </div>
+  <div class="infos">
+    <div class="powerUp">
+      <img ng-src="img/icons/gils.png" class="icon gils" />
+      {{game.total_gils|floor}} Gils
+    </div>
+  </div>
 </div><!--
 
---><div class="part w300">
-  <div><img ng-src="img/zones/{{game.zone.img}}" width="100" /></div>
-</div><!--
-
---><div class="part w300">
+--><div class="items part w400">
+  <div class="main">
+    
+  </div>
 </div>
 
 <div class="space"></div>
 
-<div class="part title w400">Items</div>
-<div class="part title w50"></div>
-<div class="part title w400">Weapons</div>
+<div class="title">INVENTORY</div>
 
-<div class="space"></div>
+<div class="shopList">
 
-<div class="part w400">
-
-  <sections class="items">
-    <div ng-repeat="(no, item) in game.items | clean" class="left div400">
+  <div class="weapons">
+    <div ng-repeat="weapon in game.weapons | clean" class="line">
+      <div class="name">
+        <img ng-src="img/icons/{{weapon.type}}.png" class="icon weapon" /> 
+        {{weapon.name}}  <span class="desc">{{weapon.getDesc()}}</span>
+      </div>
+      <div class="price">
+        {{weapon.getPrice()}} Gils
+      </div>
       <div class="actions">
-        <div class="button use" ng-click="use($event, item)">USE</div>
-      </div>
-      <div class="part w50"></div>
-      <div class="part infos w300">
-        {{item.data.name}} <strong ng-show="item.data.number > 0">x{{item.data.number}}</strong>
-        <div>
-          <span class="label">gils</span> {{item.data.gils}}
-        </div>
-        <div class="line">{{item.get_desc()}}</div>
+        <div class="button" ng-click="buy($event, weapon)">SELL</div>
       </div>
     </div>
-    <div ng-show="game.no_items()">
-      <em>No items in stock!</em>
-    </div>
-  </sections>
+  </div>
 
-</div><!--
-
---><div class="part w400">
-  
-    <sections class="weapons">
-    <div ng-repeat="(no, weapon) in game.weapons | clean" class="right div400" ng-class="{disabled: !weapon.is_equipped()}">
+  <div class="materias">
+    <div ng-repeat="materia in game.materias | clean" class="line">
+      <div class="name">
+        <img ng-src="img/icons/{{materia.color}}-materia.png" class="icon materia" /> 
+        {{materia.name}} <span class="desc">{{materia.getDesc()}}</span>
+      </div>
+      <div class="price">
+        {{materia.getPrice()}} Gils
+      </div>
       <div class="actions">
-        <div class="button equip" ng-click="equip($event, weapon)" ng-show="!weapon.is_equipped()">EQUIP</div>
-      </div>
-      <div class="part infos w300">
-        {{weapon.data.name}} 
-        <span ng-if="weapon.is_equipped()">
-          <span class="boss">Equipped</span> 
-        </span> 
-        ({{weapon.data.character}})
-        <div>
-          <span class="label">hits</span> {{weapon.data.hits}} 
-          <span class="label">gils</span> {{weapon.data.gils}}
-        </div>
-      </div>
-      <div class="part avatar w50">
-        <img ng-src="img/weapons/{{weapon.data.image}}" alt="weapon" height="48">
+        <div class="button" ng-click="buy($event, materia)">SELL</div>
       </div>
     </div>
-  </sections>
+  </div>
+
+  <div class="items">
+    <div ng-repeat="item in game.items | clean" class="line">
+      <div class="name">
+        <img ng-src="img/icons/{{item.type}}.png" class="icon item" /> 
+        {{item.name}} <span class="desc">{{item.getDesc()}}</span>
+      </div>
+      <div class="price">
+        {{item.getPrice()}} Gils
+      </div>
+      <div class="actions">
+        <div class="button" ng-click="buy($event, item)">SELL</div>
+      </div>
+    </div>
+  </div>
 
 </div>

@@ -95,15 +95,10 @@ Materia.prototype.getPrice = function() {
  * @return {boolean}
  */
 Materia.prototype.inStock = function() {
-  var Nbr = 0;
-  var ref = this.ref;
-  var materia = _.find(this.Game.materias, function(o) {
-    return (o.ref == ref);
+  var materias = _.where(this.Game.materias, {
+    ref: this.ref
   });
-  if (materia) {
-    Nbr = materia.number;
-  }
-  return Nbr;
+  return materias.length;
 };
 
 /**

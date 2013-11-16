@@ -31,26 +31,26 @@ Characters.prototype.getTeam = function() {
 
 /**
  * Build elements linked to characters
+ * @param {String} characterRef
  */
-Characters.prototype.build = function() {
-  for (var i in this.Game.data.characters) {
-    var data = this.Game.data.characters[i];
+Characters.prototype.add = function(characterRef) {
+  var data = this.Game.data.characters[characterRef];
 
-    // Character
-    var character = new Character(this, data);
+  // Character
+  var character = new Character(this, data);
 
-    // Weapon
-    character.weapon = _.findWhere(this.Game.weapons, {
-      "ref": character.weapon_ref
-    });
+  // Weapon
+  character.weapon = _.findWhere(this.Game.weapons, {
+    "character": character.ref,
+    "equiped": true
+  });
 
-    // Materia
-    character.materia = _.findWhere(this.Game.materias, {
-      "ref": character.materia_ref
-    });
+  // Materia
+  character.materia = _.findWhere(this.Game.materias, {
+    "character": character.ref
+  });
 
-    this.characters.push(character);
-  }
+  this.characters.push(character);
 };
 
 /**

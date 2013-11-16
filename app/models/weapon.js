@@ -37,15 +37,10 @@ Weapon.prototype.getPrice = function() {
  * @return {boolean}
  */
 Weapon.prototype.inStock = function() {
-  var Nbr = 0;
-  var ref = this.ref;
-  var weapon = _.find(this.Game.weapons, function(o) {
-    return (o.ref == ref);
+  var weapons = _.where(this.Game.weapons, {
+    ref: this.ref
   });
-  if (weapon) {
-    Nbr = weapon.number;
-  }
-  return Nbr;
+  return weapons.length;
 };
 
 /**

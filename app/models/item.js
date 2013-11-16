@@ -79,15 +79,10 @@ Item.prototype.getPrice = function() {
  * @return {boolean}
  */
 Item.prototype.inStock = function() {
-  var Nbr = 0;
-  var ref = this.ref;
-  var item = _.find(this.Game.items, function(o) {
-    return (o.ref == ref);
+  var items = _.where(this.Game.items, {
+    ref: this.ref
   });
-  if (item) {
-    Nbr = item.number;
-  }
-  return Nbr;
+  return items.length;
 };
 
 /**

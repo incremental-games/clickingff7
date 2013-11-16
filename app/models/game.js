@@ -153,6 +153,8 @@ Game.prototype.begin = function() {
     var save = this.$cookieStore.get('game');
     if (save) {
       this.extends(save);
+    } else {
+      this.newItems();
     }
   }
 
@@ -160,11 +162,8 @@ Game.prototype.begin = function() {
 
   this.zones.build();
 
-  this.buildInventory();
-
   this.shop.build();
 
-  this.characters.build();
   this.characters.refresh();
 
   this.enemies.refresh();
@@ -189,12 +188,15 @@ Game.prototype.extends = function(save) {
 
   // Number: 1
   var number = {
-    number: 0
+    "number": 0
   };
 
   // Characters
 
   for (var i in save.characters.data) {
+    /*this.data.characters[i] = _.extend(this.data.characters[i], {
+      "equiped": false
+    });*/
     this.data.characters[i] = _.extend(this.data.characters[i], save.characters.data[i]);
   }
 
@@ -239,87 +241,81 @@ Game.prototype.extends = function(save) {
 };
 
 /**
- * Build inventory : weapons, materias, items
- * @return {[type]} [description]
+ * Basic inventory
  */
-Game.prototype.buildInventory = function() {
-  // Weapons
-  for (var i in this.data.weapons) {
-    var data = this.data.weapons[i];
-    if (data.number > 0) {
-      this.weapons.push(new Weapon(this, data));
-    }
-  }
-
-  // Materias
-  for (var i in this.data.materias) {
-    var data = this.data.materias[i];
-    if (data.number > 0) {
-      this.materias.push(new Materia(this, data));
-    }
-  }
-
-  // Items
-  for (var i in this.data.items) {
-    var data = this.data.items[i];
-    if (data.number > 0) {
-      this.items.push(new Item(this, data));
-    }
-  }
-};
-
-/**
- * Returns if it is possible to go next zone
- * @return {boolean}
- */
-Game.prototype.can_next_zone = function() {
-  return !this.fight && this.boss_defeated;
-};
-
-/**
- * Refresh the characters level max
- */
-Game.prototype.refresh_level_max = function() {
-  var self = this;
-  this.get_characters(function(i, character) {
-    self.characters_level_max = Math.max(self.characters_level_max, character.data.level);
-  });
-};
-
-/**
- * Return item number in stock
- * @param  {string} i
- * @return {int}
- */
-Game.prototype.get_item_stock = function(i) {
-  var res = 0;
-
-  if (i in this.items) {
-    res = this.items[i].data.number;
-  }
-
-  return res;
-};
-
-/**
- * Returns true if there are no weapons in stock
- */
-Game.prototype.no_items = function() {
-  return Object.keys(this.items).length == 0;
-};
-
-/**
- * Returns true if there are no weapons to buy
- */
-Game.prototype.no_weapons = function() {
-  var res = 1;
-  for (var i in this.data.weapons) {
-    if (!(i in this.weapons)) {
-      res = 0;
+Game.prototype.newItems = function() {
+  switch (this.zones.levelMax) {
+    case 1: // Cloud & Barret
+      this.addWeapon('buster-sword', true);
+      this.addWeapon('gatling-gun', true);
+      this.addMateria('restore', 'barret');
+      this.addItem('health-potion');
+      this.addItem('health-potion');
+      this.characters.add('cloud');
+      this.characters.add('barret');
       break;
-    }
+    case 2: // Tifa
+      this.addWeapon('leather-glove', true);
+      this.characters.add('tifa');
+      break;
+    case 3: // Aerith
+      this.addWeapon('guard-stick', true);
+      this.characters.add('aerith');
+      break;
+    case 5: // Red XIII
+      this.addWeapon('mythril-clip', true);
+      this.characters.add('redxiii');
+      break;
   }
-  return res;
+
+};
+
+/**
+ * Add a weapon to the game or character
+ * @param {String} weaponRef
+ * @param {Boolean} eqiuped
+ */
+Game.prototype.addWeapon = function(weaponRef, equiped) {
+  var data = _.findWhere(this.data.weapons, {
+    ref: weaponRef
+  });
+
+  // Give the weapon to a character
+  if (equiped) {
+    data.equiped = equiped;
+  }
+
+  this.weapons.push(new Weapon(this, data));
+};
+
+/**
+ * Add a materia to the game or character
+ * @param {String} materiaRef
+ * @param {String} characterRef
+ */
+Game.prototype.addMateria = function(materiaRef, characterRef) {
+  var data = _.findWhere(this.data.materias, {
+    ref: materiaRef
+  });
+
+  // Give the weapon to a character
+  if (characterRef) {
+    data.character = characterRef;
+  }
+
+  this.materias.push(new Materia(this, data));
+};
+
+/**
+ * Add a item to the game
+ * @param {String} itemRef
+ */
+Game.prototype.addItem = function(itemRef, characterRef) {
+  var data = _.findWhere(this.data.items, {
+    ref: itemRef
+  });
+
+  this.items.push(new Item(this, data));
 };
 
 /**
@@ -354,6 +350,7 @@ Game.prototype.end_fight = function(victory) {
       if (enemy.boss) {
         // Complete zone
         this.zones.completed();
+        this.newItems();
       }
 
       // XP for characters
@@ -373,15 +370,6 @@ Game.prototype.end_fight = function(victory) {
 
   this.enemies.remove();
   this.enemies.refresh();
-};
-
-/**
- * Go the next zone level
- */
-Game.prototype.next_zone = function() {
-  this.zone.level += 1;
-  this.boss_defeated = false;
-  this.load();
 };
 
 /**

@@ -16,7 +16,6 @@ function Zones(Game) {
 
 /**
  * Build zones
- * @return {[type]} [description]
  */
 Zones.prototype.build = function() {
   for (var i in this.Game.data.zones) {
@@ -27,7 +26,6 @@ Zones.prototype.build = function() {
 
 /**
  * Complete the current level zone
- * @return {[type]} [description]
  */
 Zones.prototype.completed = function() {
   this.zone().completed = true;
