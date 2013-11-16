@@ -69,3 +69,12 @@ Shop.prototype.getItems = function() {
   });
 
 };
+
+/**
+ * Returns true is player can buy the item
+ * @param  {Weapon|Materia|Item} item
+ * @return {Boolean}
+ */
+Shop.prototype.canBuy = function(item) {
+  return (this.Game.gils >= item.getPrice());
+};

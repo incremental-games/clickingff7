@@ -8,6 +8,7 @@ function Game() {};
  * Init the game with angular variables
  */
 Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
+  // Angular
   this.$rootScope = $rootScope;
   this.$cookieStore = $cookieStore;
   this.$http = $http;
@@ -19,12 +20,7 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
   // Fight mode
   this.fight = false;
 
-  // scopes INFOS
-  this.enemy_hp_max = 0;
-  this.enemy_hp = 0;
-  this.characters_level_max = 1;
-  this.total_gils = 0;
-  this.boss_defeated = false;
+  this.gils = 500;
 
   this.zones = new Zones(this);
 
@@ -217,8 +213,10 @@ Game.prototype.extends = function(save) {
   this.characters.hp = save.characters.hp;
   this.characters.mp = save.characters.mp;
   this.characters.limit = save.characters.limit;
-  this.characters.gils = save.characters.gils;
 
+  // Game
+
+  this.gils = save.gils;
   this.time = save.time;
 
   this.last_export = JSON.stringify(save);
@@ -335,7 +333,7 @@ Game.prototype.end_fight = function(victory) {
 
     // Rewards if victory
     if (victory) {
-      this.total_gils += enemy.gilsReward();
+      this.gils += enemy.gilsReward();
 
       if (enemy.boss) {
         // Complete zone
@@ -399,6 +397,7 @@ Game.prototype.export = function() {
   save.materias = materias;
   save.items = items;
 
+  save.gils = this.gils;
   save.time = (new Date()).toLocaleString();
 
   return save;

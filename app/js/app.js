@@ -294,16 +294,19 @@ function ShopCtrl($rootScope, $location, Game, Utils) {
    * Buy a weapon from the store
    */
   $rootScope.buy = function(ev, item) {
-    if (Game.can_buy(item)) {
-      if (item.data.ref in Game[item.data.type]) {
-        Game[item.data.type][item.data.ref].data.number++;
-      } else {
-        Game[item.data.type][item.data.ref] = $.extend(true, {}, item);
+    if (Game.shop.canBuy(item)) {
+      if (item instanceof Weapon) {
+        Game.weapons.push($.extend(true, {}, item));
+      }
+      if (item instanceof Materia) {
+        Game.materias.push($.extend(true, {}, item));
+      }
+      if (item instanceof Item) {
+        Game.items.push($.extend(true, {}, item));
       }
 
-      Game.sub('total_gils', item.get_gils());
-      Utils.animate(ev, 'OK!');
-
+      Game.gils = Math.max(Game.gils - item.getPrice(), 0);
+      Utils.animate(ev, 'Success!');
     }
   };
 

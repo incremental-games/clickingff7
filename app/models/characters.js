@@ -9,8 +9,6 @@ function Characters(Game) {
 
   this.characters = [];
 
-  this.gils = 0;
-
   this.timer = [];
 };
 
@@ -255,7 +253,6 @@ Characters.prototype.save = function() {
     "hp": this.hp,
     "mp": this.mp,
     "limit": this.limit,
-    "gils": this.gils,
     "data": {}
   };
 
