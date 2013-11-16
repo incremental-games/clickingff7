@@ -31,7 +31,8 @@
   <div class="zones">
     <div ng-repeat="zone in game.zones.getAll() | clean" class="line">
       <div class="name">
-        #{{zone.level}} {{zone.name}}
+        #{{zone.level}} {{zone.name}} <span class="boss" ng-if="zone.completed">COMPLETED</span><br />
+        <span class="desc">{{zone.desc}}</span>
       </div>
       <div class="actions">
         <div class="button" ng-click="goZone($event, zone)" ng-if="!zone.here()">GO</div>

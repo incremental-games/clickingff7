@@ -148,11 +148,11 @@ img.gils {width: 14px; margin-bottom: -3px;}
 
 .shopList {margin: 0 10px; background-color: #fff;}
 .shopList .line {padding: 5px 0; border-top: 1px solid #eee;}
-.shopList .name {display: inline-block; width: 500px; text-align: left;}
+.shopList .name {display: inline-block; width: 500px; text-align: left; color: #666;}
 .shopList .inStock {display: inline-block; width: 100px; text-align: left;}
 .shopList .price {display: inline-block; width: 100px; text-align: left;}
-.shopList .actions {display: inline-block; width: 100px; text-align: right;}
-.shopList .name span {color: #999; font-size: 11px;}
+.shopList .actions {display: inline-block; width: 100px; text-align: right; vertical-align: top;}
+.shopList .name .desc {color: #999; font-size: 11px;}
 
 .disabled {
   border-top: 1px solid #ccc;

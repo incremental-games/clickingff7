@@ -3,26 +3,30 @@
     "level": 1,
     "name": "Sector 1 Reactor",
     "img": "Sector_1_Reactor.png",
-    "desc": "Cloud Strife just joined Avalanche. They planned to destroy a MAKO reator which depletes the energy of the Planet."
+    "desc": "Cloud just joined Avalanche. With Barret, the leader, they planned to destroy a MAKO reator which depletes the energy of the Planet."
   },
   "2": {
     "level": 2,
     "name": "Sector 5 Reactor",
-    "img": "Sector_5_Reactor.png"
+    "img": "Sector_5_Reactor.png",
+    "desc": "After succesfully destroyed one reactor, Avalanche planned to destroy another one. Tifa joined the group to help."
   },
   "3": {
     "level": 3,
     "name": "Sector 6",
-    "img": "Sector_6.png"
+    "img": "Sector_6.png",
+    "desc": "It was a trap! Avalanche has successfully destroy the reactor. However, Cloud was separated and woke up in a church, meeting Aerith."
   },
   "4": {
     "level": 4,
     "name": "Sector 7",
-    "img": "Sector_7.png"
+    "img": "Sector_7.png",
+    "desc": "With the help of Aerith, Cloud found his friends, fighting the SHINRA who wants to bomb the sector 7. Aerith left to warn the residents."
   },
   "5": {
     "level": 5,
     "name": "Shinra Headquarters (part 1)",
-    "img": "Shinra_headquarters.png"
+    "img": "Shinra_headquarters.png",
+    "desc": "Aerith is the last Ancient and has been kidnapped! Cloud, Barret and Tifa went to SHINRA HQ to rescue her. Red XIII, a mysterious animal, provided assistance."
   }
 }

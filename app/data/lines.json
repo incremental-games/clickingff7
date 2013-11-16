@@ -1,8 +1,7 @@
 {
   "1": {
     "cloud": "It's not my problem.",
-    "barret": "The planet's dyin', Cloud!",
-    "tifa": "Here they come!"
+    "barret": "The planet's dyin', Cloud!"
   },
   "2": {
     "barret": "I don't care what it is! I'm gonna bust him up!",
@@ -20,9 +19,9 @@
     "tifa": "Here they come!"
   },
   "5": {
-    "barret": "",
-    "cloud": "",
-    "redxiii": "",
-    "tifa": ""
+    "barret": "Ok! We gonna rock!",
+    "cloud": "Did you see it?",
+    "redxiii": "...",
+    "tifa": "I hope Aerith is all right."
   }
 }
