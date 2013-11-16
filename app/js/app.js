@@ -113,7 +113,7 @@ function NavCtrl($scope, $location, Game) {
    * Go to the map
    */
   $scope.map = function() {
-    if (!Game.fight) {
+    if (Game.mode == "normal") {
       $location.path("/map");
     }
   };
@@ -122,7 +122,7 @@ function NavCtrl($scope, $location, Game) {
    * Go to the inventory
    */
   $scope.inventory = function() {
-    if (!Game.fight) {
+    if (Game.mode == "normal") {
       $location.path("/inventory");
     }
   };
@@ -131,7 +131,7 @@ function NavCtrl($scope, $location, Game) {
    * Go to the shop
    */
   $scope.shop = function() {
-    if (!Game.fight) {
+    if (Game.mode == "normal") {
       $location.path("/shop");
     }
   };
@@ -140,7 +140,7 @@ function NavCtrl($scope, $location, Game) {
    * Save the game
    */
   $scope.save = function(ev) {
-    if (!Game.fight) {
+    if (Game.mode == "normal") {
       $location.path("/save");
     }
   };
@@ -173,12 +173,32 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game, Ut
   // Scope actions
 
   /**
+   * Auto train
+   */
+  $rootScope.train = function(ev) {
+    if (Game.mode == 'normal') {
+      Game.characters.train();
+      Utils.animate(ev, 'SUCCESS!');
+    }
+  };
+
+  /**
+   * Stop training
+   */
+  $rootScope.stopTrain = function(ev) {
+    if (Game.mode == 'train') {
+      Game.characters.stopTrain();
+      Utils.animate(ev, 'SUCCESS!');
+    }
+  };
+
+  /**
    * Explore for fight
    */
   $rootScope.explore = function(ev) {
-    if (!Game.fight) {
+    if (Game.mode == "normal") {
       Game.characters.explore();
-      Utils.animate(ev, 'OK!');
+      Utils.animate(ev, 'SUCCESS!');
     }
   };
 
@@ -206,7 +226,7 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game, Ut
   $rootScope.escape = function(ev) {
     if (Game.characters.canEscape()) {
       Game.characters.escape();
-      Utils.animate(ev, 'Success!');
+      Utils.animate(ev, 'SUCCESS!');
     }
   };
 
@@ -217,28 +237,6 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game, Ut
     if (Game.characters.canRestore()) {
       var res = Game.characters.restore();
       Utils.animate(ev, '+' + res);
-    }
-  };
-
-  /**
-   * Go next zone
-   */
-  $rootScope.next_zone = function() {
-    if (Game.can_next_zone()) {
-      if (Game.zone.level == 5) {
-        alert("Congrates! You've cleared the game!\nThere should be more to come.. Stay tuned!");
-        return;
-      }
-      Game.next_zone();
-    }
-  };
-
-  /**
-   * Show the help
-   */
-  $rootScope.help = function(ev) {
-    if (!Game.fight) {
-      introJs().start();
     }
   };
 

@@ -18,7 +18,7 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
   this.loaded = false;
 
   // Fight mode
-  this.fight = false;
+  this.mode = "normal";
 
   this.gils = 500;
 
@@ -309,8 +309,8 @@ Game.prototype.addItem = function(data) {
  * Characters start auto-attacking
  */
 Game.prototype.start_fight = function() {
-  if (!this.fight) {
-    this.fight = true;
+  if (this.mode == "normal") {
+    this.mode = "fight";
 
     this.characters.run();
     this.enemies.run();
@@ -322,7 +322,7 @@ Game.prototype.start_fight = function() {
  * @param  {boolean} victory
  */
 Game.prototype.end_fight = function(victory) {
-  this.fight = false;
+  this.mode = "normal";
 
   var enemies = this.enemies.getTeam();
   var characters = this.characters.getTeam();

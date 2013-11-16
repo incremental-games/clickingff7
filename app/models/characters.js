@@ -79,19 +79,19 @@ Characters.prototype.refresh = function() {
     this.limit = 0;
   }
 
-  this.auto();
+  this.autoRestore();
 };
 
 /**
  * Auto-restore HP, MP while not in fight
  */
-Characters.prototype.auto = function() {
+Characters.prototype.autoRestore = function() {
   var self = this;
   var $timeout = this.Game.$timeout;
 
   this.timer[1] = $timeout(function() {
 
-    if (!self.Game.fight) {
+    if (self.Game.mode == "normal") {
       self.restore();
 
       // Auto explore
@@ -101,7 +101,7 @@ Characters.prototype.auto = function() {
 
     }
 
-    self.auto();
+    self.autoRestore();
   }, 1000);
 };
 
@@ -141,7 +141,7 @@ Characters.prototype.run = function() {
 
   this.timer[0] = $timeout(function() {
     // Stop attacking if fight's over
-    if (!self.Game.fight) return;
+    if (self.Game.mode != "fight") return;
 
     var hits = self.hits;
     self.Game.enemies.get_attacked(hits);
@@ -170,6 +170,40 @@ Characters.prototype.get_attacked = function(hits) {
   }
 };
 
+/**
+ * Characters do train
+ */
+Characters.prototype.train = function() {
+  this.Game.mode = "train";
+  this.autoTrain();
+};
+
+Characters.prototype.autoTrain = function() {
+  var self = this;
+  this.timer[2] = this.Game.$timeout(function() {
+    // Stop attacking if fight's over
+    if (self.Game.mode != "train") return;
+
+    var xp = 1;
+    var characters = self.getTeam();
+    for (var i in characters) {
+      characters[i].setXp(xp);
+    }
+
+    self.autoTrain();
+  }, 1000);
+};
+
+/**
+ * Characters do train
+ */
+Characters.prototype.stopTrain = function() {
+  this.Game.mode = "normal";
+};
+
+/**
+ * Characters do explore
+ */
 Characters.prototype.explore = function() {
   this.Game.enemies.random();
   this.Game.enemies.refresh();
@@ -211,7 +245,7 @@ Characters.prototype.escape = function() {
  * @return {boolean}
  */
 Characters.prototype.canAttack = function() {
-  return this.Game.fight;
+  return (this.Game.mode == "fight");
 };
 
 /**
@@ -219,7 +253,7 @@ Characters.prototype.canAttack = function() {
  * @return {boolean}
  */
 Characters.prototype.canLimit = function() {
-  return (this.Game.fight && this.limit == this.limitMax);
+  return (this.Game.mode == "fight" && this.limit == this.limitMax);
 };
 
 /**
@@ -235,7 +269,7 @@ Characters.prototype.canRestore = function() {
  * @return {boolean}
  */
 Characters.prototype.canEscape = function() {
-  return this.Game.fight;
+  return (this.Game.mode == "fight");
 };
 
 /**

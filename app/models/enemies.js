@@ -57,7 +57,7 @@ Enemies.prototype.run = function() {
 
   this.timer = $timeout(function() {
     // Stop attacking if fight's over
-    if (!self.Game.fight) return;
+    if (self.Game.mode != "fight") return;
 
     var hits = self.hits;
     self.Game.characters.get_attacked(hits);
