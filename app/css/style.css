@@ -8,7 +8,7 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  background-color: #AFAFE0;
+  background-color: #eee;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -76,7 +76,7 @@ nav {
 footer {
   margin-top: 30px;
   padding-top: 20px;
-  background-color: #eee;
+  background-color: #fff;
   height: 50px;
   color: #666;
   text-align: right;
@@ -104,6 +104,7 @@ footer {
 .w600 {width: 600px;}
 .aleft {text-align: left;}
 .aright {text-align: right;}
+.bold {font-weight: bold;}
 
 .title {
   background-color: #555;
@@ -115,15 +116,6 @@ footer {
   background-color: #fff;
   padding: 5px 0;
 }
-
-.weapons {
-  background-color: #fff;
-  padding-left: 10px;
-}
-
-  .weapon {
-    border-top: 1px dashed #999;
-  }
 
 .div400 {
   padding: 10px 0;
@@ -137,13 +129,13 @@ footer {
 
   .infos {
     margin: 0 10px;
-    background-color: #eee;
+    background-color: #DFD9DF;
     padding: 0 5px;
     font-size: 12px;
     color: #666;
   }
 
-  .infos .powerUp {
+  .powerUp {
     border-top: 1px dashed #806E94;
     padding: 3px 10px 3px 0;
   }
@@ -151,6 +143,16 @@ footer {
 img.icon {margin-bottom: -1px;}
 img.materia {width: 14px; margin-bottom: -3px;}
 img.gils {width: 14px; margin-bottom: -3px;}
+
+/*SHOP */
+
+.shopList {margin: 0 10px; background-color: #fff;}
+.shopList .line {padding: 5px 0; border-top: 1px solid #eee;}
+.shopList .name {display: inline-block; width: 500px; text-align: left;}
+.shopList .inStock {display: inline-block; width: 100px; text-align: left;}
+.shopList .price {display: inline-block; width: 100px; text-align: left;}
+.shopList .actions {display: inline-block; width: 100px; text-align: right;}
+.shopList .name span {color: #999; font-size: 11px;}
 
 .disabled {
   border-top: 1px solid #ccc;
@@ -242,6 +244,11 @@ img.gils {width: 14px; margin-bottom: -3px;}
   color: #fff;
   cursor: pointer;
   background-color: #6C7DB3;
+}
+
+.button.big {
+  padding: 15px;
+  font-size: 14px;
 }
 
 .button.limit {

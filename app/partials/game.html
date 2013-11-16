@@ -32,9 +32,9 @@
 
   <div class="part w400 aright">
 
-    <div class="part w100">
-      <div ng-click="explore($event)" class="button" ng-class="{disabled: game.fight}">EXPLORE</div>
-      <div ng-click="escape($event)" class="button" ng-class="{disabled: !game.characters.canEscape()}">ESCAPE</div>
+    <div class="part w300">
+      <div ng-click="explore($event)" class="button big" ng-class="{disabled: game.fight}">EXPLORE</div>
+      <div ng-click="escape($event)" class="button big" ng-class="{disabled: !game.characters.canEscape()}">ESCAPE</div>
     </div>
 
     <div>
@@ -48,12 +48,12 @@
 
   <div class="part w400 aleft">
 
-    <div class="part w100">
-      <div ng-click="attack($event)" class="button" ng-class="{disabled: !game.characters.canAttack(), limit: game.characters.canLimit()}">
+    <div class="part w300">
+      <div ng-click="attack($event)" class="button big" ng-class="{disabled: !game.characters.canAttack(), limit: game.characters.canLimit()}">
         <span ng-if="!game.characters.canLimit()">ATTACK</span>
         <span ng-if="game.characters.canLimit()">LIMIT</span>
       </div>
-      <div ng-click="restore($event)" class="button" ng-class="{disabled: !game.characters.canRestore()}">RESTORE</div>
+      <div ng-click="restore($event)" class="button big" ng-class="{disabled: !game.characters.canRestore()}">RESTORE</div>
     </div>
 
     <div>

@@ -1,47 +1,85 @@
-<div class="part w300">
-  <div>{{game.zone.name}}</div>
-  <div><span class="label">gils</span> {{game.total_gils|floor}}</span></div>
+<div class="zone part w400 aleft">
+  <div class="main">
+    <div class="part avatar w100">
+      <img ng-src="img/zones/{{game.zone.img}}" width="100" />
+    </div><!--
+    --><div class="part w300">
+      <div>{{game.zone.name}} <strong>(#{{game.zone.level}})</strong></div>
+      <div class="line">"{{game.zone.desc}}"</div>
+    </div>
+  </div>
+  <div class="infos">
+    <div class="powerUp">
+      <img ng-src="img/icons/gils.png" class="icon gils" />
+      {{game.total_gils|floor}} Gils
+    </div>
+  </div>
 </div><!--
 
---><div class="part w300">
-  <div><img ng-src="img/zones/{{game.zone.img}}" width="100" /></div>
-</div><!--
-
---><div class="part w300">
+--><div class="items part w400">
+  <div class="main">
+    
+  </div>
 </div>
 
 <div class="space"></div>
 
-<div class="part title w400">Items</div>
-<div class="part title w50"></div>
-<div class="part title w400">Weapons</div>
+<div class="title">SHOP</div>
 
-<div class="part w400"></div><!--
+<div class="shopList">
 
---><div class="part w400">
-
-  <sections class="weapons">
-    <div ng-repeat="weapon in game.shop.weapons | clean" class="right div400">
-      <img ng-src="img/icons/{{weapon.type}}.png" /> 
-      {{weapon.name}} (+{{weapon.hits}}) [Stock: {{weapon.inStock()}}] [Price: {{weapon.getPrice()}}] 
-      <div class="button" ng-click="buy($event, weapon)">BUY</div>
+  <div class="weapons">
+    <div ng-repeat="weapon in game.shop.weapons | clean" class="line">
+      <div class="name">
+        <img ng-src="img/icons/{{weapon.type}}.png" class="icon weapon" /> 
+        {{weapon.name}}  <span class="desc">{{weapon.getDesc()}}</span>
+      </div>
+      <div class="inStock" ng-class="{bold: weapon.inStock()}">
+        Stock: {{weapon.inStock()}}
+      </div>
+      <div class="price">
+        {{weapon.getPrice()}} Gils
+      </div>
+      <div class="actions">
+        <div class="button" ng-click="buy($event, weapon)">BUY</div>
+      </div>
     </div>
-  </sections>
+  </div>
 
-  <sections class="materias">
-    <div ng-repeat="materia in game.shop.materias | clean" class="right div400">
-      <img ng-src="img/icons/{{materia.color}}-materia.png" /> 
-      {{materia.name}} [Stock: {{materia.inStock()}}] [Price: {{materia.getPrice()}}] 
-      <div class="button" ng-click="buy($event, materia)">BUY</div>
+  <div class="materias">
+    <div ng-repeat="materia in game.shop.materias | clean" class="line">
+      <div class="name">
+        <img ng-src="img/icons/{{materia.color}}-materia.png" class="icon materia" /> 
+        {{materia.name}} <span class="desc">{{materia.getDesc()}}</span>
+      </div>
+      <div class="inStock" ng-class="{bold: materia.inStock()}">
+        Stock: {{materia.inStock()}}
+      </div>
+      <div class="price">
+        {{materia.getPrice()}} Gils
+      </div>
+      <div class="actions">
+        <div class="button" ng-click="buy($event, materia)">BUY</div>
+      </div>
     </div>
-  </sections>
+  </div>
 
-  <sections class="items">
-    <div ng-repeat="item in game.shop.items | clean" class="right div400">
-      <img ng-src="img/icons/{{item.type}}.png" /> 
-      {{item.name}} [Stock: {{item.inStock()}}] [Price: {{item.getPrice()}}] 
-      <div class="button" ng-click="buy($event, item)">BUY</div>
+  <div class="items">
+    <div ng-repeat="item in game.shop.items | clean" class="line">
+      <div class="name">
+        <img ng-src="img/icons/{{item.type}}.png" class="icon item" /> 
+        {{item.name}} <span class="desc">{{item.getDesc()}}</span>
+      </div>
+      <div class="inStock" ng-class="{bold: item.inStock()}">
+        Stock: {{item.inStock()}}
+      </div>
+      <div class="price">
+        {{item.getPrice()}} Gils
+      </div>
+      <div class="actions">
+        <div class="button" ng-click="buy($event, item)">BUY</div>
+      </div>
     </div>
-  </sections>
+  </div>
 
 </div>

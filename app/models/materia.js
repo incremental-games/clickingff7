@@ -63,7 +63,12 @@ Materia.prototype.getDesc = function() {
     case 'restore':
       Txt = 'You can cure your characters HP by ' + (this.level * 2) + '%';
       break;
-
+    case 'bolt':
+      Txt = 'Bolt damages may increase attack by ' + (this.level * 10) + '%';
+      break;
+    case 'ice':
+      Txt = 'Ice damages may increase attack by ' + (this.level * 10) + '%';
+      break;
   };
 
   return Txt;
@@ -81,7 +86,7 @@ Materia.prototype.getApMax = function() {
  * Returns the price of the weapon
  * @return {int}
  */
-Weapon.prototype.getPrice = function() {
+Materia.prototype.getPrice = function() {
   return this.gils;
 };
 
