@@ -12,12 +12,12 @@ function Shop(Game) {
  * Refresh weapons available in shop
  */
 Shop.prototype.refresh = function() {
-  var zoneLvl = this.Game.zoneLvl;
+  var zoneLvlMax = this.Game.zones.levelMax;
 
   // Weapons
 
   var weapons = _.filter(this.Game.data.weapons, function(o) {
-    return (zoneLvl >= o.zone);
+    return (zoneLvlMax >= o.zone);
   });
 
   this.weapons = [];
@@ -29,7 +29,7 @@ Shop.prototype.refresh = function() {
   // Materias
 
   var materias = _.filter(this.Game.data.materias, function(o) {
-    return (zoneLvl >= o.zone);
+    return (zoneLvlMax >= o.zone);
   });
 
   this.materias = [];
@@ -41,7 +41,7 @@ Shop.prototype.refresh = function() {
   // Items
 
   var items = _.filter(this.Game.data.items, function(o) {
-    return (zoneLvl >= o.zone);
+    return (zoneLvlMax >= o.zone);
   });
 
   this.items = [];

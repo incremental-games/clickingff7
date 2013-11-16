@@ -23,7 +23,7 @@ Enemies.prototype.getTeam = function() {
  * @return {[type]} [description]
  */
 Enemies.prototype.random = function() {
-  var zoneLvl = this.Game.zoneLvl;
+  var zoneLvl = this.Game.zones.level;
   var nbr = _.random(1, 1);
   var enemies = _.sample(this.Game.data.enemies[zoneLvl], nbr);
   for (var i in enemies) {

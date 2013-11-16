@@ -8,7 +8,6 @@ function Character(Characters, data) {
 
   this.Characters = Characters;
 
-  // scopes INFOS
   if (data) {
     this.extends(data);
   }
@@ -96,8 +95,8 @@ Character.prototype.setXp = function(xp) {
  * @return {string}
  */
 Character.prototype.getLine = function() {
-  var zoneLvl = this.Characters.Game.zoneLvl;
-  return this.Characters.Game.data.lines[zoneLvl][this.ref];
+  var zoneLvlMax = this.Characters.Game.zones.levelMax;
+  return this.Characters.Game.data.lines[zoneLvlMax][this.ref];
 };
 
 /**

@@ -71,7 +71,7 @@ Item.prototype.getDesc = function() {
  * @return {int}
  */
 Item.prototype.getPrice = function() {
-  return this.gils * this.Game.zoneLvl;
+  return this.gils;
 };
 
 /**
@@ -95,7 +95,7 @@ Item.prototype.inStock = function() {
  * @return {int}
  */
 Item.prototype.get_bonus = function() {
-  return this.bonus * this.Game.zone.level;
+  return this.bonus;
 };
 
 /**

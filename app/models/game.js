@@ -26,7 +26,7 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
   this.total_gils = 0;
   this.boss_defeated = false;
 
-  this.zoneLvl = 1;
+  this.zones = new Zones(this);
 
   this.enemies = new Enemies(this);
   this.characters = new Characters(this);
@@ -45,14 +45,6 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
  * depending the zone level
  */
 Game.prototype.load = function() {
-  // Data from save
-  if (!this.loaded) {
-    var save = this.$cookieStore.get('game');
-    if (save) {
-      this.zoneLvl = save.zoneLvl;
-    }
-  }
-
   this._loadJSON([
     ['lines', 'zones', 'enemies', 'weapons', 'materias', 'items'],
     ['characters']
@@ -97,9 +89,6 @@ Game.prototype._load_zones = function(finish) {
   var self = this;
   this.$http.get('data/zones.json').success(function(data) {
     self.data.zones = data;
-
-    // Setting current zone
-    self.zone = data[self.zoneLvl];
 
     finish();
   });
@@ -169,6 +158,8 @@ Game.prototype.begin = function() {
 
   this.loaded = true;
 
+  this.zones.refresh();
+
   this.buildInventory();
 
   this.shop.refresh();
@@ -186,6 +177,15 @@ Game.prototype.begin = function() {
  * @param  {object} infos
  */
 Game.prototype.extends = function(save) {
+
+  // Zones
+
+  for (var i in save.zones.data) {
+    this.data.zones[i] = _.extend(this.data.zones[i], save.zones.data[i]);
+  }
+
+  this.zones.level = save.zones.level;
+  this.zones.levelMax = save.zones.levelMax;
 
   // Number: 1
   var number = {
@@ -395,6 +395,7 @@ Game.prototype.refresh = function() {
  * @return {object}
  */
 Game.prototype.export = function() {
+  var zones = this.zones.save();
   var characters = this.characters.save();
 
   var weapons = {};
@@ -412,21 +413,13 @@ Game.prototype.export = function() {
     items[this.items[i].ref] = this.items[i].save();
   }
 
-  var zones = {};
-  for (var i in this.zones) {
-    zones[i] = this.zones[i].save();
-  }
-
   var save = {};
 
+  save.zones = zones;
   save.characters = characters;
   save.weapons = weapons;
   save.materias = materias;
   save.items = items;
-  save.zones = zones;
-  save.zoneLvl = this.zoneLvl;
-
-  save.boss_defeated = this.boss_defeated;
 
   save.time = (new Date()).toLocaleString();
 
