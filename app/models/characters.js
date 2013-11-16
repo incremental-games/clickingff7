@@ -36,21 +36,7 @@ Characters.prototype.add = function(data) {
     data = _.clone(this.Game.data.characters[data]);
   }
 
-  // Character
-  var character = new Character(this, data);
-
-  // Weapon
-  character.weapon = _.findWhere(this.Game.weapons, {
-    "character": character.ref,
-    "equiped": true
-  });
-
-  // Materia
-  character.materia = _.findWhere(this.Game.materias, {
-    "character": character.ref
-  });
-
-  this.characters.push(character);
+  this.characters.push(new Character(this, data));
 };
 
 /**
@@ -190,8 +176,8 @@ Characters.prototype.restore = function() {
   var Lvl = 0;
   for (var i in characters) {
     var character = characters[i];
-    if (character.materia && character.materia.ref == 'restore') {
-      Lvl += character.materia.level;
+    if (character.materia() && character.materia().ref == 'restore') {
+      Lvl += character.materia().level;
     }
   }
 

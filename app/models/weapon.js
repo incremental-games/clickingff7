@@ -49,17 +49,17 @@ Weapon.prototype.inStock = function() {
 Weapon.prototype.equip = function() {
   var weapon = _.findWhere(this.Game.weapons, {
     character: this.character,
-    equiped: true
+    equipped: true
   });
 
-  weapon.equiped = false;
+  weapon.equipped = false;
 
-  this.equiped = true;
+  this.equipped = true;
 };
 
 /**
  * Save weapon
  */
 Weapon.prototype.save = function() {
-  return _.pick(this, 'ref', 'equiped');
+  return _.pick(this, 'ref', 'equipped');
 };

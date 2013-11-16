@@ -135,16 +135,16 @@
         </div>
       </div>
       <div class="infos">
-        <div class="powerUp" ng-if="character.weapon">
-          <img ng-src="img/icons/{{character.weapon.type}}.png" class="icon" />
-          {{character.weapon.name}} (+{{character.weapon.hits}})
+        <div class="powerUp" ng-if="character.weapon()">
+          <img ng-src="img/icons/{{character.weapon().type}}.png" class="icon" />
+          {{character.weapon().name}} (+{{character.weapon().hits}})
         </div>
         <div class="powerUp" ng-if="character.armor">
           {{character.armor.name}}
         </div>
-        <div class="powerUp" ng-if="character.materia">
-          <img ng-src="img/icons/{{character.materia.color}}-materia.png" class="materia icon" />
-          {{character.materia.name}}
+        <div class="powerUp" ng-if="character.materia()">
+          <img ng-src="img/icons/{{character.materia().color}}-materia.png" class="materia icon" />
+          {{character.materia().name}}
         </div>
         <div class="powerUp" ng-if="character.item">
           {{character.item.name}}

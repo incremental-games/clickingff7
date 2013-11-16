@@ -14,9 +14,6 @@ function Character(Characters, data) {
   if (!('level' in this)) {
     this.level = 1;
   }
-  if (!('weapon_level' in this)) {
-    this.weapon_level = 1;
-  }
   if (!('xp' in this)) {
     this.xp = 0;
   }
@@ -31,6 +28,27 @@ Character.prototype.extends = function(data) {
     this[i] = data[i];
   }
 };
+
+/**
+ * Get the weapon of the character
+ * @return {Weapon|undefined}
+ */
+Character.prototype.weapon = function() {
+  return _.findWhere(this.Characters.Game.weapons, {
+    "character": this.ref,
+    "equipped": true
+  });
+};
+
+/**
+ * Get the materia of the character
+ * @return {Materia|undefined}
+ */
+Character.prototype.materia = function() {
+  return _.findWhere(this.Characters.Game.materias, {
+    "character": this.ref
+  });
+}
 
 /**
  * returns character total HP
@@ -56,7 +74,7 @@ Character.prototype.getMpMax = function() {
  * @return {int}
  */
 Character.prototype.getHits = function() {
-  return this.level * this.weapon.hits * 0.1;
+  return this.level * this.weapon().hits * 0.1;
 };
 
 /**
@@ -103,7 +121,7 @@ Character.prototype.getLine = function() {
  * Save character data
  */
 Character.prototype.save = function() {
-  var json = _.pick(this, 'ref', 'level', 'xp', 'weapon_ref', 'materia_ref');
+  var json = _.pick(this, 'ref', 'level', 'xp');
 
   return json;
 };

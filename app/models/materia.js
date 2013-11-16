@@ -126,6 +126,21 @@ Materia.prototype.setAp = function(ap) {
 };
 
 /**
+ * Equip a materia
+ * @param  {String} characterRef
+ */
+Materia.prototype.equip = function(characterRef) {
+  this.character = characterRef;
+};
+
+/**
+ * Unequip a materia
+ */
+Materia.prototype.unequip = function() {
+  this.character = "";
+};
+
+/**
  * Save materia data
  */
 Materia.prototype.save = function() {

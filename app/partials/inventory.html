@@ -33,15 +33,15 @@
       <div class="name">
         <img ng-src="img/icons/{{weapon.type}}.png" class="icon weapon" /> 
         {{weapon.name}}  
-        <span class="boss" ng-if="weapon.equiped">EQUIPED</span> 
+        <span class="boss" ng-if="weapon.equipped">EQUIPPED</span> 
         <span class="desc">{{weapon.getDesc()}}</span>
       </div>
       <div class="price">
         {{weapon.getPrice()}} Gils
       </div>
       <div class="actions">
-        <div class="button" ng-click="equip($event, weapon)" ng-if="!weapon.equiped">EQUIP</div>&nbsp;
-        <div class="button" ng-click="sell($event, weapon)" ng-if="!weapon.equiped">SELL</div>
+        <div class="button" ng-click="equipWeapon($event, weapon)" ng-if="!weapon.equipped">EQUIP</div>
+        <div class="button" ng-click="sell($event, weapon)" ng-if="!weapon.equipped">SELL</div>
       </div>
     </div>
   </div>
@@ -51,14 +51,24 @@
       <div class="name">
         <img ng-src="img/icons/{{materia.color}}-materia.png" class="icon materia" /> 
         {{materia.name}} 
-        <span class="boss" ng-if="materia.character">EQUIPED TO {{materia.character}}</span> 
+        <span class="boss" ng-if="materia.character">EQUIPPED TO {{materia.character}}</span> 
         <span class="desc">{{materia.getDesc()}}</span>
       </div>
       <div class="price">
         {{materia.getPrice()}} Gils
       </div>
       <div class="actions">
-        <div class="button" ng-click="sell($event, materia)">SELL</div>
+        <!-- CHARACTERS LIST -->
+        <div class="listEquipMateria">
+          <div ng-click="hideList($event)" class="close">X</div>
+            <div ng-repeat="character in game.characters.getTeam() | clean" ng-click="equipMateria($event, materia, character.ref)">
+              {{character.name}}
+            </div>
+        </div>
+
+        <div class="button" ng-click="showList($event)" ng-if="!materia.character">EQUIP</div>
+        <div class="button" ng-click="unequipMateria($event, materia)" ng-if="materia.character">UNEQUIP</div>
+        <div class="button" ng-click="sell($event, materia)" ng-if="!materia.character">SELL</div>
       </div>
     </div>
   </div>

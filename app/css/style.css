@@ -283,6 +283,31 @@ img.gils {width: 14px; margin-bottom: -3px;}
   white-space: pre;
 }
 
+/* INVENTORY */
+
+.listEquipMateria {
+  display: none;
+  position: absolute;
+  width: 200px;
+  border: 1px solid #999;
+  background-color: #FFF;
+  z-index: 1;
+  text-align: left;
+  padding-left: 15px;
+  padding-top: 15px;
+}
+
+.listEquipMateria div:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
+
+.listEquipMateria .close {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 /* ANIMATIONS */
 
 .xp_progress, .enemy_hp_progress, .characters_hp_progress, .characters_limit_progress {

@@ -279,7 +279,7 @@ function InventoryCtrl($rootScope, $location, Game, Utils) {
    */
   $rootScope.sell = function(ev, thing) {
     if (thing instanceof Weapon) {
-      if (thing.equiped) {
+      if (thing.equipped) {
         Utils.animate(ev, 'FAIL!');
         return;
       }
@@ -315,16 +315,47 @@ function InventoryCtrl($rootScope, $location, Game, Utils) {
   /**
    * Use an item from the inventory
    */
-  $rootScope.use = function(ev, item) {
+  $rootScope.useItem = function(ev, item) {
     item.use();
     Utils.animate(ev, 'SUCCESS!');
   };
 
   /**
-   * Use an item from the inventory
+   * Equip a weapon from the inventory
    */
-  $rootScope.equip = function(ev, weapon) {
+  $rootScope.equipWeapon = function(ev, weapon) {
     weapon.equip();
+    Utils.animate(ev, 'SUCCESS!');
+  };
+
+  /**
+   * Equip a materia from the inventory
+   */
+  $rootScope.equipMateria = function(ev, materia, characterRef) {
+    $(ev.target).parent().hide();
+    materia.equip(characterRef);
+    Utils.animate(ev, 'SUCCESS!');
+  };
+
+  /**
+   * Equip a materia from the inventory
+   */
+  $rootScope.showList = function(ev) {
+    $(ev.target).prev().show();
+  };
+
+  /**
+   * Equip a materia from the inventory
+   */
+  $rootScope.hideList = function(ev) {
+    $(ev.target).parent().hide();
+  };
+
+  /**
+   * Unequip a materia from the inventory
+   */
+  $rootScope.unequipMateria = function(ev, materia) {
+    materia.unequip();
     Utils.animate(ev, 'SUCCESS!');
   };
 

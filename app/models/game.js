@@ -262,14 +262,14 @@ Game.prototype.newItems = function() {
  * @param {String|Object} data
  * @param {Boolean} eqiuped
  */
-Game.prototype.addWeapon = function(data, equiped) {
+Game.prototype.addWeapon = function(data, equipped) {
   if (typeof data == 'string') {
     data = _.clone(this.data.weapons[data]);
   }
 
   // Give the weapon to a character
-  if (equiped) {
-    data.equiped = equiped;
+  if (equipped) {
+    data.equipped = equipped;
   }
 
   this.weapons.push(new Weapon(this, data));
