@@ -34,6 +34,8 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
   this.items = [];
 
   this.data = {};
+
+  this.version = 0.8;
 };
 
 /**
@@ -145,13 +147,17 @@ Game.prototype.begin = function() {
   var $cookieStore = this.$cookieStore;
   var $timeout = this.$timeout;
 
-  if (!this.loaded) {
-    var save = this.$cookieStore.get('game');
-    if (save) {
+  var save = this.$cookieStore.get('game');
+  if (save) {
+    // Detect old save
+    if (save.version && save.version == this.version) {
       this.extends(save);
     } else {
+      this.reset();
       this.newItems();
     }
+  } else {
+    this.newItems();
   }
 
   this.loaded = true;
@@ -398,6 +404,7 @@ Game.prototype.export = function() {
 
   save.gils = this.gils;
   save.time = (new Date()).toLocaleString();
+  save.version = this.version;
 
   return save;
 };
