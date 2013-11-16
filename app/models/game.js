@@ -177,7 +177,7 @@ Game.prototype.extends = function(save) {
 
   for (var i in save.zones.data) {
     var data = save.zones.data[i];
-    this.data.zones[data.ref] = _.extend(this.data.zones[data.ref], data);
+    this.data.zones[data.ref] = _.extend(_.clone(this.data.zones[data.ref]), data);
   }
 
   this.zones.level = save.zones.level;
@@ -187,7 +187,7 @@ Game.prototype.extends = function(save) {
 
   for (var i in save.weapons) {
     var data = save.weapons[i];
-    data = _.extend(this.data.weapons[data.ref], data);
+    data = _.extend(_.clone(this.data.weapons[data.ref]), data);
     this.addWeapon(data);
   }
 
@@ -195,7 +195,7 @@ Game.prototype.extends = function(save) {
 
   for (var i in save.materias) {
     var data = save.materias[i];
-    data = _.extend(this.data.materias[data.ref], data);
+    data = _.extend(_.clone(this.data.materias[data.ref]), data);
     this.addMateria(data);
   }
 
@@ -203,7 +203,7 @@ Game.prototype.extends = function(save) {
 
   for (var i in save.items) {
     var data = save.items[i];
-    data = _.extend(this.data.items[data.ref], data);
+    data = _.extend(_.clone(this.data.items[data.ref]), data);
     this.addItem(data);
   }
 
@@ -211,7 +211,7 @@ Game.prototype.extends = function(save) {
 
   for (var i in save.characters.data) {
     var data = save.characters.data[i];
-    var data = _.extend(this.data.characters[data.ref], data);
+    var data = _.extend(_.clone(this.data.characters[data.ref]), data);
     this.characters.add(data);
   }
 

@@ -40,7 +40,8 @@
         {{weapon.getPrice()}} Gils
       </div>
       <div class="actions">
-        <div class="button" ng-click="sell($event, weapon)">SELL</div>
+        <div class="button" ng-click="equip($event, weapon)" ng-if="!weapon.equiped">EQUIP</div>&nbsp;
+        <div class="button" ng-click="sell($event, weapon)" ng-if="!weapon.equiped">SELL</div>
       </div>
     </div>
   </div>

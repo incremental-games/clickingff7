@@ -44,18 +44,17 @@ Weapon.prototype.inStock = function() {
 };
 
 /**
- * Returns true if the weapon is currently equipped
- * @return {boolean}
- */
-Weapon.prototype.is_equipped = function() {
-  return (this.data.ref == this.Game.characters[this.data.character].data.weapon);
-};
-
-/**
  * Equip a weapon
  */
 Weapon.prototype.equip = function() {
-  this.Game.characters[this.data.character].data.weapon = this.data.ref;
+  var weapon = _.findWhere(this.Game.weapons, {
+    character: this.character,
+    equiped: true
+  });
+
+  weapon.equiped = false;
+
+  this.equiped = true;
 };
 
 /**

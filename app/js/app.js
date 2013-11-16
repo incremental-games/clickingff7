@@ -309,7 +309,7 @@ function InventoryCtrl($rootScope, $location, Game, Utils) {
     }
 
     Game.gils += thing.getPrice();
-    Utils.animate(ev, 'Success!');
+    Utils.animate(ev, 'SUCCESS!');
   };
 
   /**
@@ -323,9 +323,9 @@ function InventoryCtrl($rootScope, $location, Game, Utils) {
   /**
    * Use an item from the inventory
    */
-  $rootScope.equip = function(ev, item) {
-    item.equip();
-    Utils.animate(ev, 'OK!');
+  $rootScope.equip = function(ev, weapon) {
+    weapon.equip();
+    Utils.animate(ev, 'SUCCESS!');
   };
 
 }
