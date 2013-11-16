@@ -19,7 +19,7 @@ function Zones(Game) {
  */
 Zones.prototype.build = function() {
   for (var i in this.Game.data.zones) {
-    var data = this.Game.data.zones[i];
+    var data = _.clone(this.Game.data.zones[i]);
     this.zones.push(new Zone(this, data));
   }
 

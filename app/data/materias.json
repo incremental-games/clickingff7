@@ -5,8 +5,7 @@
     "color": "green",
     "ap_formula": "Math.pow(x+1,4)*30",
     "gils": 100,
-    "zone": 1,
-    "number": 1
+    "zone": 1
   },
   "bolt": {
     "ref": "bolt",
@@ -14,8 +13,7 @@
     "color": "green",
     "ap_formula": "Math.pow(x+1,4)*30",
     "gils": 100,
-    "zone": 1,
-    "number": 1
+    "zone": 1
   },
   "ice": {
     "ref": "ice",
@@ -23,7 +21,6 @@
     "color": "green",
     "ap_formula": "Math.pow(x+1,4)*30",
     "gils": 100,
-    "zone": 1,
-    "number": 1
+    "zone": 1
   }
 }

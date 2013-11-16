@@ -264,9 +264,7 @@ Game.prototype.newItems = function() {
  */
 Game.prototype.addWeapon = function(data, equiped) {
   if (typeof data == 'string') {
-    data = _.findWhere(this.data.weapons, {
-      ref: data
-    });
+    data = _.clone(this.data.weapons[data]);
   }
 
   // Give the weapon to a character
@@ -284,9 +282,7 @@ Game.prototype.addWeapon = function(data, equiped) {
  */
 Game.prototype.addMateria = function(data, characterRef) {
   if (typeof data == 'string') {
-    data = _.findWhere(this.data.materias, {
-      ref: data
-    });
+    data = _.clone(this.data.materias[data]);
   }
 
   // Give the weapon to a character
@@ -303,9 +299,7 @@ Game.prototype.addMateria = function(data, characterRef) {
  */
 Game.prototype.addItem = function(data) {
   if (typeof data == 'string') {
-    var data = _.findWhere(this.data.items, {
-      ref: data
-    });
+    var data = _.clone(this.data.items[data]);
   }
 
   this.items.push(new Item(this, data));

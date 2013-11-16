@@ -33,7 +33,7 @@ Characters.prototype.getTeam = function() {
  */
 Characters.prototype.add = function(data) {
   if (typeof data == 'string') {
-    data = this.Game.data.characters[data];
+    data = _.clone(this.Game.data.characters[data]);
   }
 
   // Character
