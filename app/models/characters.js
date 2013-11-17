@@ -153,7 +153,7 @@ Characters.prototype.autoTrain = function() {
   var self = this;
   this.timer['train'] = this.Game.$timeout(function() {
 
-    var xp = self.Game.zones.level / 5;
+    var xp = self.Game.zones.level;
     var characters = self.getTeam();
     for (var i in characters) {
       characters[i].setXp(xp);
