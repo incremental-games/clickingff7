@@ -334,8 +334,8 @@ Game.prototype.start_fight = function() {
 Game.prototype.end_fight = function(victory) {
   this.mode = "normal";
 
-  this.enemies.stopFighting();
   this.characters.stopFighting();
+  this.enemies.stopFighting();
 
   var enemies = this.enemies.getTeam();
   var characters = this.characters.getTeam();

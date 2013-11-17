@@ -60,9 +60,13 @@ Enemies.prototype.autoFighting = function() {
   this.timer['fighting'] = this.Game.$timeout(function() {
 
     var hits = self.hits;
-    self.Game.characters.get_attacked(hits);
+    var alive = self.Game.characters.get_attacked(hits);
 
-    self.autoFighting();
+    if (alive) {
+      self.autoFighting();
+    } else {
+      self.Game.end_fight(false);
+    }
   }, 1000);
 };
 
@@ -70,7 +74,7 @@ Enemies.prototype.autoFighting = function() {
  * Stop fighting
  */
 Enemies.prototype.stopFighting = function() {
-  this.Game.$timeout.cancel(this.timer['fighting']);
+  var success = this.Game.$timeout.cancel(this.timer['fighting']);
 };
 
 /**
@@ -82,8 +86,9 @@ Enemies.prototype.get_attacked = function(hits) {
   if (this.hp <= 0) {
     this.hp = 0;
 
-    this.Game.end_fight(true);
+    return false;
   }
+  return true;
 };
 
 /**

@@ -138,9 +138,13 @@ Characters.prototype.autoFighting = function() {
   this.timer['fighting'] = this.Game.$timeout(function() {
 
     var hits = self.hits;
-    self.Game.enemies.get_attacked(hits);
+    var alive = self.Game.enemies.get_attacked(hits);
 
-    self.autoFighting();
+    if (alive) {
+      self.autoFighting();
+    } else {
+      self.Game.end_fight(true);
+    }
   }, 1000);
 };
 
@@ -148,7 +152,7 @@ Characters.prototype.autoFighting = function() {
  * Stop fighting
  */
 Characters.prototype.stopFighting = function() {
-  this.Game.$timeout.cancel(this.timer['fighting']);
+  var success = this.Game.$timeout.cancel(this.timer['fighting']);
 };
 
 /**
@@ -209,8 +213,10 @@ Characters.prototype.get_attacked = function(hits) {
     this.limit = 0;
     this.hp = 0;
 
-    this.Game.end_fight(false);
+    return false;
   }
+
+  return true;
 };
 
 /**
