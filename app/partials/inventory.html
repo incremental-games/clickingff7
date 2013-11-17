@@ -61,7 +61,7 @@
         <!-- CHARACTERS LIST -->
         <div class="listEquipMateria">
           <div ng-click="hideList($event)" class="close">X</div>
-            <div ng-repeat="character in game.characters.getTeam() | clean" ng-click="equipMateria($event, materia, character.ref)">
+            <div ng-repeat="character in game.characters.getMateriaTeam() | clean" ng-click="equipMateria($event, materia, character.ref)">
               {{character.name}}
             </div>
         </div>

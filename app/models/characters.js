@@ -32,6 +32,15 @@ Characters.prototype.getTeam = function() {
 };
 
 /**
+ * Get the team who can equip a materia
+ */
+Characters.prototype.getMateriaTeam = function() {
+  return _.filter(this.characters, function(o) {
+    return (!o.materia());
+  });
+};
+
+/**
  * Set HP characters
  * @param {int} hp
  */
