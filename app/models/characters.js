@@ -95,11 +95,24 @@ Characters.prototype.refresh = function() {
   }
 };
 
+/**
+ * Characters do train
+ */
+Characters.prototype.train = function() {
+  if (this.Game.mode == "normal") {
+    this.Game.mode = "train";
+    this.autoTrain();
+  }
+};
+
+/**
+ * Auto-train (XP by level zone)
+ */
 Characters.prototype.autoTrain = function() {
   var self = this;
   this.timer['train'] = this.Game.$timeout(function() {
 
-    var xp = 1;
+    var xp = self.Game.zones.level / 5;
     var characters = self.getTeam();
     for (var i in characters) {
       characters[i].setXp(xp);
@@ -110,7 +123,7 @@ Characters.prototype.autoTrain = function() {
 };
 
 /**
- * Characters do train
+ * Characters stop training
  */
 Characters.prototype.stopTrain = function() {
   this.Game.mode = "normal";
@@ -198,14 +211,6 @@ Characters.prototype.get_attacked = function(hits) {
 
     this.Game.end_fight(false);
   }
-};
-
-/**
- * Characters do train
- */
-Characters.prototype.train = function() {
-  this.Game.mode = "train";
-  this.autoTrain();
 };
 
 /**
