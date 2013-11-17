@@ -11,7 +11,9 @@ function Characters(Game) {
 
   this.characters = [];
 
-  this.timer = [];
+  this.timer = {};
+
+  this.autoRestore();
 };
 
 /**
@@ -30,13 +32,24 @@ Characters.prototype.getTeam = function() {
 };
 
 /**
- * Set hp characters
+ * Set HP characters
  * @param {int} hp
  */
 Characters.prototype.addHp = function(hp) {
   this.hp += hp;
   if (this.hp > this.hpMax) {
     this.hp = this.hpMax;
+  }
+};
+
+/**
+ * Set MP characters
+ * @param {int} hp
+ */
+Characters.prototype.addMp = function(mp) {
+  this.mp += mp;
+  if (this.mp > this.mpMax) {
+    this.mp = this.mpMax;
   }
 };
 
@@ -80,8 +93,49 @@ Characters.prototype.refresh = function() {
   if (!_.has(this, 'limit')) {
     this.limit = 0;
   }
+};
 
-  this.autoRestore();
+Characters.prototype.autoTrain = function() {
+  var self = this;
+  this.timer['train'] = this.Game.$timeout(function() {
+
+    var xp = 1;
+    var characters = self.getTeam();
+    for (var i in characters) {
+      characters[i].setXp(xp);
+    }
+
+    self.autoTrain();
+  }, 1000);
+};
+
+/**
+ * Characters do train
+ */
+Characters.prototype.stopTrain = function() {
+  this.Game.mode = "normal";
+  this.Game.$timeout.cancel(this.timer['train']);
+};
+
+/**
+ * Characters auto-attack process
+ */
+Characters.prototype.autoFighting = function() {
+  var self = this;
+  this.timer['fighting'] = this.Game.$timeout(function() {
+
+    var hits = self.hits;
+    self.Game.enemies.get_attacked(hits);
+
+    self.autoFighting();
+  }, 1000);
+};
+
+/**
+ * Stop fighting
+ */
+Characters.prototype.stopFighting = function() {
+  this.Game.$timeout.cancel(this.timer['fighting']);
 };
 
 /**
@@ -89,18 +143,10 @@ Characters.prototype.refresh = function() {
  */
 Characters.prototype.autoRestore = function() {
   var self = this;
-  var $timeout = this.Game.$timeout;
-
-  this.timer[1] = $timeout(function() {
+  this.timer['restore'] = this.Game.$timeout(function() {
 
     if (self.Game.mode == "normal") {
       self.restore();
-
-      // Auto explore
-      //if (self.hp == self.hpMax) {
-      //  self.explore();
-      //}
-
     }
 
     self.autoRestore();
@@ -135,24 +181,6 @@ Characters.prototype.limitProgress = function(pixels_max) {
 };
 
 /**
- * Characters auto-attack process
- */
-Characters.prototype.run = function() {
-  var self = this;
-  var $timeout = this.Game.$timeout;
-
-  this.timer[0] = $timeout(function() {
-    // Stop attacking if fight's over
-    if (self.Game.mode != "fight") return;
-
-    var hits = self.hits;
-    self.Game.enemies.get_attacked(hits);
-
-    self.run();
-  }, 1000);
-};
-
-/**
  * Enemies are under attack
  * @param  {int} hits
  */
@@ -180,29 +208,6 @@ Characters.prototype.train = function() {
   this.autoTrain();
 };
 
-Characters.prototype.autoTrain = function() {
-  var self = this;
-  this.timer[2] = this.Game.$timeout(function() {
-    // Stop attacking if fight's over
-    if (self.Game.mode != "train") return;
-
-    var xp = 1;
-    var characters = self.getTeam();
-    for (var i in characters) {
-      characters[i].setXp(xp);
-    }
-
-    self.autoTrain();
-  }, 1000);
-};
-
-/**
- * Characters do train
- */
-Characters.prototype.stopTrain = function() {
-  this.Game.mode = "normal";
-};
-
 /**
  * Characters do explore
  */
@@ -217,10 +222,9 @@ Characters.prototype.explore = function() {
  * @return {[type]} [description]
  */
 Characters.prototype.restore = function() {
-  var hpMax = this.hpMax;
   var characters = this.getTeam();
 
-  var Lvl = 0;
+  var Lvl = 1;
   for (var i in characters) {
     var character = characters[i];
     if (character.materia() && character.materia().ref == 'restore') {
@@ -228,11 +232,13 @@ Characters.prototype.restore = function() {
     }
   }
 
-  var res = Math.ceil(hpMax * (Lvl * 2 / 100));
+  var resHp = Math.ceil(this.hpMax * (Lvl * 1 / 100));
+  var resMp = Math.ceil(this.mpMax * (Lvl * 1 / 100));
 
-  this.addHp(res);
+  this.addHp(resHp);
+  this.addMp(resMp);
 
-  return res;
+  return resHp;
 };
 
 /**

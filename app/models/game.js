@@ -24,7 +24,7 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
   // Fight mode
   this.mode = "normal";
 
-  this.gils = 3500;
+  this.gils = 0;
 
   this.zones = new Zones(this);
 
@@ -322,8 +322,8 @@ Game.prototype.start_fight = function() {
   if (this.mode == "normal") {
     this.mode = "fight";
 
-    this.characters.run();
-    this.enemies.run();
+    this.characters.autoFighting();
+    this.enemies.autoFighting();
   }
 };
 
@@ -333,6 +333,9 @@ Game.prototype.start_fight = function() {
  */
 Game.prototype.end_fight = function(victory) {
   this.mode = "normal";
+
+  this.enemies.stopFighting();
+  this.characters.stopFighting();
 
   var enemies = this.enemies.getTeam();
   var characters = this.characters.getTeam();

@@ -10,6 +10,8 @@ function Enemies(Game) {
   this.Game = Game;
 
   this.enemies = [];
+
+  this.timer = {};
 };
 
 /**
@@ -53,19 +55,22 @@ Enemies.prototype.refresh = function() {
 /**
  * Enemies auto-attack process
  */
-Enemies.prototype.run = function() {
+Enemies.prototype.autoFighting = function() {
   var self = this;
-  var $timeout = this.Game.$timeout;
-
-  this.timer = $timeout(function() {
-    // Stop attacking if fight's over
-    if (self.Game.mode != "fight") return;
+  this.timer['fighting'] = this.Game.$timeout(function() {
 
     var hits = self.hits;
     self.Game.characters.get_attacked(hits);
 
-    self.run();
+    self.autoFighting();
   }, 1000);
+};
+
+/**
+ * Stop fighting
+ */
+Enemies.prototype.stopFighting = function() {
+  this.Game.$timeout.cancel(this.timer['fighting']);
 };
 
 /**
