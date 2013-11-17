@@ -1,7 +1,7 @@
 <div class="zone part w400 aleft">
   <div class="main">
     <div class="part avatar w100">
-      <img ng-src="img/zones/{{game.zones.zone().img}}" width="100" />
+      <img ng-src="img/zones/{{game.zones.zone().img}}" ng-if="game.zones.zone()" width="100" />
     </div><!--
     --><div class="part w300">
       <div>{{game.zones.zone().name}} <strong>(#{{game.zones.zone().level}})</strong></div>
@@ -79,7 +79,7 @@
   <div class="part w400 aleft">
     {{game.characters.getHits()|round:2}}</span> 
     <span ng-repeat="(effect, power) in game.characters.effects" class="effect" ng-if="effect">
-      <img src="img/icons/{{effect}}.png" title="{{effect}}" class="effect" />
+      <img ng-src="img/icons/{{effect}}.png" title="{{effect}}" class="effect" />
     </span>
   </div>
 
@@ -117,13 +117,13 @@
         <div class="powerUp" ng-if="enemy.weakness">
           Weakness: 
             <span ng-repeat="effect in enemy.weakness" class="effect">
-              <img src="img/icons/{{effect}}.png" title="{{effect}}" class="effect" />
+              <img ng-src="img/icons/{{effect}}.png" title="{{effect}}" class="effect" />
             </span>
         </div>
         <div class="powerUp" ng-if="enemy.resists">
           Resists: 
             <span ng-repeat="effect in enemy.resists" class="effect">
-              <img src="img/icons/{{effect}}.png" title="{{effect}}" class="effect" />
+              <img ng-src="img/icons/{{effect}}.png" title="{{effect}}" class="effect" />
             </span>
         </div>
       </div>

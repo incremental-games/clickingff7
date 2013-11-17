@@ -1,7 +1,7 @@
 <div class="zone part w400 aleft">
   <div class="main">
     <div class="part avatar w100">
-      <img ng-src="img/zones/{{game.zones.zone().img}}" width="100" />
+      <img ng-src="img/zones/{{game.zones.zone().img}}" ng-if="game.zones.zone()" width="100" />
     </div><!--
     --><div class="part w300">
       <div>{{game.zones.zone().name}} <strong>(#{{game.zones.zone().level}})</strong></div>
