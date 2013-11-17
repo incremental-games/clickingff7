@@ -5,6 +5,8 @@
 
 function Enemies(Game) {
 
+  this._id = _.uniqueId();
+
   this.Game = Game;
 
   this.enemies = [];

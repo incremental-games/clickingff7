@@ -5,6 +5,8 @@
 
 function Zones(Game) {
 
+  this._id = _.uniqueId();
+
   this.Game = Game;
 
   this.zones = [];

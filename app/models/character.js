@@ -6,6 +6,8 @@
 
 function Character(Characters, data) {
 
+  this._id = _.uniqueId();
+
   this.Characters = Characters;
 
   if (data) {

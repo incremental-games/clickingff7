@@ -5,6 +5,8 @@
 
 function Characters(Game) {
 
+  this._id = _.uniqueId();
+
   this.Game = Game;
 
   this.characters = [];

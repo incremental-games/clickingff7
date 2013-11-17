@@ -2,7 +2,11 @@
  * Game class
  */
 
-function Game() {};
+function Game() {
+
+  this._id = _.uniqueId();
+
+};
 
 /**
  * Init the game with angular variables
@@ -20,7 +24,7 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
   // Fight mode
   this.mode = "normal";
 
-  this.gils = 500;
+  this.gils = 3500;
 
   this.zones = new Zones(this);
 

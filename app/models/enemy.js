@@ -6,6 +6,8 @@
 
 function Enemy(Enemies, data) {
 
+  this._id = _.uniqueId();
+
   this.Enemies = Enemies;
 
   if (data) {

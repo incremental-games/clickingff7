@@ -5,6 +5,8 @@
 
 function Shop(Game) {
 
+  this._id = _.uniqueId();
+
   this.Game = Game;
 };
 

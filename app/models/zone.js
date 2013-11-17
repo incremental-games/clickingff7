@@ -6,6 +6,8 @@
 
 function Zone(Zones, data) {
 
+  this._id = _.uniqueId();
+
   this.Zones = Zones;
 
   if (data) {

@@ -6,6 +6,8 @@
 
 function Materia(Game, data) {
 
+  this._id = _.uniqueId();
+
   this.Game = Game;
 
   if (data) {
