@@ -39,7 +39,7 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
 
   this.data = {};
 
-  this.version = 0.8;
+  this.version = "0.8.1";
 };
 
 /**
@@ -154,7 +154,7 @@ Game.prototype.begin = function() {
   var save = this.$cookieStore.get('game');
   if (save) {
     // Detect old save
-    if (save.version && save.version == this.version) {
+    if (_.has(save, 'version')) {
       this.extends(save);
     } else {
       this.reset();
