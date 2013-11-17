@@ -207,7 +207,7 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game, Ut
    */
   $rootScope.attack = function(ev) {
     if (Game.characters.canAttack()) {
-      var hits = Game.characters.hits;
+      var hits = Game.characters.getHits();
       var d = Math.pow(10, 2);
       hits = Math.round(hits * d) / d;
       // checks limit

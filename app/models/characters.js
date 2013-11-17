@@ -14,6 +14,9 @@ function Characters(Game) {
   this.timer = {};
 
   this.autoRestore();
+
+  this.weaknessDamages = 0;
+  this.resistsDamages = 0;
 };
 
 /**
@@ -52,14 +55,14 @@ Characters.prototype.addHp = function(hp) {
 };
 
 /**
- * Set MP characters
- * @param {int} hp
+ * Add an effect
+ * @param {String} effect
  */
-Characters.prototype.addMp = function(mp) {
-  this.mp += mp;
-  if (this.mp > this.mpMax) {
-    this.mp = this.mpMax;
+Characters.prototype.addEffect = function(effect) {
+  if (!_.has(this.effects, effect)) {
+    this.effects[effect] = 0;
   }
+  this.effects[effect] += 1;
 };
 
 /**
@@ -79,16 +82,21 @@ Characters.prototype.add = function(data) {
  */
 Characters.prototype.refresh = function() {
   this.hpMax = 0;
-  this.mpMax = 0;
   this.limitMax = 0;
   this.hits = 0;
+  this.effects = {};
 
   var characters = this.getTeam();
   for (var i in characters) {
-    // HP
+    // HP, hits
     this.hpMax += characters[i].getHpMax();
-    this.mpMax += characters[i].getMpMax();
     this.hits += characters[i].getHits();
+
+    // Effects
+    var materia = characters[i].materia();
+    if (materia && materia.effect) {
+      this.addEffect(materia.effect);
+    }
   }
 
   this.limitMax = this.hpMax * 2;
@@ -96,11 +104,35 @@ Characters.prototype.refresh = function() {
   if (!_.has(this, 'hp')) {
     this.hp = this.hpMax;
   }
-  if (!_.has(this, 'mp')) {
-    this.mp = this.mpMax;
-  }
   if (!_.has(this, 'limit')) {
     this.limit = 0;
+  }
+};
+
+Characters.prototype.getHits = function() {
+  var hits = 0;
+  hits += this.hits;
+  hits += ((this.weaknessDamages - this.resistsDamages) * 10 / 100) * hits;
+  return hits;
+};
+
+/**
+ * Finalize refresh with enemies weakness
+ */
+Characters.prototype.refreshHits = function() {
+  this.weaknessDamages = 0;
+  var weakness = this.Game.enemies.weakness;
+  for (var i in weakness) {
+    if (_.has(this.effects, i)) {
+      this.weaknessDamages += this.effects[i];
+    }
+  }
+  this.resistsDamages = 0;
+  var resists = this.Game.enemies.resists;
+  for (var i in resists) {
+    if (_.has(this.effects, i)) {
+      this.resistsDamages += this.effects[i];
+    }
   }
 };
 
@@ -146,7 +178,7 @@ Characters.prototype.autoFighting = function() {
   var self = this;
   this.timer['fighting'] = this.Game.$timeout(function() {
 
-    var hits = self.hits;
+    var hits = self.getHits();
     var alive = self.Game.enemies.get_attacked(hits);
 
     if (alive) {
@@ -162,10 +194,12 @@ Characters.prototype.autoFighting = function() {
  */
 Characters.prototype.stopFighting = function() {
   var success = this.Game.$timeout.cancel(this.timer['fighting']);
+  this.weaknessDamages = 0;
+  this.resistsDamages = 0;
 };
 
 /**
- * Auto-restore HP, MP while not in fight
+ * Auto-restore HP while not in fight
  */
 Characters.prototype.autoRestore = function() {
   var self = this;
@@ -186,15 +220,6 @@ Characters.prototype.autoRestore = function() {
  */
 Characters.prototype.hpProgress = function(pixels_max) {
   return this.hp / this.hpMax * pixels_max;
-};
-
-/**
- * Returns in pixels characters hp bar width
- * @param  {int} pixel_max
- * @return {int}
- */
-Characters.prototype.mpProgress = function(pixels_max) {
-  return this.mp / this.mpMax * pixels_max;
 };
 
 /**
@@ -234,6 +259,7 @@ Characters.prototype.get_attacked = function(hits) {
 Characters.prototype.explore = function() {
   this.Game.enemies.random();
   this.Game.enemies.refresh();
+  this.refreshHits(); // Modify hits if enemies weakness
   this.Game.start_fight();
 };
 
@@ -253,10 +279,8 @@ Characters.prototype.restore = function() {
   }
 
   var resHp = Math.ceil(this.hpMax * (Lvl * 1 / 100));
-  var resMp = Math.ceil(this.mpMax * (Lvl * 1 / 100));
 
   this.addHp(resHp);
-  this.addMp(resMp);
 
   return resHp;
 };
@@ -307,7 +331,6 @@ Characters.prototype.canEscape = function() {
 Characters.prototype.save = function() {
   var res = {
     "hp": this.hp,
-    "mp": this.mp,
     "limit": this.limit,
     "data": []
   };

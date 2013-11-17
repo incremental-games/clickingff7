@@ -133,6 +133,7 @@ Materia.prototype.setAp = function(ap) {
  */
 Materia.prototype.equip = function(characterRef) {
   this.character = characterRef;
+  this.Game.characters.refresh();
 };
 
 /**
@@ -140,6 +141,7 @@ Materia.prototype.equip = function(characterRef) {
  */
 Materia.prototype.unequip = function() {
   this.character = "";
+  this.Game.characters.refresh();
 };
 
 /**

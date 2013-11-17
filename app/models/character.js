@@ -62,15 +62,6 @@ Character.prototype.getHpMax = function() {
 };
 
 /**
- * returns character total MP
- * based on level and weapon level
- * @return {int}
- */
-Character.prototype.getMpMax = function() {
-  return this.mpBase * this.level;
-};
-
-/**
  * returns character total hits
  * based on level and weapon level
  * @return {int}

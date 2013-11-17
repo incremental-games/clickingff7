@@ -40,12 +40,11 @@
     </div>
 
     <div>
-      <span class="label2">{{game.enemies.hp|round:2}} / {{game.enemies.hpMax}} HP</span>
+      <span class="label2">{{game.enemies.hp|ceil}} / {{game.enemies.hpMax}} HP</span>
       <div class="part progress enemy_hp w300">
         <div class="enemy_hp_progress" style="width:{{game.enemies.hpProgress(300)}}px;"></div>
       </div>
     </div>
-
   </div>
 
   <div class="part w400 aleft">
@@ -62,14 +61,7 @@
       <div class="part progress characters_hp w300">
         <div class="characters_hp_progress" style="width:{{game.characters.hpProgress(300)}}px;"></div>
       </div>
-      <span class="label2">{{game.characters.hp|round:2}} / {{game.characters.hpMax}} HP</span>
-    </div>
-
-    <div>
-      <div class="part progress characters_mp w300">
-        <div class="characters_mp_progress" style="width:{{game.characters.mpProgress(300)}}px;"></div>
-      </div>
-      <span class="label2">{{game.characters.mp|round:2}} / {{game.characters.mpMax}} MP</span>
+      <span class="label2">{{game.characters.hp|ceil}} / {{game.characters.hpMax}} HP</span>
     </div>
 
     <div>
@@ -78,10 +70,22 @@
       </div>
       <span class="label2">LIMIT</span>
     </div>
+  </div>
 
+  <div class="part w400 aright">
+    {{game.enemies.hits|round:2}}</span>
+  </div>
+  <div class="part w50"><strong>PWR</strong></div>
+  <div class="part w400 aleft">
+    {{game.characters.getHits()|round:2}}</span> 
+    <span ng-repeat="(effect, power) in game.characters.effects" class="effect" ng-if="effect">
+      <img src="img/icons/{{effect}}.png" title="{{effect}}" class="effect" />
+    </span>
   </div>
 
 </div>
+
+
 
 <div class="space"></div>
 
@@ -109,7 +113,20 @@
           </div>
         </div>
       </div>
-      <div class="infos"></div>
+      <div class="infos">
+        <div class="powerUp" ng-if="enemy.weakness">
+          Weakness: 
+            <span ng-repeat="effect in enemy.weakness" class="effect">
+              <img src="img/icons/{{effect}}.png" title="{{effect}}" class="effect" />
+            </span>
+        </div>
+        <div class="powerUp" ng-if="enemy.resists">
+          Resists: 
+            <span ng-repeat="effect in enemy.resists" class="effect">
+              <img src="img/icons/{{effect}}.png" title="{{effect}}" class="effect" />
+            </span>
+        </div>
+      </div>
     </div>
   </sections>
 
@@ -146,7 +163,7 @@
         </div>
         <div class="powerUp" ng-if="character.materia()">
           <img ng-src="img/icons/{{character.materia().color}}-materia.png" class="materia icon" />
-          {{character.materia().name}}
+          {{character.materia().name}} (LVL{{character.materia().level}})
         </div>
         <div class="powerUp" ng-if="character.item">
           {{character.item.name}}

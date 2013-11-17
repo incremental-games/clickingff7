@@ -23,6 +23,26 @@ Enemies.prototype.getTeam = function() {
 };
 
 /**
+ * Add a weakness
+ */
+Enemies.prototype.addWeakness = function(effect) {
+  if (!_.has(this.weakness, effect)) {
+    this.weakness[effect] = 0;
+  }
+  this.weakness[effect] += 10;
+};
+
+/**
+ * Add a resistance
+ */
+Enemies.prototype.addResists = function(effect) {
+  if (!_.has(this.resists, effect)) {
+    this.resists[effect] = 0;
+  }
+  this.resists[effect] += 10;
+};
+
+/**
  * Pick a random number of enemies of the current zone
  * @return {[type]} [description]
  */
@@ -41,12 +61,28 @@ Enemies.prototype.random = function() {
 Enemies.prototype.refresh = function() {
   this.hpMax = 0;
   this.hits = 0;
+  this.weakness = {};
+  this.resists = {};
 
   var enemies = this.getTeam();
   for (var i in enemies) {
     // HP
     this.hpMax += enemies[i].getHpMax();
     this.hits += enemies[i].getHits();
+
+    var weakness = enemies[i].weakness;
+    if (weakness) {
+      for (var i in weakness) {
+        this.addWeakness(weakness[i]);
+      }
+    }
+
+    var resists = enemies[i].resists;
+    if (resists) {
+      for (var i in resists) {
+        this.addResists(resists[i]);
+      }
+    }
   }
 
   this.hp = this.hpMax;

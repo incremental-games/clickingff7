@@ -10,6 +10,8 @@
   "bolt": {
     "ref": "bolt",
     "name": "Bolt",
+    "effect": "bolt",
+    "hits": true,
     "color": "green",
     "ap_formula": "Math.pow(x+1,4)*30",
     "gils": 100,
@@ -18,6 +20,8 @@
   "ice": {
     "ref": "ice",
     "name": "Ice",
+    "effect": "ice",
+    "hits": true,
     "color": "green",
     "ap_formula": "Math.pow(x+1,4)*30",
     "gils": 100,

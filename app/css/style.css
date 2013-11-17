@@ -143,6 +143,7 @@ footer {
 img.icon {margin-bottom: -1px;}
 img.materia {width: 14px; margin-bottom: -3px;}
 img.gils {width: 14px; margin-bottom: -3px;}
+img.effect {width: 16px; margin-bottom: -3px;}
 
 /*SHOP */
 
@@ -183,14 +184,6 @@ img.gils {width: 14px; margin-bottom: -3px;}
 
 .characters_hp_progress {
   background-color: #BEECBE;
-  position: absolute;
-  height: 18px;
-  top: 0;
-  left: 0;
-}
-
-.characters_mp_progress {
-  background-color: #ACC9E9;
   position: absolute;
   height: 18px;
   top: 0;
@@ -310,7 +303,7 @@ img.gils {width: 14px; margin-bottom: -3px;}
 
 /* ANIMATIONS */
 
-.xp_progress, .enemy_hp_progress, .characters_hp_progress, .characters_mp_progress, .characters_limit_progress {
+.xp_progress, .enemy_hp_progress, .characters_hp_progress, .characters_limit_progress {
   -webkit-transition:0.5s linear all;
   -moz-transition:0.5s linear all;
   -o-transition:0.5s linear all;
