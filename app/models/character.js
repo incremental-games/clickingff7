@@ -75,7 +75,7 @@ Character.prototype.getHits = function() {
  * @return {int}
  */
 Character.prototype.getXpMax = function() {
-  return eval(this.xp_formula.replace('x', this.level));
+  return eval(this.xp_formula.replace('x', this.level + 1));
 };
 
 /**

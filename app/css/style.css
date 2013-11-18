@@ -153,7 +153,7 @@ img.effect {width: 16px; margin-bottom: -3px;}
 .shopList .inStock {display: inline-block; width: 100px; text-align: left;}
 .shopList .price {display: inline-block; width: 100px; text-align: left;}
 .shopList .actions {display: inline-block; width: 100px; text-align: right; vertical-align: top;}
-.shopList .name .desc {color: #999; font-size: 11px;}
+.shopList .name .desc {color: #666; font-size: 11px;}
 
 .disabled {
   border-top: 1px solid #ccc;
@@ -214,7 +214,7 @@ img.effect {width: 16px; margin-bottom: -3px;}
 }
 
 .label2 {
-  color: #999;
+  color: #666;
   font-size: 11px;
 }
 
@@ -226,7 +226,7 @@ img.effect {width: 16px; margin-bottom: -3px;}
 
 .line {
   font-style: italic;
-  color: #999;
+  color: #666;
 }
 
 .button {
