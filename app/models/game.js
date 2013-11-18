@@ -24,7 +24,7 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
   // Fight mode
   this.mode = "normal";
 
-  this.gils = 0;
+  this.gils = 100;
 
   this.zones = new Zones(this);
 
