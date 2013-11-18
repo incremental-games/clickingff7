@@ -57,6 +57,8 @@ Weapon.prototype.equip = function() {
   weapon.equipped = false;
 
   this.equipped = true;
+
+  this.Game.characters.refresh();
 };
 
 /**
