@@ -16,9 +16,21 @@
   </div>
 </div><!--
 
+--><div class="part w50"></div><!--
+
 --><div class="items part w400">
-  <div class="main">
-    
+  <div class="title">Quick items ({{game.items.length}})</div>
+  <div class="quickShopList aleft">
+    <div ng-repeat="item in game.items | clean" class="line">
+      <div class="name">
+        <img ng-src="img/icons/{{item.type}}.png" class="icon item" /> 
+        {{item.name}} <span class="desc">{{item.getDesc()}}</span>
+      </div><!--
+      --><div class="actions">
+        <div class="button" ng-click="useItem($event, item)">USE</div>&nbsp;<!--
+        --><div class="button" ng-click="sell($event, item)">SELL</div>
+      </div>
+    </div>
   </div>
 </div>
 

@@ -172,6 +172,52 @@ function GameCtrl($rootScope, $location, $cookieStore, $http, $timeout, Game, Ut
   // STEP 3
   // Scope actions
 
+  $rootScope.useItem = function(ev, item) {
+    item.use();
+    Utils.animate(ev, 'SUCCESS!');
+  };
+
+  /**
+   * Sell an item
+   */
+  $rootScope.sell = function(ev, thing) {
+    var conf = confirm("Are you sure you want to sell " + thing.name + " ?");
+    if (!conf) return;
+
+    if (thing instanceof Weapon) {
+      if (thing.equipped) {
+        Utils.animate(ev, 'FAIL!');
+        return;
+      }
+      for (var i in Game.weapons) {
+        if (_.isEqual(Game.weapons[i], thing)) {
+          Game.weapons.splice(i, 1);
+        }
+      }
+    }
+    if (thing instanceof Materia) {
+      if (thing.character) {
+        Utils.animate(ev, 'FAIL!');
+        return;
+      }
+      for (var i in Game.materias) {
+        if (_.isEqual(Game.materias[i], thing)) {
+          Game.materias.splice(i, 1);
+        }
+      }
+    }
+    if (thing instanceof Item) {
+      for (var i in Game.items) {
+        if (_.isEqual(Game.items[i], thing)) {
+          Game.items.splice(i, 1);
+        }
+      }
+    }
+
+    Game.gils += thing.getPrice();
+    Utils.animate(ev, 'SUCCESS!');
+  };
+
   /**
    * Auto train
    */
