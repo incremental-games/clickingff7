@@ -41,7 +41,7 @@
         {{weapon.getPrice()}} Gils
       </div>
       <div class="actions">
-        <div class="button" ng-click="buy($event, weapon)">BUY</div>
+        <div class="button" ng-click="buy($event, weapon)" ng-if="game.gils >= weapon.getPrice()">BUY</div>
       </div>
     </div>
   </div>
@@ -59,7 +59,7 @@
         {{materia.getPrice()}} Gils
       </div>
       <div class="actions">
-        <div class="button" ng-click="buy($event, materia)">BUY</div>
+        <div class="button" ng-click="buy($event, materia)" ng-if="game.gils >= materia.getPrice()">BUY</div>
       </div>
     </div>
   </div>
@@ -77,7 +77,7 @@
         {{item.getPrice()}} Gils
       </div>
       <div class="actions">
-        <div class="button" ng-click="buy($event, item)">BUY</div>
+        <div class="button" ng-click="buy($event, item)" ng-if="game.gils >= item.getPrice()">BUY</div>
       </div>
     </div>
   </div>

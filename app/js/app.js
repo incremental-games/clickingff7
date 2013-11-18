@@ -284,6 +284,9 @@ function InventoryCtrl($rootScope, $location, Game, Utils) {
    * Sell an item
    */
   $rootScope.sell = function(ev, thing) {
+    var conf = confirm("Are you sure you want to sell " + thing.name + " ?");
+    if (!conf) return;
+
     if (thing instanceof Weapon) {
       if (thing.equipped) {
         Utils.animate(ev, 'FAIL!');

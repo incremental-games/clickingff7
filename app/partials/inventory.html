@@ -40,8 +40,8 @@
         {{weapon.getPrice()}} Gils
       </div>
       <div class="actions">
-        <div class="button" ng-click="equipWeapon($event, weapon)" ng-if="!weapon.equipped">EQUIP</div>
-        <div class="button" ng-click="sell($event, weapon)" ng-if="!weapon.equipped">SELL</div>
+        <div class="button" ng-click="equipWeapon($event, weapon)" ng-if="!weapon.equipped">EQUIP</div>&nbsp;<!--
+        --><div class="button" ng-click="sell($event, weapon)" ng-if="!weapon.equipped">SELL</div>
       </div>
     </div>
   </div>
@@ -66,9 +66,9 @@
             </div>
         </div>
 
-        <div class="button" ng-click="showList($event)" ng-if="!materia.character">EQUIP</div>
-        <div class="button" ng-click="unequipMateria($event, materia)" ng-if="materia.character">UNEQUIP</div>
-        <div class="button" ng-click="sell($event, materia)" ng-if="!materia.character">SELL</div>
+        <div class="button" ng-click="showList($event)" ng-if="!materia.character">EQUIP</div>&nbsp;<!--
+        --><div class="button" ng-click="unequipMateria($event, materia)" ng-if="materia.character">UNEQUIP</div>&nbsp;<!--
+        --><div class="button" ng-click="sell($event, materia)" ng-if="!materia.character">SELL</div>
       </div>
     </div>
   </div>
@@ -83,8 +83,8 @@
         {{item.getPrice()}} Gils
       </div>
       <div class="actions">
-        <div class="button" ng-click="useItem($event, item)">USE</div>
-        <div class="button" ng-click="sell($event, item)">SELL</div>
+        <div class="button" ng-click="useItem($event, item)">USE</div>&nbsp;<!--
+        --><div class="button" ng-click="sell($event, item)">SELL</div>
       </div>
     </div>
   </div>
