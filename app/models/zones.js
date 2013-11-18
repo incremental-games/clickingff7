@@ -49,6 +49,7 @@ Zones.prototype.completed = function() {
     this.level++;
     this.levelMax++;
     this.Game.newItems();
+    this.Game.characters.refresh();
   }
 };
 
