@@ -72,15 +72,15 @@ Enemies.prototype.refresh = function() {
 
     var weakness = enemies[i].weakness;
     if (weakness) {
-      for (var i in weakness) {
-        this.addWeakness(weakness[i]);
+      for (var j in weakness) {
+        this.addWeakness(weakness[j]);
       }
     }
 
     var resists = enemies[i].resists;
     if (resists) {
-      for (var i in resists) {
-        this.addResists(resists[i]);
+      for (var j in resists) {
+        this.addResists(resists[j]);
       }
     }
   }
