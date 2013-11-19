@@ -52,7 +52,7 @@ Enemies.prototype.random = function() {
   var chances = [];
   var last = 0;
   var enemies = _.filter(this.Game.data.enemies[zoneLvl], function(o) {
-    return (Math.max(Level - 1, 1) <= o.level + 2 && o.level <= (Level + 1));
+    return (Math.max(Level - 1, 1) <= o.level + 2 && o.level <= Level);
   });
   for (var i in enemies) {
     var enemy = enemies[i];
