@@ -48,11 +48,25 @@ Enemies.prototype.addResists = function(effect) {
  */
 Enemies.prototype.random = function() {
   var zoneLvl = this.Game.zones.level;
-  var nbr = _.random(1, 1);
-  var enemies = _.sample(this.Game.data.enemies[zoneLvl], nbr);
+  var Level = this.Game.characters.levelMax;
+  var chances = [];
+  var last = 0;
+  var enemies = _.filter(this.Game.data.enemies[zoneLvl], function(o) {
+    return (Math.max(Level - 1, 1) <= o.level + 2 && o.level <= (Level + 1));
+  });
   for (var i in enemies) {
-    this.enemies.push(new Enemy(this, enemies[i]));
+    var enemy = enemies[i];
+    var chance = Math.ceil(Math.pow(enemies.length - Math.abs(enemy.level - Level), 2) + last);
+    chances.push(chance);
+    last = chance;
   }
+  var sX = _.random(1, _.last(chances));
+  i = 0;
+  while (sX > chances[i]) {
+    i++;
+  }
+  var data = enemies[i];
+  this.enemies.push(new Enemy(this, data));
 };
 
 /**

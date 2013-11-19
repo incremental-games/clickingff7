@@ -85,9 +85,15 @@ Characters.prototype.refresh = function() {
   this.limitMax = 0;
   this.hits = 0;
   this.effects = {};
+  this.levelMax = 0;
 
   var characters = this.getTeam();
   for (var i in characters) {
+    // Level
+    if (characters[i].level > this.levelMax) {
+      this.levelMax = characters[i].level;
+    }
+
     // HP, hits
     this.hpMax += characters[i].getHpMax();
     this.hits += characters[i].getHits();
