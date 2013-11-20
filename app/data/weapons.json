@@ -8,6 +8,15 @@
     "gils": 170,
     "zone": 1
   },
+  "mythril-saber": {
+    "ref": "mythril-saber",
+    "name": "Mythril Saber",
+    "character": "cloud",
+    "type": "broadsword",
+    "hits": 23,
+    "gils": 1000,
+    "zone": 7
+  },
   "gatling-gun": {
     "ref": "gatling-gun",
     "name": "Gatling Gun",
@@ -25,6 +34,15 @@
     "hits": 17,
     "gils": 350,
     "zone": 2
+  },
+  "cannon-ball": {
+    "ref": "cannon-ball",
+    "name": "Cannon Ball",
+    "character": "barret",
+    "type": "gun-arm",
+    "hits": 23,
+    "gils": 475,
+    "zone": 7
   },
   "leather-glove": {
     "ref": "leather-glove",
@@ -44,6 +62,15 @@
     "gils": 320,
     "zone": 3
   },
+  "mythril-claw": {
+    "ref": "mythril-claw",
+    "name": "Mythril Claw",
+    "character": "tifa",
+    "type": "knuckle",
+    "hits": 24,
+    "gils": 750,
+    "zone": 7
+  },
   "guard-stick": {
     "ref": "guard-stick",
     "name": "Guard Stick",
@@ -61,6 +88,15 @@
     "hits": 16,
     "gils": 370,
     "zone": 3
+  },
+  "full-metal-staff": {
+    "ref": "full-metal-staff",
+    "name": "Full Metal Staff",
+    "character": "aerith",
+    "type": "stave",
+    "hits": 22,
+    "gils": 800,
+    "zone": 7
   },
   "mythril-clip": {
     "ref": "mythril-clip",

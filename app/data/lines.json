@@ -30,5 +30,12 @@
     "cloud": "Something's wrong.",
     "redxiii": "No human could've done this.",
     "tifa": "...Sephiroth is alive?"
+  },
+  "7": {
+    "aerith": "Seems like a lot of this doesn't make sense.",
+    "barret": "Yo, c'mon let's go!",
+    "cloud": "......I want to know the truth.",
+    "redxiii": "What a fascinating story.....",
+    "tifa": "Official records state Sephiroth is dead."
   }
 }

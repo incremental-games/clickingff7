@@ -4,7 +4,7 @@
     "name": "Restore",
     "color": "green",
     "ap_formula": "Math.pow(x+1,4)*25",
-    "gils": 100,
+    "gils": 750,
     "zone": 1
   },
   "bolt": {
@@ -14,7 +14,7 @@
     "hits": true,
     "color": "green",
     "ap_formula": "Math.pow(x+1,4)*30",
-    "gils": 100,
+    "gils": 600,
     "zone": 1
   },
   "ice": {
@@ -24,7 +24,7 @@
     "hits": true,
     "color": "green",
     "ap_formula": "Math.pow(x+1,4)*30",
-    "gils": 100,
+    "gils": 600,
     "zone": 1
   },
   "fire": {
@@ -34,7 +34,7 @@
     "hits": true,
     "color": "green",
     "ap_formula": "Math.pow(x+1,4)*30",
-    "gils": 150,
+    "gils": 600,
     "zone": 2
   },
   "poison": {
@@ -44,7 +44,17 @@
     "hits": true,
     "color": "green",
     "ap_formula": "Math.pow(x+1,4)*35",
-    "gils": 200,
+    "gils": 1500,
     "zone": 5
+  },
+  "earth": {
+    "ref": "earth",
+    "name": "Earth",
+    "effect": "earth",
+    "hits": true,
+    "color": "green",
+    "ap_formula": "Math.pow(x+1,4)*33",
+    "gils": 1500,
+    "zone": 7
   }
 }

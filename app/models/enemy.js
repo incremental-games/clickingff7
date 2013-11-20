@@ -33,7 +33,7 @@ Enemy.prototype.extends = function(data) {
 Enemy.prototype.getHpMax = function() {
   var level = this.level;
   var zoneLvl = this.Enemies.Game.zones.level;
-  var hits = [12.8, 38.4, 62.4, 84.8, 154, 223.2];
+  var hits = [12.8, 38.4, 62.4, 84.8, 154, 223.2, 324.8];
   var characters_hits = hits[zoneLvl - 1];
   var res;
 
@@ -55,7 +55,7 @@ Enemy.prototype.getHpMax = function() {
 Enemy.prototype.getHits = function() {
   var level = this.level;
   var zoneLvl = this.Enemies.Game.zones.level;
-  var hp = [120, 344, 468, 688, 1200, 1728];
+  var hp = [120, 344, 468, 688, 1200, 1728, 2016];
   var characters_hp = hp[zoneLvl - 1];
   var res;
 

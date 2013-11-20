@@ -40,5 +40,12 @@
     "name": "Shinra Headquarters (part 2)",
     "img": "Shinra_headquarters.png",
     "desc": "Aerith is safe, Jenova has been released and the president SHINRA has been killed by Sephiroth! No time to lose, there has to be a way to escape from Midgar!"
+  },
+  "zone-7": {
+    "ref": "midgar-wasteland",
+    "level": 7,
+    "name": "Midgar Wasteland",
+    "img": "kalm.png",
+    "desc": "Cloud told his horrible past to his companions. Sepiroth is still alive and is looking for the Promise Land. So, they're now chasing him."
   }
 }
