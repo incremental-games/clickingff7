@@ -17,7 +17,7 @@ function Materia(Game, data) {
   if (!_.has(this, 'level')) {
     this.level = 1;
   }
-  if (!_.has(this, 'level')) {
+  if (!_.has(this, 'ap')) {
     this.ap = 0;
   }
 };

@@ -352,18 +352,16 @@ Game.prototype.end_fight = function(victory) {
         this.zones.completed();
       }
 
-      // XP for characters
+      // XP for characters, AP for materias
       for (var j in characters) {
         var character = characters[j];
         var xp = enemy.xpReward();
-        character.setXp(xp);
-      }
-
-      // AP for materias
-      /*for (var j in this.materias) {
         var ap = enemy.apReward();
-        this.materias[j].set_ap(ap);
-      }*/
+        character.setXp(xp);
+        if (character.materia()) {
+          character.materia().setAp(ap);
+        }
+      }
     }
   }
 
