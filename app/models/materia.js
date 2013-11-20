@@ -34,31 +34,6 @@ Materia.prototype.extends = function(data) {
 };
 
 /**
- * Returns materia name
- * @return {String}
- */
-Materia.prototype.getName = function() {
-  var Txt;
-
-  switch (this.ref) {
-    case 'restore':
-      Txt = 'Restore';
-      break;
-    case 'bolt':
-      Txt = 'Bolt';
-      break;
-    case 'ice':
-      Txt = 'Ice';
-      break;
-    default:
-      Txt = "Unknown"
-      break;
-  }
-
-  return Txt;
-};
-
-/**
  * Returns description of the materia
  */
 Materia.prototype.getDesc = function() {
@@ -73,6 +48,12 @@ Materia.prototype.getDesc = function() {
       break;
     case 'ice':
       Txt = 'Ice damages may increase attack by ' + (this.level * 10) + '%';
+      break;
+    case 'fire':
+      Txt = 'Fire damages may increase attack by ' + (this.level * 10) + '%';
+      break;
+    case 'poison':
+      Txt = 'Poison damages may increase attack by ' + (this.level * 10) + '%';
       break;
   };
 

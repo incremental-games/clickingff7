@@ -3,7 +3,7 @@
     "ref": "restore",
     "name": "Restore",
     "color": "green",
-    "ap_formula": "Math.pow(x+1,4)*30",
+    "ap_formula": "Math.pow(x+1,4)*25",
     "gils": 100,
     "zone": 1
   },
@@ -26,5 +26,25 @@
     "ap_formula": "Math.pow(x+1,4)*30",
     "gils": 100,
     "zone": 1
+  },
+  "fire": {
+    "ref": "fire",
+    "name": "Fire",
+    "effect": "fire",
+    "hits": true,
+    "color": "green",
+    "ap_formula": "Math.pow(x+1,4)*30",
+    "gils": 150,
+    "zone": 2
+  },
+  "poison": {
+    "ref": "poison",
+    "name": "Poison",
+    "effect": "poison",
+    "hits": true,
+    "color": "green",
+    "ap_formula": "Math.pow(x+1,4)*35",
+    "gils": 200,
+    "zone": 5
   }
 }
