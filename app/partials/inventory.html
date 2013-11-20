@@ -34,7 +34,7 @@
         <img ng-src="img/icons/{{weapon.type}}.png" class="icon weapon" /> 
         {{weapon.name}}  
         <span class="boss" ng-if="weapon.equipped">EQUIPPED</span> 
-        <span class="desc">{{weapon.getDesc()}}</span>
+        <span class="desc">PWR {{weapon.hits}}</span>
       </div>
       <div class="price">
         {{weapon.getPrice()}} Gils

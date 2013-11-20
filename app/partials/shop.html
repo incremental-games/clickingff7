@@ -32,7 +32,7 @@
     <div ng-repeat="weapon in game.shop.getWeapons() | clean" class="line">
       <div class="name">
         <img ng-src="img/icons/{{weapon.type}}.png" class="icon weapon" /> 
-        {{weapon.name}}  <span class="desc">{{weapon.getDesc()}}</span>
+        {{weapon.name}}  <span class="desc">PWR {{weapon.hits}}</span>
       </div>
       <div class="inStock" ng-class="{bold: weapon.inStock()}">
         Stock: {{weapon.inStock()}}

@@ -149,6 +149,7 @@ img.effect {width: 16px; margin-bottom: -3px;}
 
 .shopList {margin: 0 10px; background-color: #fff;}
 .shopList .line {padding: 5px 0; border-top: 1px solid #eee;}
+.shopList .line:hover {background-color: #eee;}
 .shopList .name {display: inline-block; width: 500px; text-align: left; color: #666;}
 .shopList .name .desc {color: #666; font-size: 11px;}
 .shopList .inStock {display: inline-block; width: 100px; text-align: left;}
@@ -157,6 +158,7 @@ img.effect {width: 16px; margin-bottom: -3px;}
 
 .quickShopList {background-color: #fff; height: 100px; overflow: auto;}
 .quickShopList .line {padding: 5px 0; border-top: 1px solid #eee;}
+.quickShopList .line:hover {background-color: #eee;}
 .quickShopList .name {display: inline-block; width: 270px; text-align: left; color: #666;}
 .quickShopList .name .desc {color: #666; font-size: 11px;}
 .quickShopList .actions {display: inline-block; width: 100px; text-align: right; vertical-align: top;}
