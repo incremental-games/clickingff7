@@ -24,7 +24,7 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
   // Fight mode
   this.mode = "normal";
 
-  this.gils = 100;
+  this.gils = 200;
 
   this.zones = new Zones(this);
 
@@ -39,7 +39,7 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
 
   this.data = {};
 
-  this.version = "0.8.2";
+  this.version = "0.8.3";
 };
 
 /**
@@ -154,7 +154,7 @@ Game.prototype.begin = function() {
   var save = this.$cookieStore.get('game');
   if (save) {
     // Detect old save
-    if (_.has(save, 'version')) {
+    if (_.has(save, 'version') && save.version >= '0.8.3') {
       this.extends(save);
     } else {
       this.reset();
@@ -245,9 +245,10 @@ Game.prototype.newItems = function() {
     case 1: // Cloud & Barret
       this.addWeapon('buster-sword', true);
       this.addWeapon('gatling-gun', true);
+      this.addMateria('bolt', 'cloud');
       this.addMateria('restore', 'barret');
-      this.addItem('health-potion');
-      this.addItem('health-potion');
+      this.addItem('potion');
+      this.addItem('potion');
       this.characters.add('cloud');
       this.characters.add('barret');
       break;
@@ -261,6 +262,7 @@ Game.prototype.newItems = function() {
       break;
     case 5: // Red XIII
       this.addWeapon('mythril-clip', true);
+      this.addMateria('fire', 'redxiii');
       this.characters.add('redxiii');
       break;
   }

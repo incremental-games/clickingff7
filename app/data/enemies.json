@@ -50,7 +50,7 @@
       "level": 6,
       "name": "Blood Taste",
       "image": "blood-taste.png",
-      "weakness": ["fire"],
+      "weakness": ["fire"]
     },
     "4": {
       "level": 7,

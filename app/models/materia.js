@@ -41,19 +41,22 @@ Materia.prototype.getDesc = function() {
 
   switch (this.ref) {
     case 'restore':
-      Txt = 'You can cure your characters HP by ' + (this.level * 2) + '%';
+      Txt = 'HP +' + (this.level * 2) + '% while restoring';
       break;
     case 'bolt':
-      Txt = 'Bolt damages may increase attack by ' + (this.level * 10) + '%';
+      Txt = 'Bolt damages +' + (this.level * 10) + '%';
       break;
     case 'ice':
-      Txt = 'Ice damages may increase attack by ' + (this.level * 10) + '%';
+      Txt = 'Ice damages +' + (this.level * 10) + '%';
       break;
     case 'fire':
-      Txt = 'Fire damages may increase attack by ' + (this.level * 10) + '%';
+      Txt = 'Fire damages +' + (this.level * 10) + '%';
       break;
     case 'poison':
-      Txt = 'Poison damages may increase attack by ' + (this.level * 10) + '%';
+      Txt = 'Poison damages +' + (this.level * 10) + '%';
+      break;
+    case 'earth':
+      Txt = 'Earth damages +' + (this.level * 10) + '%';
       break;
   };
 

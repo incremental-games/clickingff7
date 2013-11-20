@@ -34,14 +34,11 @@ Item.prototype.extends = function(data) {
  */
 Item.prototype.use = function() {
   switch (this.ref) {
-    case 'health-potion':
+    case 'potion':
       this.Game.characters.addHp(this.getBonus());
       break;
-    case 'xp-potion':
-      var characters = this.Game.characters.getTeam();
-      for (var i in characters) {
-        characters[i].setXp(this.getBonus());
-      }
+    case 'hi-potion':
+      this.Game.characters.addHp(this.getBonus());
       break;
   }
   for (var i in this.Game.items) {
@@ -58,11 +55,11 @@ Item.prototype.getDesc = function() {
   var Txt = '';
 
   switch (this.ref) {
-    case 'health-potion':
-      Txt = 'Your characters regain ' + this.getBonus() + ' HP';
+    case 'potion':
+      Txt = 'HP +' + this.getBonus();
       break;
-    case 'xp-potion':
-      Txt = 'Your characters earn ' + this.getBonus() + ' XP';
+    case 'hi-potion':
+      Txt = 'HP +' + this.getBonus();
       break;
   }
 
