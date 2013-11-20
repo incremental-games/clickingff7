@@ -190,9 +190,48 @@
     "7": {
       "level": 20,
       "name": "Sample:H0512",
-      "image": "sample_h0512.png",
+      "image": "sample-h0512.png",
       "weakness": ["bolt"],
       "resists": ["gravity", "poison"],
+      "boss": true
+    }
+  },
+  "6": {
+    "1": {
+      "level": 20,
+      "name": "Zenene",
+      "image": "zenene.png",
+      "resists": ["fire", "poison"]
+    },
+    "2": {
+      "level": 21,
+      "name": "Rufus",
+      "image": "rufus.png",
+      "resists": ["gravity"],
+      "miboss": true
+    },
+    "3": {
+      "level": 22,
+      "name": "Hundred Gunner",
+      "image": "hundred-gunner.png",
+      "weakness": ["bolt"],
+      "resists": ["gravity"],
+      "miboss": true
+    },
+    "4": {
+      "level": 23,
+      "name": "Heli Gunner",
+      "image": "heli-gunner.png",
+      "weakness": ["bolt", "wind"],
+      "resists": ["earth"],
+      "miboss": true
+    },
+    "5": {
+      "level": 24,
+      "name": "Motor Ball",
+      "image": "motor-ball.png",
+      "weakness": ["bolt"],
+      "resists": ["fire", "gravity", "poison"],
       "boss": true
     }
   }

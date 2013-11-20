@@ -33,5 +33,12 @@
     "name": "Shinra Headquarters (part 1)",
     "img": "Shinra_headquarters.png",
     "desc": "Aerith is the last Ancient and has been kidnapped! Cloud, Barret and Tifa went to SHINRA HQ to rescue her. Red XIII, a mysterious animal, provided assistance."
+  },
+  "zone-6": {
+    "ref": "zone-6",
+    "level": 6,
+    "name": "Shinra Headquarters (part 2)",
+    "img": "Shinra_headquarters.png",
+    "desc": "Aerith is safe ! But something strange is happening... WTF ?! The president SHINRA has been killed by... Sephiroth ? Cloud and his friends have to run away from Midgar !"
   }
 }

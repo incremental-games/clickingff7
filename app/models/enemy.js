@@ -33,12 +33,14 @@ Enemy.prototype.extends = function(data) {
 Enemy.prototype.getHpMax = function() {
   var level = this.level;
   var zoneLvl = this.Enemies.Game.zones.level;
-  var hits = [12.8, 38.4, 62.4, 84.8, 154];
+  var hits = [12.8, 38.4, 62.4, 84.8, 154, 223.2];
   var characters_hits = hits[zoneLvl - 1];
   var res;
 
   if (this.boss) {
     res = characters_hits * 20;
+  } else if (this.miboss) {
+    res = characters_hits * 17.5;
   } else {
     res = Math.ceil((level / (zoneLvl * 4)) * characters_hits * 15);
   }
@@ -53,12 +55,14 @@ Enemy.prototype.getHpMax = function() {
 Enemy.prototype.getHits = function() {
   var level = this.level;
   var zoneLvl = this.Enemies.Game.zones.level;
-  var hp = [120, 344, 468, 688, 1200];
+  var hp = [120, 344, 468, 688, 1200, 1728];
   var characters_hp = hp[zoneLvl - 1];
   var res;
 
   if (this.boss) {
     res = Math.ceil(characters_hp / 9);
+  } else if (this.miboss) {
+    res = Math.ceil(characters_hp / 10.5);
   } else {
     res = Math.ceil((level / (zoneLvl * 4)) * characters_hp / 12);
   }
@@ -72,6 +76,9 @@ Enemy.prototype.getHits = function() {
  */
 Enemy.prototype.xpReward = function() {
   var res = this.level * 10;
+  if (this.miboss) {
+    res *= 1.5;
+  }
   if (this.boss) {
     res *= 2;
   }
@@ -85,6 +92,9 @@ Enemy.prototype.xpReward = function() {
 Enemy.prototype.apReward = function() {
   var zoneLvl = this.Enemies.Game.zones.level;
   var res = Math.ceil(this.level + zoneLvl);
+  if (this.miboss) {
+    res *= 1.5;
+  }
   if (this.boss) {
     res *= 2;
   }
@@ -98,6 +108,9 @@ Enemy.prototype.apReward = function() {
 Enemy.prototype.gilsReward = function() {
   var zoneLvl = this.Enemies.Game.zones.level;
   var res = Math.ceil(this.level * 10 + zoneLvl);
+  if (this.miboss) {
+    res *= 1.5;
+  }
   if (this.boss) {
     res *= 2;
   }

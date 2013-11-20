@@ -1,0 +1,20 @@
+Clicking FF7 FAQS
+
+==---------------------------------------------------------------------------==
+
+Zones
+  
+  #01   Sector 1 Reactor
+  #02   Sector 5 Reactor
+  #03   Sector 6
+  #04   Sector 7
+  #05   Shinra Headquarters (part 1)
+
+==---------------------------------------------------------------------------==
+
+Weapons
+
+  CLOUD
+  * Buster Sword    PWR 18
+
+  BARRET

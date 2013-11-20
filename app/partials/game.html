@@ -107,13 +107,12 @@
     <div ng-repeat="enemy in game.enemies.getTeam() | clean" class="left div400 enemy">
       <div class="main">
         <div class="part avatar w50">
-          <img ng-src="img/enemy/{{enemy.image}}" alt="avatar" height="48" />
+          <img ng-src="img/enemies/{{game.zones.level}}/{{enemy.image}}" alt="avatar" height="48" />
         </div>
         <div class="part w300">
           {{enemy.name}} <strong>(LVL{{enemy.level|ceil}})</strong> 
-          <span ng-if="enemy.boss">
-            <span class="boss">BOSS</span> 
-          </span>
+          <span ng-if="enemy.boss" class="boss">ZONE BOSS</span>
+          <span ng-if="enemy.miboss" class="boss">BOSS</span>
           <div>
             <span class="label">hp</span> {{enemy.getHpMax()}} 
             <span class="label">pwr</span> {{enemy.getHits()}}
