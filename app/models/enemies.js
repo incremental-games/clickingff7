@@ -48,12 +48,12 @@ Enemies.prototype.addResists = function(effect) {
  */
 Enemies.prototype.random = function() {
   var zoneLvl = this.Game.zones.level;
-  var Level = this.Game.characters.levelMax;
   var chances = [];
   var last = 0;
   var data = this.Game.data.enemies[zoneLvl];
+  var Level = Math.max(this.Game.characters.levelMax, data[1].level);
   var enemies = _.filter(data, function(o) {
-    return (Math.max(Level - 1, 1) <= o.level + 2 && o.level <= Math.max(Level, data[1].level));
+    return (Math.max(Level - 1, 1) <= o.level + 2 && o.level <= Level);
   });
   for (var i in enemies) {
     var enemy = enemies[i];
