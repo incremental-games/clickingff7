@@ -23,6 +23,7 @@
     "hpBase": 13,
     "xp_formula": "Math.pow(x,2)*11",
     "zone": 2,
+    "level": 4,
     "notAvailable": [3]
   },
   "aerith": {
@@ -32,6 +33,7 @@
     "hpBase": 12,
     "xp_formula": "Math.pow(x,2)*17",
     "zone": 3,
+    "level": 8,
     "notAvailable": [4, 5]
   },
   "redxiii": {
@@ -40,6 +42,7 @@
     "image": "redxiii.png",
     "hpBase": 17,
     "xp_formula": "Math.pow(x,2)*14",
-    "zone": 5
+    "zone": 5,
+    "level": 16
   }
 }
