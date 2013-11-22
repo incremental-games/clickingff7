@@ -52,6 +52,7 @@ Enemies.prototype.random = function() {
   var last = 0;
   var data = this.Game.data.enemies[zoneLvl];
   var Level = Math.max(this.Game.characters.levelMax, data[1].level);
+  var Level = Math.min(Level, data[5].level);
   var enemies = _.filter(data, function(o) {
     return (Math.max(Level - 1, 1) <= o.level + 2 && o.level <= Level);
   });
