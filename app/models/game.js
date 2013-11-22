@@ -369,6 +369,7 @@ Game.prototype.end_fight = function(victory) {
 
   this.enemies.remove();
   this.enemies.refresh();
+  this.characters.refresh();
 };
 
 /**

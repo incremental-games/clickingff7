@@ -14,9 +14,6 @@ function Characters(Game) {
   this.timer = {};
 
   this.autoRestore();
-
-  this.weaknessDamages = 0;
-  this.resistsDamages = 0;
 };
 
 /**
@@ -58,11 +55,11 @@ Characters.prototype.addHp = function(hp) {
  * Add an effect
  * @param {String} effect
  */
-Characters.prototype.addEffect = function(effect) {
+Characters.prototype.addEffect = function(effect, level) {
   if (!_.has(this.effects, effect)) {
     this.effects[effect] = 0;
   }
-  this.effects[effect] += 1;
+  this.effects[effect] += level;
 };
 
 /**
@@ -101,7 +98,25 @@ Characters.prototype.refresh = function() {
     // Effects
     var materia = characters[i].materia();
     if (materia && materia.effect) {
-      this.addEffect(materia.effect);
+      this.addEffect(materia.effect, materia.level);
+    }
+  }
+
+  // WEAKNESS
+  this.weaknessDamages = 0;
+  var weakness = this.Game.enemies.weakness;
+  for (var i in weakness) {
+    if (_.has(this.effects, i)) {
+      this.weaknessDamages += this.effects[i];
+    }
+  }
+
+  // RESISTS
+  this.resistsDamages = 0;
+  var resists = this.Game.enemies.resists;
+  for (var i in resists) {
+    if (_.has(this.effects, i)) {
+      this.resistsDamages += this.effects[i];
     }
   }
 
@@ -115,31 +130,14 @@ Characters.prototype.refresh = function() {
   }
 };
 
+/**
+ * Get total characters hits
+ */
 Characters.prototype.getHits = function() {
   var hits = 0;
   hits += this.hits;
   hits += ((this.weaknessDamages - this.resistsDamages) * 10 / 100) * hits;
   return hits;
-};
-
-/**
- * Finalize refresh with enemies weakness
- */
-Characters.prototype.refreshHits = function() {
-  this.weaknessDamages = 0;
-  var weakness = this.Game.enemies.weakness;
-  for (var i in weakness) {
-    if (_.has(this.effects, i)) {
-      this.weaknessDamages += this.effects[i];
-    }
-  }
-  this.resistsDamages = 0;
-  var resists = this.Game.enemies.resists;
-  for (var i in resists) {
-    if (_.has(this.effects, i)) {
-      this.resistsDamages += this.effects[i];
-    }
-  }
 };
 
 /**
@@ -200,8 +198,6 @@ Characters.prototype.autoFighting = function() {
  */
 Characters.prototype.stopFighting = function() {
   var success = this.Game.$timeout.cancel(this.timer['fighting']);
-  this.weaknessDamages = 0;
-  this.resistsDamages = 0;
 };
 
 /**
@@ -265,7 +261,7 @@ Characters.prototype.get_attacked = function(hits) {
 Characters.prototype.explore = function() {
   this.Game.enemies.random();
   this.Game.enemies.refresh();
-  this.refreshHits(); // Modify hits if enemies weakness
+  this.refresh();
   this.Game.start_fight();
 };
 
