@@ -174,7 +174,7 @@
         </div>
         <div class="powerUp" ng-if="character.materia()">
           <img ng-src="img/icons/{{character.materia().color}}-materia.png" class="materia icon" />
-          {{character.materia().name}} (LVL{{character.materia().level}}) {{character.materia().getDesc()}}
+          {{character.materia().name}} (LVL{{character.materia().getLevel()}}) {{character.materia().getDesc()}}
         </div>
         <div class="powerUp" ng-if="character.item">
           {{character.item.name}}

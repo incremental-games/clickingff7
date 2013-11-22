@@ -64,6 +64,18 @@ Materia.prototype.getDesc = function() {
 };
 
 /**
+ * Return the level of the materia
+ * @return {int|String}
+ */
+Materia.prototype.getLevel = function() {
+  if (this.level < this.levelMax) {
+    return this.level;
+  } else {
+    return "MAX";
+  }
+};
+
+/**
  * Get the total ap to level up
  * @return {int}
  */
@@ -105,7 +117,7 @@ Materia.prototype.apProgress = function(pixels_max) {
  */
 Materia.prototype.setAp = function(ap) {
   this.ap += ap;
-  while (this.ap >= this.getApMax()) {
+  while (this.ap >= this.getApMax() && this.level < this.levelMax) {
     this.ap -= this.getApMax();
     this.level += 1;
   }

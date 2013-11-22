@@ -50,7 +50,7 @@
     <div ng-repeat="materia in game.materias | clean" class="line">
       <div class="name">
         <img ng-src="img/icons/{{materia.color}}-materia.png" class="icon materia" /> 
-        {{materia.name}} (LVL{{materia.level}}) 
+        {{materia.name}} (LVL{{materia.getLevel()}}) 
         <span class="boss" ng-if="materia.character">EQUIPPED TO {{materia.character}}</span> 
         <span class="desc">{{materia.getDesc()}}</span>
       </div>

@@ -4,6 +4,7 @@
     "name": "Restore",
     "color": "green",
     "ap_formula": "Math.pow(x+1,4)*25",
+    "levelMax": 4,
     "gils": 750,
     "zone": 1
   },
@@ -13,7 +14,8 @@
     "effect": "bolt",
     "hits": true,
     "color": "green",
-    "ap_formula": "Math.pow(x+1,4)*30",
+    "ap_formula": "Math.pow(x+1,5)*30",
+    "levelMax": 3,
     "gils": 600,
     "zone": 1
   },
@@ -23,7 +25,8 @@
     "effect": "ice",
     "hits": true,
     "color": "green",
-    "ap_formula": "Math.pow(x+1,4)*30",
+    "ap_formula": "Math.pow(x+1,5)*30",
+    "levelMax": 3,
     "gils": 600,
     "zone": 1
   },
@@ -33,7 +36,8 @@
     "effect": "fire",
     "hits": true,
     "color": "green",
-    "ap_formula": "Math.pow(x+1,4)*30",
+    "ap_formula": "Math.pow(x+1,5)*30",
+    "levelMax": 3,
     "gils": 600,
     "zone": 2
   },
@@ -43,7 +47,8 @@
     "effect": "poison",
     "hits": true,
     "color": "green",
-    "ap_formula": "Math.pow(x+1,4)*35",
+    "ap_formula": "Math.pow(x+1,5)*35",
+    "levelMax": 3,
     "gils": 1500,
     "zone": 5
   },
@@ -53,7 +58,8 @@
     "effect": "earth",
     "hits": true,
     "color": "green",
-    "ap_formula": "Math.pow(x+1,4)*33",
+    "ap_formula": "Math.pow(x+1,5)*33",
+    "levelMax": 3,
     "gils": 1500,
     "zone": 7
   }
