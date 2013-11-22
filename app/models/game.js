@@ -39,7 +39,7 @@ Game.prototype.init = function($rootScope, $cookieStore, $http, $timeout) {
 
   this.data = {};
 
-  this.version = "0.8.3";
+  this.version = "0.8.4";
 };
 
 /**
