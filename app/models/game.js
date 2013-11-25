@@ -175,6 +175,8 @@ Game.prototype.begin = function() {
   this.enemies.refresh();
 
   this.refresh();
+
+  this.run();
 };
 
 /**
@@ -377,6 +379,25 @@ Game.prototype.end_fight = function(victory) {
  */
 Game.prototype.refresh = function() {
   this.$rootScope.game = this;
+};
+
+/**
+ * MAIN process
+ */
+Game.prototype.run = function() {
+  var self = this;
+  this.$timeout(function() {
+    switch (self.mode) {
+      case "normal":
+        if (self.enemies.enemies.length === 0) {
+          self.enemies.random();
+        }
+
+        self.characters.fight();
+        break;
+    }
+    self.run();
+  }, 1000);
 };
 
 /**
